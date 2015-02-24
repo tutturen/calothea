@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 public class User {
 	String email, username, passord, navn;
-	boolean loggedIn;
+	
 	Kalender personligKalender;
 	ArrayList<Gruppe> medlemAv; //Ikke i klassediagrammet, men knyttet til metoden
 	
-	public void setData(String mail, String userName, String passord, String navn, boolean loggedIn, Kalender personligKalender, ArrayList<Gruppe> medlemAV){
+	
+	
+	public User(String mail, String userName, String passord, String navn){
+		
 		if(checkMail(mail)){
 			this.email = mail;
 		}
@@ -21,23 +24,24 @@ public class User {
 			this.navn = navn;
 		}
 		
-		this.loggedIn = loggedIn;
-		this.personligKalender = personligKalender;
-		this.medlemAv = medlemAV;
+		this.personligKalender = new Kalender();
+		this.medlemAv = new ArrayList<Gruppe>();
 		
 	}
 	
 	boolean checkMail(String mail){
+		return true;
 		
 		
 	}
 	
 	boolean checkUserName(String userName){
+		return true;
 		
 	}
 	
 	boolean checkName(String navn){
-		
+		return true;
 	}
 	
 	
@@ -55,7 +59,7 @@ public class User {
 	}
 	
 	public Kalender getGruppeKalender(Gruppe gruppe){
-		return gruppe.kalender;
+		return gruppe.gruppeKalender;
 	}
 	
 	public Kalender getEgenKalender(){
