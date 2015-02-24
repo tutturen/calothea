@@ -14,6 +14,10 @@ public class User {
 		
 		if(checkMail(mail)){
 			this.email = mail;
+			
+		}
+		else{
+			throw new IllegalArgumentException();
 		}
 		
 		if(checkUserName(userName)){
@@ -30,12 +34,14 @@ public class User {
 	}
 	
 	boolean checkMail(String mail){
+		
 		return true;
 		
 		
 	}
 	
 	boolean checkUserName(String userName){
+		
 		return true;
 		
 	}
@@ -49,6 +55,11 @@ public class User {
 	public String getBrukerNavn(){
 		return username;
 	}
+	
+	public String getEmail(){
+		return email;
+	}
+	
 	public ArrayList<Gruppe> getGrupper(){
 		return medlemAv;
 		

@@ -22,9 +22,25 @@ public class UserTest {
 	
 	@Test
 	public void testConstructor(){
-		User test1 = new User(email, username, passord, navn);
-		
+		User user = new User(email, username, passord, navn);
+		assertEquals(user.getEmail(), email);
+		assertEquals(user.getBrukerNavn(), username);
+		assertEquals(user.getNavn(), navn);
+	
 	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testmailA(){
+		new User("theagmail.com", username, passord, navn);
+		fail();
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testMailDomene(){
+		new User("thea@Ggmail.asSA", username, passord, navn);
+		fail();
+	}
+		
+		
+	
 	
 	@Test
 	public void test() {
