@@ -14,11 +14,31 @@ public class Aktivitet {
 	public Aktivitet(User eier, Date startDate, Date endDate, Rom rom) {
 		brukereInvitert = new ArrayList<User>();
 		deltagere = new ArrayList<User>();
+		if (!isValidEier(eier)) {
+			throw new IllegalArgumentException("User invalid");
+		}
 		this.eier = eier;
+		if (!isValidDates(startDate, endDate)){
+			throw new IllegalArgumentException("Invalid dates");
+		}
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.rom = rom;
 		deltagere.add(eier);
+	}
+	
+	private boolean isValidEier(User eier) {
+		return eier != null;
+	}
+
+	private boolean isValidDates(Date startDate, Date endDate) {
+		if (startDate == null) {
+			return false;
+		}
+		if (endDate == null) {
+			return false;
+		}
+		return (endDate.getTime() - startDate.getTime()) > 0;
 	}
 
 	public ArrayList<User> getBrukereInvitert() {
