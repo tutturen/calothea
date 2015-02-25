@@ -23,7 +23,7 @@ public class Kalendertest {
 	Date endDate3 = new Date(2015, 3, 12, 17, 0);
 	Date testDate1 = new Date(2015, 3, 12, 11, 0);
 	Date testDate2 = new Date(2015, 3, 12, 15, 30);
-	User eier;
+	User eier = new User("simhellem@gmail.com", "simo", "123", "simen hellem");
 	String navn = "kal";
 	int ID = 3;
 	
