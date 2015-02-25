@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class User {
 	String email, username, passord, navn;
 	
-	Kalender personligKalender;
+	//For aa ikke ha konflikt
+	Kalender personligKalender = null;
 	ArrayList<Gruppe> medlemAv; //Ikke i klassediagrammet, men knyttet til metoden
 	
 	
@@ -23,7 +24,6 @@ public class User {
 		}
 		
 		this.passord = passord;
-		this.personligKalender = new Kalender();
 		this.medlemAv = new ArrayList<Gruppe>();
 		this.username = userName;
 		
