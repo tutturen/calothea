@@ -5,13 +5,31 @@ import java.util.Date;
 
 public class Kalender {
 	
-	ArrayList<Avtale> avtaleListe = new ArrayList<Avtale>();
+	ArrayList<Aktivitet> AktivitetListe = new ArrayList<Aktivitet>();
 	String navn;
 	int kalenderID;
 	
 	
-	//Lager ikke konstruktor fordi objektet vil komme fra server
+	//Kun for test
 	
+	public Kalender(ArrayList<Aktivitet> aktiviteter, String navn, int ID){
+		this.AktivitetListe = aktiviteter;
+		this.navn = navn;
+		this.kalenderID = ID;
+	}
+	
+	public ArrayList<Aktivitet> getAktivitetListe() {
+		return AktivitetListe;
+	}
+
+	public String getNavn() {
+		return navn;
+	}
+
+	public int getKalenderID() {
+		return kalenderID;
+	}
+
 	//I alle disse metodene maa vi oppdatere server 
 	public void setNavn(String navn){
 		this.navn = navn;
@@ -21,31 +39,34 @@ public class Kalender {
 		this.kalenderID = ID;
 	}
 	
-	public void setAvtaler(ArrayList<Avtale> avtaleliste){
-		this.avtaleListe = avtaleliste;
+	public void setAktivitetr(ArrayList<Aktivitet> Aktivitetliste){
+		this.AktivitetListe = Aktivitetliste;
 	}
 	
 	//Returnerer innenfor gitte tider
-	public ArrayList<Avtale> getAvtaler(Date start, Date end){
-		ArrayList<Avtale> soktAvtale = new ArrayList<Avtale>();
-		for (int i = 0; i < avtaleListe.size(); i++) {
-			Avtale mulig = avtaleListe.get(i);
-			if(mulig.getStart().after(start) && mulig.getSlutt().before(end)){
-				soktAvtale.add(mulig);
+	public ArrayList<Aktivitet> getAktiviteter(Date start, Date end){
+		ArrayList<Aktivitet> soktAktivitet = new ArrayList<Aktivitet>();
+		for (int i = 0; i < AktivitetListe.size(); i++) {
+			Aktivitet mulig = AktivitetListe.get(i);
+			if(mulig.getStartDate().after(start) && mulig.getEndDate().before(end)){
+				soktAktivitet.add(mulig);
 				
 			}
 			
 			
-		}return soktAvtale;
+		}return soktAktivitet;
 		
 	}
-	public void leggTilAvtale(Avtale avtale){
-		avtaleListe.add(avtale);
+	public void leggTilAktivitet(Aktivitet Aktivitet){
+		AktivitetListe.add(Aktivitet);
 	}
 	
-	//Skal kun vaere mulig for avtale-eier
-	public void fjernAvtale(Avtale avtale){
-		avtaleListe.remove(avtale);
+	//Skal kun vaere mulig for Aktivitet-eier
+	public void fjernAktivitet(Aktivitet Aktivitet){
+		if(!(AktivitetListe.contains(Aktivitet))){
+			throw new IllegalArgumentException();
+		}
+		AktivitetListe.remove(Aktivitet);
 		
 	}
 	
