@@ -18,6 +18,8 @@ public class Kalender {
 		this.kalenderID = ID;
 	}
 	
+	//Kun for test
+	
 	public ArrayList<Aktivitet> getAktivitetListe() {
 		return AktivitetListe;
 	}
