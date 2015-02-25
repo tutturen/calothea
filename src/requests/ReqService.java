@@ -25,9 +25,26 @@ public interface ReqService {
 	public Rom getFreeRomWithMinimum(@Path("minimum") int mimimumSize);
 	
 	// AvtaleController
+	@GET("aktivitet/{id}")
+	public Aktivitet getAktivitet(@Path("id") int aktivitetId);
+	
 	@POST("/avtale/create")
 	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("start_time") int start, @Field("end_time") int end);
 	
 	@POST("avtale/{avtale_id}/invite/{person_id}")
 	public void inviteToAktivitet(@Path("avtale_id") int avtaleId, @Path("person_id") int userId);
+	
+	
+	// UserController
+
+	
+	// AuthController
+	
+	@POST("/login")
+	public void login(@Field("email") String email, @Field("password") String password);
+	
+	@POST("/register")
+	public void register(@Field("email") String email, @Field("username") String username, @Field("name") String name, @Field("password") String password);
+	
+	
 }
