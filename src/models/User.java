@@ -16,38 +16,56 @@ public class User {
 			this.email = mail;
 			
 		}
-		else{
-			throw new IllegalArgumentException();
-		}
-		
-		if(checkUserName(userName)){
-			this.username = userName; 
-		}
-		
 		if(checkName(navn)){
 			this.navn = navn;
+		
+		
 		}
 		
+		this.passord = passord;
 		this.personligKalender = new Kalender();
 		this.medlemAv = new ArrayList<Gruppe>();
+		this.username = userName;
+		
 		
 	}
-	
+		
+		
 	boolean checkMail(String mail){
+	
 		
+		if(!(mail.contains("@"))) {
+			throw new IllegalArgumentException();
+		}
+		String[] oppdeltMail = mail.split("@");
+		String etterAlphakroll = oppdeltMail[1];
+
+		//Tester om det eksisterer punktum etter @
+		String[] oppdeltDomene = etterAlphakroll.split("\\.");
+		
+		if(oppdeltDomene.length != 2) {
+			throw new IllegalArgumentException("E-posten har ikke punktum og domene");
+
+		}
 		return true;
-		
-		
+			
+
 	}
 	
-	boolean checkUserName(String userName){
-		
-		return true;
-		
-	}
 	
 	boolean checkName(String navn){
+		if(!(navn.length() > 1)){
+			throw new IllegalArgumentException();
+		}
+		for (int i = 0; i < navn.length(); i++) {
+			
+			if((!(Character.isLetter(navn.charAt(i)))) && navn.charAt(i) != ' '){
+				throw new IllegalArgumentException();
+			}
+			
+		}
 		return true;
+		
 	}
 	
 	
@@ -76,6 +94,11 @@ public class User {
 	public Kalender getEgenKalender(){
 		return personligKalender;
 	}
-
+	
+	
 	
 }
+
+
+
+

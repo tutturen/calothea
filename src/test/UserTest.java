@@ -2,11 +2,6 @@ package test;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
-import models.Aktivitet;
-import models.Gruppe;
-import models.Kalender;
 import models.User;
 
 import org.junit.Test;
@@ -35,16 +30,15 @@ public class UserTest {
 	}
 	@Test(expected = IllegalArgumentException.class)
 	public void testMailDomene(){
-		new User("thea@Ggmail.asSA", username, passord, navn);
+		new User("thea@Ggmail", username, passord, navn);
+		fail();
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testName(){
+		new User(email, username, passord, "123dj)");
 		fail();
 	}
 		
-		
-	
-	
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
 
 }
