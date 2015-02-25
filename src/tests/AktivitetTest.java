@@ -50,6 +50,11 @@ public class AktivitetTest {
 		assertEquals(aktivitet.getBrukereInvitert().contains(otherUser1), true);
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testEndDateBeforeStartDate() {
+		new Aktivitet(owner, endDate, startDate, rom);
+	}
+	
 	@Test(expected = IllegalStateException.class)
 	public void testInviteTooMany() {
 		Aktivitet aktivitet = new Aktivitet(owner, startDate, endDate, smallRom);
