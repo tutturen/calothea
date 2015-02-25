@@ -10,13 +10,35 @@ public class Aktivitet {
 	Date startDate, endDate;
 	Rom rom;
 	User eier;
-	
+
 	public Aktivitet(User eier, Date startDate, Date endDate, Rom rom) {
+		brukereInvitert = new ArrayList<User>();
+		deltagere = new ArrayList<User>();
+		if (!isValidEier(eier)) {
+			throw new IllegalArgumentException("User invalid");
+		}
 		this.eier = eier;
+		if (!isValidDates(startDate, endDate)){
+			throw new IllegalArgumentException("Invalid dates");
+		}
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.rom = rom;
 		deltagere.add(eier);
+	}
+	
+	private boolean isValidEier(User eier) {
+		return eier != null;
+	}
+
+	private boolean isValidDates(Date startDate, Date endDate) {
+		if (startDate == null) {
+			return false;
+		}
+		if (endDate == null) {
+			return false;
+		}
+		return (endDate.getTime() - startDate.getTime()) > 0;
 	}
 
 	public ArrayList<User> getBrukereInvitert() {
@@ -43,23 +65,38 @@ public class Aktivitet {
 		return eier;
 	}
 	
-	public void addToInvitedList(User user) {
+	public void removeFromInvitedList(User user) {
 		if (!brukereInvitert.contains(user)) {
-			brukereInvitert.add(user);
+			throw new IllegalStateException("User not invited");
 		}
-		throw new IllegalStateException("User already invited");
+		brukereInvitert.remove(user);
 	}
-	
+
+	public void addToInvitedList(User user) {
+		if (brukereInvitert.contains(user)) {
+			throw new IllegalStateException("User already invited");
+		}
+		if (user == eier) {
+			throw new IllegalStateException("Cant invite owner");
+		}
+		// Sjekk at vi ikke potensielt overbooker
+		int potentialUsers = brukereInvitert.size() + deltagere.size();
+		if (potentialUsers > rom.getAntall()) {
+			throw new IllegalStateException("Room is too small to invite more people.");
+		}
+		
+		brukereInvitert.add(user);
+	}
+
 	public void acceptInvitation(User user) {
-		if (deltagere.contains(user)){
+		if (deltagere.contains(user)) {
 			throw new IllegalStateException("User has already accepted");
 		}
-		if (!brukereInvitert.contains(user)){
+		if (!brukereInvitert.contains(user)) {
 			throw new IllegalStateException("User not invited");
 		}
 		brukereInvitert.remove(user);
 		deltagere.add(user);
 	}
-	
-	
+
 }
