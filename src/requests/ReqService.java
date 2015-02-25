@@ -7,6 +7,7 @@ import retrofit.http.Field;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import models.Gruppe;
 
 public interface ReqService {
 	
@@ -33,6 +34,14 @@ public interface ReqService {
 	
 	@POST("avtale/{avtale_id}/invite/{person_id}")
 	public void inviteToAktivitet(@Path("avtale_id") int avtaleId, @Path("person_id") int userId);
+	
+	// GruppeController
+	
+	@POST("/gruppe/create")
+	public Gruppe createGruppe(@Field("calendar_id") int calendarId, @Field("first_member_Id") int userId, @Field("name") String gruppeNavn);
+	
+	@POST("gruppe/{gruppe_id}/invite/{person_id}")
+	public void inviteToGruppe(@Path("gruppe_Id") int gruppeId, @Path("person_Id") int userId);
 	
 	
 	// UserController
