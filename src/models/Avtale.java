@@ -7,6 +7,8 @@ public class Avtale {
 	Date start;
 	Date slutt;
 	
+
+	
 	public Date getStart() {
 		return start;
 	}
