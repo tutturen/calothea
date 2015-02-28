@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class Gruppe {
 
-	Kalender gruppeKalender;
+	Kalender kalender;
 	ArrayList<User> gruppeMedlemmer;
 	ArrayList<Gruppe> subGrupper; // ikke i klassediagrammet i exercise 5
 	String gruppeNavn;
 
-	public Gruppe(Kalender gruppeKalender, String gruppeNavn) {
+	public Gruppe(Kalender kalender, String gruppeNavn) {
 		gruppeMedlemmer = new ArrayList<User>();
 		subGrupper = new ArrayList<Gruppe>();
-		this.gruppeKalender = gruppeKalender;
+		this.kalender = kalender;
 		if (!isValidName(gruppeNavn)) {
 			throw new IllegalArgumentException("Illegal gruppeNavn");
 		}
@@ -24,7 +24,7 @@ public class Gruppe {
 		return (name != null && !name.equals(""));
 	}
 
-	public ArrayList<User> getGruppeMedlemmer() {
+	public ArrayList<User> getGruppeMedlemmer() { // Denne metoden skal også være i GruppeController som getMedlemmer(), skal den også være her da?
 		return gruppeMedlemmer;
 	}
 
@@ -32,22 +32,12 @@ public class Gruppe {
 		return subGrupper;
 	}
 
-	public Kalender getGruppeKalender() { 
-		return gruppeKalender;
+	public Kalender getKalender() { 
+		return kalender;
 	}
 
 	public String getGruppeNavn() { 
 		return gruppeNavn;
-	}
-
-	public Kalender getKalender() {
-		return gruppeKalender;
-
-	}
-
-	public ArrayList<User> getMedlemmer() {
-		return gruppeMedlemmer;
-
 	}
 
 	public void addMedlem(User user) {
@@ -65,7 +55,7 @@ public class Gruppe {
 	}
 
 	public void setKalender(Kalender kalender) { // byttet ut addKalender og removeKalender med en setKalender da du uansett bare kan ha en
-		gruppeKalender = kalender;
+		this.kalender = kalender;
 	}
 
 	public void setGruppeNavn(String gruppeNavn) { 
