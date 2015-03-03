@@ -1,8 +1,6 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
-
 import requests.ReqClient;
 import requests.ReqService;
 import models.Rom;
@@ -23,14 +21,14 @@ public class RoomController{
 	
 	public void addRom(Aktivitet aktivitet, Rom rom){
 		aktivitet.setRom(rom);
-		db.setRom(aktivitet., rom.getRomNr())
+		db.setRom(aktivitet.getId(), rom.getRomNr());
 		
 	}
 	
 	
 	public void deleteRom(Aktivitet aktivitet){
-		//db.setRoom(aktivitet.getId, null)
 		aktivitet.setRom(null);
+		db.setRom(aktivitet.getId(), 0);
 		
 	}
 	

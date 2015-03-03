@@ -27,7 +27,6 @@ public interface ReqService {
 	@GET("rom/{id}")
 	public Rom getRom(@Path("id") int romId);
 	
-	//Has to be changed. Needs to include startTime, and endTime. Returns a arrayList with all available rooms
 	@GET("/rom/find")
 	public ArrayList<Rom> getFreeRooms(@Query("antall") int antall, @Query("start") long start, @Query("end") long end );
 	
@@ -36,7 +35,6 @@ public interface ReqService {
 	@GET("aktivitet/{id}")
 	public Aktivitet getAktivitet(@Path("id") int aktivitetId);
 	
-	//This needs to change since room is set seperatly
 	@POST("/avtale/create")
 	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("start_time") int start, @Field("end_time") int end);
 	
