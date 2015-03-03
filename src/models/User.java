@@ -3,102 +3,115 @@ package models;
 import java.util.ArrayList;
 
 public class User {
-	String email, username, passord, navn;
-	
-	//For aa ikke ha konflikt
+	private String email, name, role;
+	private int user_id;
+	// For aa ikke ha konflikt
 	Kalender personligKalender = null;
-	ArrayList<Gruppe> medlemAv; //Ikke i klassediagrammet, men knyttet til metoden
-	
-	
-	
-	public User(String mail, String userName, String passord, String navn){
+	ArrayList<Gruppe> medlemAv; // Ikke i klassediagrammet, men knyttet til
+								// metoden
+
+	public User(int userId, String mail, String name, String role) {
+
+		if (!isValidId(userId)) {
+			throw new IllegalArgumentException("Illegal ID");
+		}
+		this.user_id = userId;
 		
-		if(checkMail(mail)){
+		if (checkMail(mail)) {
 			this.email = mail;
-			
+
 		}
-		if(checkName(navn)){
-			this.navn = navn;
-		
-		
+		if (checkName(name)) {
+			this.name = name;
 		}
-		
-		this.passord = passord;
+		if (checkRole(role)){
+			this.role = role;
+		}
+
 		this.medlemAv = new ArrayList<Gruppe>();
-		this.username = userName;
-		
-		
+
 	}
-		
-		
-	boolean checkMail(String mail){
-	
-		
-		if(!(mail.contains("@"))) {
+
+	boolean checkMail(String mail) {
+
+		if (!(mail.contains("@"))) {
 			throw new IllegalArgumentException();
 		}
 		String[] oppdeltMail = mail.split("@");
 		String etterAlphakroll = oppdeltMail[1];
 
-		//Tester om det eksisterer punktum etter @
+		// Tester om det eksisterer punktum etter @
 		String[] oppdeltDomene = etterAlphakroll.split("\\.");
-		
-		if(oppdeltDomene.length != 2) {
-			throw new IllegalArgumentException("E-posten har ikke punktum og domene");
+
+		if (oppdeltDomene.length != 2) {
+			throw new IllegalArgumentException(
+					"E-posten har ikke punktum og domene");
 
 		}
 		return true;
-			
 
 	}
 	
+	private boolean isValidId(int id) {
+		return id > 0;
+	}
 	
-	boolean checkName(String navn){
-		if(!(navn.length() > 1)){
+	private boolean checkRole(String role) {
+		if (role.length() < 3) {
+			throw new IllegalArgumentException("Role must consist of 3 or more characters");
+		}
+		for (int i = 0; i > role.length(); i++) {
+			char c = role.charAt(i);
+			if (Character.isLetter(c)) {
+				throw new IllegalArgumentException("Role can not contain numbers");
+			}
+		}
+		return true;
+	}
+
+	boolean checkName(String navn) {
+		if (!(navn.length() > 1)) {
 			throw new IllegalArgumentException();
 		}
 		for (int i = 0; i < navn.length(); i++) {
-			
-			if((!(Character.isLetter(navn.charAt(i)))) && navn.charAt(i) != ' '){
+
+			if ((!(Character.isLetter(navn.charAt(i))))
+					&& navn.charAt(i) != ' ') {
 				throw new IllegalArgumentException();
 			}
-			
+
 		}
 		return true;
-		
+
 	}
 	
-	
-	
-	public String getBrukerNavn(){
-		return username;
+	public int getId() {
+		return user_id;
 	}
-	
-	public String getEmail(){
+
+	public String getRole() {
+		return role;
+	}
+
+	public String getEmail() {
 		return email;
 	}
-	
-	public ArrayList<Gruppe> getGrupper(){
+
+	public ArrayList<Gruppe> getGrupper() {
 		return medlemAv;
-		
+
 	}
-	
-	public String getNavn(){
-		return navn;
+
+	public String getName() {
+		return name;
 	}
-	
-	public Kalender getGruppeKalender(Gruppe gruppe){
-		return gruppe.gruppeKalender;
+
+	public Kalender getGruppeKalender(Gruppe gruppe) {
+		return gruppe.getKalender();
 	}
-	
-	public Kalender getEgenKalender(){
+
+	public Kalender getEgenKalender() {
 		return personligKalender;
 	}
-	
-	
-	
+
 }
-
-
-
-

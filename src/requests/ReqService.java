@@ -1,10 +1,12 @@
 package requests;
 
-import java.util.ArrayList;
 
+import java.util.ArrayList;
+import helpers.LoginResult;
 import models.Aktivitet;
 import models.Kalender;
 import models.Rom;
+import models.User;
 import retrofit.http.Field;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -55,14 +57,17 @@ public interface ReqService {
 	
 	// UserController
 
+	@GET("/user/{id}")
+	public User getUser(@Path("id") int userId);
 	
 	// AuthController
 	
 	@POST("/login")
-	public void login(@Field("email") String email, @Field("password") String password);
+	public LoginResult login(@Field("email") String email, @Field("password") String password);
 	
 	@POST("/register")
-	public void register(@Field("email") String email, @Field("username") String username, @Field("name") String name, @Field("password") String password);
+	public User register(@Field("email") String email, @Field("username") String username, @Field("name") String name, @Field("password") String password);
+	
 	
 	
 }
