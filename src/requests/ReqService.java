@@ -1,12 +1,17 @@
 package requests;
 
+
+import java.util.ArrayList;
+import helpers.LoginResult;
 import models.Aktivitet;
 import models.Kalender;
 import models.Rom;
+import models.User;
 import retrofit.http.Field;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import models.Gruppe;
 
 public interface ReqService {
@@ -22,8 +27,9 @@ public interface ReqService {
 	@GET("rom/{id}")
 	public Rom getRom(@Path("id") int romId);
 	
-	@GET("/rom/minimum/{minimum}")
-	public Rom getFreeRomWithMinimum(@Path("minimum") int mimimumSize);
+	@GET("/rom/find")
+	public ArrayList<Rom> getFreeRooms(@Query("antall") int antall, @Query("start") long start, @Query("end") long end );
+	
 	
 	// AvtaleController
 	@GET("aktivitet/{id}")
@@ -34,6 +40,9 @@ public interface ReqService {
 	
 	@POST("avtale/{avtale_id}/invite/{person_id}")
 	public void inviteToAktivitet(@Path("avtale_id") int avtaleId, @Path("person_id") int userId);
+	
+	@POST("avtale/{avtale_id}/rom/{rom_id}")
+	public void setRom(@Path("avtale_id") int avtaleId, @Path("rom_id") int romId);
 	
 	// GruppeController
 	
@@ -46,14 +55,17 @@ public interface ReqService {
 	
 	// UserController
 
+	@GET("/user/{id}")
+	public User getUser(@Path("id") int userId);
 	
 	// AuthController
 	
 	@POST("/login")
-	public void login(@Field("email") String email, @Field("password") String password);
+	public LoginResult login(@Field("email") String email, @Field("password") String password);
 	
 	@POST("/register")
-	public void register(@Field("email") String email, @Field("username") String username, @Field("name") String name, @Field("password") String password);
+	public User register(@Field("email") String email, @Field("username") String username, @Field("name") String name, @Field("password") String password);
+	
 	
 	
 }

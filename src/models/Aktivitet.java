@@ -3,15 +3,22 @@ package models;
 import java.util.ArrayList;
 import java.util.Date;
 
+import requests.ReqClient;
+import requests.ReqService;
+
 public class Aktivitet {
 
+	int id;
 	ArrayList<User> brukereInvitert;
 	ArrayList<User> deltagere;
 	Date startDate, endDate;
 	Rom rom;
 	User eier;
+	String name;
+	
+	ReqService db = ReqClient.getInstance().getService();
 
-	public Aktivitet(User eier, Date startDate, Date endDate, Rom rom) {
+	public Aktivitet(User eier, String name, Date startDate, Date endDate) {
 		brukereInvitert = new ArrayList<User>();
 		deltagere = new ArrayList<User>();
 		if (!isValidEier(eier)) {
@@ -23,10 +30,18 @@ public class Aktivitet {
 		}
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.rom = rom;
+		this.name = name;
 		deltagere.add(eier);
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
+	public void setRom(Rom rom) {
+		this.rom = rom;
+	}
+
 	private boolean isValidEier(User eier) {
 		return eier != null;
 	}
@@ -84,8 +99,8 @@ public class Aktivitet {
 		if (potentialUsers > rom.getAntall()) {
 			throw new IllegalStateException("Room is too small to invite more people.");
 		}
-		
 		brukereInvitert.add(user);
+		db.inviteToAktivitet(this.getId(), user.getId());
 	}
 
 	public void acceptInvitation(User user) {
