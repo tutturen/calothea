@@ -25,10 +25,13 @@ public interface ReqService {
 	@GET("/rom/minimum/{minimum}")
 	public Rom getFreeRomWithMinimum(@Path("minimum") int mimimumSize);
 	
+	// Sette tid for Date felter for et rom @POST("/rom/{id}/")
+	
 	// AvtaleController
 	@GET("aktivitet/{id}")
 	public Aktivitet getAktivitet(@Path("id") int aktivitetId);
 	
+	//This needs to change since room is set seperatly
 	@POST("/avtale/create")
 	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("start_time") int start, @Field("end_time") int end);
 	
