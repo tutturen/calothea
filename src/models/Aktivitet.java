@@ -11,7 +11,7 @@ public class Aktivitet {
 	Rom rom;
 	User eier;
 
-	public Aktivitet(User eier, Date startDate, Date endDate, Rom rom) {
+	public Aktivitet(User eier, Date startDate, Date endDate) {
 		brukereInvitert = new ArrayList<User>();
 		deltagere = new ArrayList<User>();
 		if (!isValidEier(eier)) {
@@ -23,10 +23,13 @@ public class Aktivitet {
 		}
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.rom = rom;
 		deltagere.add(eier);
 	}
 	
+	public void setRom(Rom rom) {
+		this.rom = rom;
+	}
+
 	private boolean isValidEier(User eier) {
 		return eier != null;
 	}
