@@ -4,14 +4,19 @@ import java.util.ArrayList;
 
 public class User {
 	private String email, name, role;
-
+	private int user_id;
 	// For aa ikke ha konflikt
 	Kalender personligKalender = null;
 	ArrayList<Gruppe> medlemAv; // Ikke i klassediagrammet, men knyttet til
 								// metoden
 
-	public User(String mail, String name, String role) {
+	public User(int userId, String mail, String name, String role) {
 
+		if (!isValidId(userId)) {
+			throw new IllegalArgumentException("Illegal ID");
+		}
+		this.user_id = userId;
+		
 		if (checkMail(mail)) {
 			this.email = mail;
 
@@ -47,6 +52,10 @@ public class User {
 
 	}
 	
+	private boolean isValidId(int id) {
+		return id > 0;
+	}
+	
 	private boolean checkRole(String role) {
 		if (role.length() < 3) {
 			throw new IllegalArgumentException("Role must consist of 3 or more characters");
@@ -74,6 +83,10 @@ public class User {
 		}
 		return true;
 
+	}
+	
+	public int getId() {
+		return user_id;
 	}
 
 	public String getRole() {
