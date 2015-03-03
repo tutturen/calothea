@@ -16,25 +16,26 @@ public class RoomController{
 	ReqService db = ReqClient.getInstance().getService();
 	
 	
-	public void ArrayList<Rom> finnRom(Aktivitet aktivitet, int antall, Date start, Date slutt){
-		//Assumes reqservice returns a list of available rooms. Changed Activity class here, test needs to be updated. 
-		return db.getFreeRomWithMinimum(mimimumSize); //This one has to be changed to also have Date as parameter and return a list
-		//of options to a user
+	public ArrayList<Rom> finnRom(int antall, long start, long slutt){
+		return db.getFreeRooms(antall, start, slutt); 
 		
 	}
 	
 	public void addRom(Aktivitet aktivitet, Rom rom){
 		aktivitet.setRom(rom);
-		// db.setRoom(aktivitet, rom)
-	}
-	
-	public void deleteRom(Aktivitet aktivitet){
-		aktivitet.setRom(null);
-		//db.setRoom(aktivitet, null)
+		db.setRom(aktivitet., rom.getRomNr())
 		
 	}
 	
-	public Rom romController(int romId){
+	
+	public void deleteRom(Aktivitet aktivitet){
+		//db.setRoom(aktivitet.getId, null)
+		aktivitet.setRom(null);
+		
+	}
+	
+	//Gir deg ingen informasjon annet enn at du henter et rom. 
+	public Rom getRoom(int romId){
 		return db.getRom(romId);
 		
 		

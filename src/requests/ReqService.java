@@ -1,5 +1,7 @@
 package requests;
 
+import java.util.ArrayList;
+
 import models.Aktivitet;
 import models.Kalender;
 import models.Rom;
@@ -7,6 +9,7 @@ import retrofit.http.Field;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import models.Gruppe;
 
 public interface ReqService {
@@ -22,10 +25,10 @@ public interface ReqService {
 	@GET("rom/{id}")
 	public Rom getRom(@Path("id") int romId);
 	
-	@GET("/rom/minimum/{minimum}")
-	public Rom getFreeRomWithMinimum(@Path("minimum") int mimimumSize);
+	//Has to be changed. Needs to include startTime, and endTime. Returns a arrayList with all available rooms
+	@GET("/rom/find")
+	public ArrayList<Rom> getFreeRooms(@Query("antall") int antall, @Query("start") long start, @Query("end") long end );
 	
-	// Sette tid for Date felter for et rom @POST("/rom/{id}/")
 	
 	// AvtaleController
 	@GET("aktivitet/{id}")
@@ -37,6 +40,9 @@ public interface ReqService {
 	
 	@POST("avtale/{avtale_id}/invite/{person_id}")
 	public void inviteToAktivitet(@Path("avtale_id") int avtaleId, @Path("person_id") int userId);
+	
+	@POST("avtale/{avtale_id}/rom/{rom_id}")
+	public void setRom(@Path("avtale_id") int avtaleId, @Path("rom_id") int romId);
 	
 	// GruppeController
 	
