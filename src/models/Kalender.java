@@ -6,16 +6,15 @@ import java.util.Date;
 public class Kalender {
 	
 	ArrayList<Aktivitet> AktivitetListe = new ArrayList<Aktivitet>();
-	String navn;
-	int kalenderID;
-	
+	String name;
+	int id;
 	
 	//Kun for test
 	
 	public Kalender(ArrayList<Aktivitet> aktiviteter, String navn, int ID){
 		this.AktivitetListe = aktiviteter;
-		this.navn = navn;
-		this.kalenderID = ID;
+		this.name = navn;
+		this.id = ID;
 	}
 	
 	//Kun for test
@@ -25,20 +24,20 @@ public class Kalender {
 	}
 
 	public String getNavn() {
-		return navn;
+		return name;
 	}
 
 	public int getKalenderID() {
-		return kalenderID;
+		return id;
 	}
 
 	//I alle disse metodene maa vi oppdatere server 
 	public void setNavn(String navn){
-		this.navn = navn;
+		this.name = navn;
 	}
 	
 	public void setID(int ID){
-		this.kalenderID = ID;
+		this.id = ID;
 	}
 	
 	public void setAktivitetr(ArrayList<Aktivitet> Aktivitetliste){

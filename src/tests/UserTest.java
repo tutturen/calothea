@@ -1,4 +1,4 @@
-package test;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -8,35 +8,37 @@ import org.junit.Test;
 
 public class UserTest {
 	
+	int id = 5;
 	String email = "thea@gmail.com";
-	String username = "thea";
+	String rolle = "Utvikler";
 	String passord = "123";
-	String navn = "thea sofie";
+	String navn = "Thea Sofie";
 	
 
 	
 	@Test
 	public void testConstructor(){
-		User user = new User(email, username, passord, navn);
+		User user = new User(id, email, navn, rolle);
+		assertEquals(user.getId(), id);
 		assertEquals(user.getEmail(), email);
-		assertEquals(user.getBrukerNavn(), username);
-		assertEquals(user.getNavn(), navn);
+		assertEquals(user.getRole(), rolle);
+		assertEquals(user.getName(), navn);
 	
 	}
 	@Test(expected = IllegalArgumentException.class)
 	public void testmailA(){
-		new User("theagmail.com", username, passord, navn);
+		new User(id, "theagmail.com", navn, rolle);
 		fail();
 	}
 	@Test(expected = IllegalArgumentException.class)
 	public void testMailDomene(){
-		new User("thea@Ggmail", username, passord, navn);
+		new User(id, "thea@Ggmail", navn, rolle);
 		fail();
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testName(){
-		new User(email, username, passord, "123dj)");
+		new User(id, email, "123dj)", rolle);
 		fail();
 	}
 		

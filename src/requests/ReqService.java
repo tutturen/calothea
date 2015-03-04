@@ -8,6 +8,7 @@ import models.Kalender;
 import models.Rom;
 import models.User;
 import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -64,11 +65,13 @@ public interface ReqService {
 	
 	// AuthController
 	
+	@FormUrlEncoded
 	@POST("/login")
 	public LoginResult login(@Field("email") String email, @Field("password") String password);
 	
+	@FormUrlEncoded
 	@POST("/register")
-	public User register(@Field("email") String email, @Field("username") String username, @Field("name") String name, @Field("password") String password);
+	public User register(@Field("email") String email, @Field("name") String name, @Field("password") String password, @Field("role") String role);
 	
 	
 	

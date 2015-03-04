@@ -5,7 +5,7 @@ import retrofit.RestAdapter;
 public class ReqClient {
 	
 	private static ReqClient instance = new ReqClient();
-	private static final String API_URL = "127.0.0.1";
+	private static final String API_URL = "http://localhost:8888";
 	private ReqService service;
 	
 	public static ReqClient getInstance() {
