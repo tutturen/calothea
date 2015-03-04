@@ -26,8 +26,8 @@ public class GruppeTest {
 	ArrayList<Aktivitet> aktiviteter2 = new ArrayList<Aktivitet>();
 	ArrayList<Aktivitet> aktiviteter3 = new ArrayList<Aktivitet>();
 	
-	User user1 = new User("thea@gmail.com", "thea", "123", "thea sofie");
-	User user2 = new User("kari@gmail.com", "Kari", "jomsemari", "Kari Krymnagaard");
+	User user1 = new User(2, "thea@gmail.com", "Thea Sofie", "Prosjektleder");
+	User user2 = new User(3, "kari@gmail.com", "Kari Krymnagaard", "Assistent");
 	
 	@Test
 	public void testConstructor(){

@@ -3,10 +3,10 @@ package models;
 import java.util.ArrayList;
 
 public class User {
-	private String email, name, role;
+	private String email, name, rolle;
 	private int user_id;
 	// For aa ikke ha konflikt
-	Kalender personligKalender = null;
+	Kalender calendar = null;
 	ArrayList<Gruppe> medlemAv; // Ikke i klassediagrammet, men knyttet til
 								// metoden
 
@@ -25,7 +25,7 @@ public class User {
 			this.name = name;
 		}
 		if (checkRole(role)){
-			this.role = role;
+			this.rolle = role;
 		}
 
 		this.medlemAv = new ArrayList<Gruppe>();
@@ -90,7 +90,7 @@ public class User {
 	}
 
 	public String getRole() {
-		return role;
+		return rolle;
 	}
 
 	public String getEmail() {
@@ -111,7 +111,7 @@ public class User {
 	}
 
 	public Kalender getEgenKalender() {
-		return personligKalender;
+		return calendar;
 	}
 
 }

@@ -12,10 +12,10 @@ import org.junit.Test;
 
 public class AktivitetTest {
 
-	User owner = new User("jon@gmail.com", "Jon", "karitraa", "Jon Gremsefjaurd");
+	User owner = new User(12, "jon@gmail.com", "Jon", "Systemutvikler");
 	
-	User otherUser1 = new User("gryndir@gmail.com", "Gryndir", "lausekaru", "Gryndir Bekkeløg");
-	User otherUser2 = new User("kari@gmail.com", "Kari", "jomsemari", "Kari Krymnagaard");
+	User otherUser1 = new User(13, "gryndir@gmail.com", "Gryndir Bekkeløg", "Produktbehandler");
+	User otherUser2 = new User(4, "kari@gmail.com", "Kari Krymnagaard", "Sjef");
 
 
 	Date startDate = new Date(System.currentTimeMillis() + 5000L);
