@@ -12,8 +12,8 @@ import models.Rom;
 
 import org.junit.Test;
 
+@SuppressWarnings(value={"deprecation"})
 public class Kalendertest {
-	
 	Rom rom;
 	Date startDate1 = new Date(2015, 3, 12, 12, 0);
 	Date endDate1 = new Date(2015, 3, 12, 13, 0);
@@ -28,9 +28,9 @@ public class Kalendertest {
 	int ID = 3;
 	
 	
-	Aktivitet aktivitet1 = new Aktivitet(eier, startDate1, endDate1, rom);
-	Aktivitet aktivitet2 = new Aktivitet(eier, startDate2, endDate2, rom);
-	Aktivitet aktivitet3 = new Aktivitet(eier, startDate3, endDate3, rom);
+	Aktivitet aktivitet1 = new Aktivitet(eier, navn, startDate1, endDate1);
+	Aktivitet aktivitet2 = new Aktivitet(eier, navn, startDate2, endDate2);
+	Aktivitet aktivitet3 = new Aktivitet(eier, navn, startDate3, endDate3);
 	
 	ArrayList<Aktivitet> aktiviteter = new ArrayList<Aktivitet>();
 	

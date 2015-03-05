@@ -18,11 +18,11 @@ import models.Gruppe;
 public interface ReqService {
 	
 	// KalenderController
-	@POST("/kalender/add")
-	public void addAvtaleToKalender(@Field("calendar_id") int calendarId, @Field("avtale_id") int avtaleId);
+	@POST("/calendar/appointment/add")
+	public void addAvtaleToKalender(@Field("calendar_id") int kalenderId, @Field("avtale_id") int avtaleId);
 
 	@GET("/user/{id}/kalender")
-	public Kalender getUserKalender(@Path("user_id") int userId);
+	public Kalender getUserKalender(@Path("id") int userId);
 	
 	// RomController
 	@GET("rom/{id}")
@@ -37,7 +37,7 @@ public interface ReqService {
 	public Aktivitet getAktivitet(@Path("id") int aktivitetId);
 	
 	@POST("/avtale/create")
-	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("start_time") int start, @Field("end_time") int end);
+	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("start_time") long start, @Field("end_time") long end);
 	
 	@POST("avtale/{avtale_id}/invite/{person_id}")
 	public void inviteToAktivitet(@Path("avtale_id") int avtaleId, @Path("person_id") int userId);

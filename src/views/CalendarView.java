@@ -1,5 +1,10 @@
 package views;
 
-public class MainView {
+public abstract class CalendarView implements View {
+
+	@Override
+	public String getTitle() {
+		return "Kalender";
+	}
 
 }
