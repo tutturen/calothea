@@ -14,7 +14,7 @@ public class Aktivitet {
 	Date startDate, endDate;
 	Rom rom;
 	User eier;
-	String name;
+ 
 	String location;
 	String message;
 	
