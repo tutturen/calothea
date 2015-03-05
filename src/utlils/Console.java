@@ -45,8 +45,5 @@ public class Console {
 			}
 		}
 		return res;
-	}
-	
-	
-	
+	}	
 }

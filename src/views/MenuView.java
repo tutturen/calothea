@@ -14,6 +14,8 @@ public class MenuView implements View {
 		applicationViews = new ArrayList<View>();
 		applicationViews.add(new PersonalCalendarView(MainUser.getInstance()));
 		applicationViews.add(new CreditsView());
+		applicationViews.add(new MyGroupView());
+		applicationViews.add(new MessageView("Du er skikkelig skikkelig kul! Bare så du vet det."));
 	}
 
 	@Override

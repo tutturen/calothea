@@ -36,7 +36,7 @@ public class LoginView implements View {
 		content.add("");
 		content.add("");
 		content.add("Epost: " + (email == null ? "" : email));
-		content.add("Du kommer aldri inn.");
+		content.add("Hvis du vil registere deg, skriv 'registrer'");
 		return content;
 	}
 
@@ -50,6 +50,12 @@ public class LoginView implements View {
 
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
+		if(input.toLowerCase().equals("registrer")){
+			viewStack.push(new RegisterView());
+			this.email="";
+			emailWritten = false;
+			return;
+		}
 		if (!emailWritten) {
 			email = input;
 			emailWritten = true;

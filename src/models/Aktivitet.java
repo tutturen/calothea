@@ -30,6 +30,7 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		if (!isValidDates(startDate, endDate)){
 			throw new IllegalArgumentException("Invalid dates");
 		}
+
 		this.start = startDate;
 		this.end = endDate;
 		this.name = name;
