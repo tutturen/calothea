@@ -45,6 +45,10 @@ public interface ReqService {
 	@POST("avtale/{avtale_id}/rom/{rom_id}")
 	public void setRom(@Path("avtale_id") int avtaleId, @Path("rom_id") int romId);
 	
+	//Do we need an acceot appointment 
+	
+	// InnvitasjonsCoontroller
+	
 	// GruppeController
 	
 	@POST("/gruppe/create")
