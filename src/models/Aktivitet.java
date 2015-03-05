@@ -14,7 +14,7 @@ public class Aktivitet {
 	Date startDate, endDate;
 	Rom rom;
 	User eier;
- 
+	String name;
 	String location;
 	String message;
 	
@@ -32,7 +32,6 @@ public class Aktivitet {
 		}
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.name = name;
 		deltagere.add(eier);
 	}
 	
