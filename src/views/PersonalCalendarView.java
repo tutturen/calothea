@@ -9,6 +9,7 @@ import java.util.Stack;
 import utlils.Console;
 import controllers.AvtaleController;
 import models.Aktivitet;
+import models.Rom;
 import models.User;
 
 public class PersonalCalendarView extends CalendarView {
@@ -27,8 +28,9 @@ public class PersonalCalendarView extends CalendarView {
 		Date lateDate = new Date(System.currentTimeMillis() + 20000000L);
 		aktiviteter = AvtaleController.getAktiviteter(user.getId(),
 				startDate.getTime(), middleDate.getTime());
-		aktiviteter.add(new Aktivitet(owner, "Kul aktivitet", startDate, middleDate));
-		aktiviteter.add(new Aktivitet(owner, "Morsom aktivitet", startDate,	lateDate));
+		Aktivitet firstAktivitet = new Aktivitet(owner, "MONGO aktivitet", startDate, middleDate);
+		firstAktivitet.setRom(new Rom("Gobo", 424, 12));
+		aktiviteter.add(firstAktivitet);
 		for (int i = 0; i < 20; i++) {
 			aktiviteter.add(new Aktivitet(owner, "Kul aktivitet", startDate,
 					middleDate));

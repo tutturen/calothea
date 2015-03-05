@@ -113,5 +113,10 @@ public class User {
 	public Kalender getEgenKalender() {
 		return calendar;
 	}
+	
+	@Override
+	public String toString() {
+		return this.name;
+	}
 
 }

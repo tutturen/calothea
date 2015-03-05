@@ -46,5 +46,10 @@ public class Rom {
 	public int getRomNr() {
 		return romNr;
 	}
+	
+	@Override
+	public String toString() {
+		return romNavn + " " + romNr + " [" + maxAntall + "]";
+	}
 
 }

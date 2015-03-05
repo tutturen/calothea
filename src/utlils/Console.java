@@ -35,6 +35,18 @@ public class Console {
 		System.out.println(str);
 	}
 	
+	public static String matchLength(String content, int len) {
+		String res = "";
+		for (int i = 0; i < len; i++) {
+			if (i >= content.length()) {
+				res += " ";
+			} else {
+				res += content.charAt(i) + "";
+			}
+		}
+		return res;
+	}
+	
 	
 	
 }

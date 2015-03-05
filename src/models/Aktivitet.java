@@ -8,15 +8,15 @@ import requests.ReqService;
 
 public class Aktivitet implements Comparable {
 
-	int id;
-	ArrayList<User> brukereInvitert;
-	ArrayList<User> deltagere;
-	Date startDate, endDate;
-	Rom rom;
-	User eier;
- 
-	String location;
-	String message;
+	private int id;
+	private ArrayList<User> brukereInvitert;
+	private ArrayList<User> deltagere;
+	private Date startDate, endDate;
+	private Rom rom;
+	private User eier;
+	private String name;
+	private String location;
+	private String message;
 	
 	ReqService db = ReqClient.getInstance().getService();
 
