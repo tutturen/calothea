@@ -13,7 +13,7 @@ public class AvtaleController {
 	
 	ArrayList<Aktivitet> avtaler;
 	
-	ReqService db = ReqClient.getInstance().getService();
+	static ReqService db = ReqClient.getInstance().getService();
 	
 	public Aktivitet createAvtale(User eier, String name, ArrayList<User> inviterte, Date startDate, Date endDate) {
 		Aktivitet aktivitet = db.createAktivitet(eier.getId(), name, startDate.getTime(), endDate.getTime());
@@ -25,7 +25,12 @@ public class AvtaleController {
 	}
 	
 	public static ArrayList<Aktivitet> getAktiviteter(int userId, long start, long stop) {
+		
 		return new ArrayList<Aktivitet>();
+	}
+	
+	public static ArrayList<Aktivitet> getAlleAktiviteter(int userId) {
+		return db.getAlleBrukerAktiviteter(userId);
 	}
 	
 	public void editAvtale(Aktivitet avtale) {

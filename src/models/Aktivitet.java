@@ -6,12 +6,12 @@ import java.util.Date;
 import requests.ReqClient;
 import requests.ReqService;
 
-public class Aktivitet implements Comparable {
+public class Aktivitet implements Comparable<Aktivitet> {
 
 	private int id;
 	private ArrayList<User> brukereInvitert;
 	private ArrayList<User> deltagere;
-	private Date startDate, endDate;
+	private Date start, end;
 	private Rom rom;
 	private User eier;
 	private String name;
@@ -30,14 +30,22 @@ public class Aktivitet implements Comparable {
 		if (!isValidDates(startDate, endDate)){
 			throw new IllegalArgumentException("Invalid dates");
 		}
-		this.startDate = startDate;
-		this.endDate = endDate;
+		this.start = startDate;
+		this.end = endDate;
 		this.name = name;
 		deltagere.add(eier);
 	}
 	
 	public int getId() {
 		return id;
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+	
+	public String getMessage() {
+		return message;
 	}
 	
 	public void setRom(Rom rom) {
@@ -71,11 +79,11 @@ public class Aktivitet implements Comparable {
 	}
 
 	public Date getStartDate() {
-		return startDate;
+		return start;
 	}
 
 	public Date getEndDate() {
-		return endDate;
+		return end;
 	}
 
 	public Rom getRom() {
@@ -141,17 +149,11 @@ public class Aktivitet implements Comparable {
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		
-		Aktivitet other = (Aktivitet) o;
-		
-		int thisStartTime = (int) this.startDate.getTime();
-		int otherStartTime = (int) other.startDate.getTime();
-		
-		if (thisStartTime == otherStartTime) {
-			return (int) (this.endDate.getTime() - other.endDate.getTime());
+	public int compareTo(Aktivitet other) {
+		if (this.start.getTime() == other.start.getTime()) {
+			return (int) (this.end.getTime() - other.end.getTime());
 		}
-		return (int) (this.startDate.getTime() - ((Aktivitet) o).startDate.getTime()); 
+		return (int) (this.start.getTime() - other.start.getTime()); 
 	}
 
 }

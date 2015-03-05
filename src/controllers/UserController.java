@@ -15,7 +15,7 @@ public class UserController {
 		return MainUser.newInstance(user);
 	}
 	
-	public static User login(String email, String password) {
+	public static LoginResult login(String email, String password) {
 		LoginResult result = db.login(email, password);
 		System.out.println(result.getMessage());
 		if (!result.isSuccess()) {
@@ -23,7 +23,8 @@ public class UserController {
 		}
 		
 		User dbUser = db.getUser(result.getUserId());
-		return MainUser.newInstance(dbUser);
+		MainUser.newInstance(dbUser);
+		return result;
 	}
 	
 }

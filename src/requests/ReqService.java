@@ -25,7 +25,7 @@ public interface ReqService {
 	public Kalender getUserKalender(@Path("id") int userId);
 	
 	// RomController
-	@GET("rom/{id}")
+	@GET("/rom/{id}")
 	public Rom getRom(@Path("id") int romId);
 	
 	@GET("/rom/find")
@@ -33,17 +33,20 @@ public interface ReqService {
 	
 	
 	// AvtaleController
-	@GET("aktivitet/{id}")
+	@GET("/aktivitet/{id}")
 	public Aktivitet getAktivitet(@Path("id") int aktivitetId);
 	
 	@POST("/avtale/create")
 	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("start_time") long start, @Field("end_time") long end);
 	
-	@POST("avtale/{avtale_id}/invite/{person_id}")
+	@POST("/avtale/{avtale_id}/invite/{person_id}")
 	public void inviteToAktivitet(@Path("avtale_id") int avtaleId, @Path("person_id") int userId);
 	
-	@POST("avtale/{avtale_id}/rom/{rom_id}")
+	@POST("/avtale/{avtale_id}/rom/{rom_id}")
 	public void setRom(@Path("avtale_id") int avtaleId, @Path("rom_id") int romId);
+	
+	@GET("/user/{user_id}/appointments")
+	public ArrayList<Aktivitet> getAlleBrukerAktiviteter(@Path("user_id") int userId);
 	
 	//Do we need an acceot appointment 
 	
@@ -54,7 +57,7 @@ public interface ReqService {
 	@POST("/gruppe/create")
 	public Gruppe createGruppe(@Field("calendar_id") int calendarId, @Field("first_member_Id") int userId, @Field("name") String gruppeNavn);
 	
-	@POST("gruppe/{gruppe_id}/invite/{person_id}")
+	@POST("/gruppe/{gruppe_id}/invite/{person_id}")
 	public void inviteToGruppe(@Path("gruppe_id") int gruppeId, @Path("person_id") int userId);
 	
 	

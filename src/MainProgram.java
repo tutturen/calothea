@@ -2,11 +2,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
-import controllers.UserController;
-import requests.ReqClient;
 import utlils.Console;
 import views.LoginView;
-import views.MenuView;
 import views.View;
 import models.MainUser;
 import models.User;

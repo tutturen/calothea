@@ -1,7 +1,10 @@
 package views;
 
+import helpers.LoginResult;
+
 import java.util.ArrayList;
 import java.util.Stack;
+
 import controllers.UserController;
 import models.MainUser;
 
@@ -52,7 +55,10 @@ public class LoginView implements View {
 			emailWritten = true;
 		} else {
 			password = input;
-			UserController.login(email, password);
+			LoginResult res = UserController.login(email, password);
+			if (!res.isSuccess()) {
+				viewStack.push(new MessageView(res.getMessage()));
+			}
 			if (MainUser.getInstance() != null) {
 				viewStack.push(new MenuView());
 				done = true;
