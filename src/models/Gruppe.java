@@ -8,6 +8,7 @@ public class Gruppe {
 	ArrayList<User> gruppeMedlemmer;
 	ArrayList<Gruppe> subGrupper; // ikke i klassediagrammet i exercise 5
 	String gruppeNavn;
+	int id;
 
 	public Gruppe(Kalender kalender, String gruppeNavn) {
 		gruppeMedlemmer = new ArrayList<User>();
@@ -24,7 +25,7 @@ public class Gruppe {
 		return (name != null && !name.equals(""));
 	}
 
-	public ArrayList<User> getGruppeMedlemmer() { // Denne metoden skal også være i GruppeController som getMedlemmer(), skal den også være her da?
+	public ArrayList<User> getGruppeMedlemmer() { // Denne metoden skal ogs�� v��re i GruppeController som getMedlemmer(), skal den ogs�� v��re her da?
 		return gruppeMedlemmer;
 	}
 
