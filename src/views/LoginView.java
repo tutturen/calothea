@@ -2,7 +2,6 @@ package views;
 
 import java.util.ArrayList;
 import java.util.Stack;
-
 import controllers.UserController;
 import models.MainUser;
 
@@ -21,7 +20,6 @@ public class LoginView implements View {
 	@Override
 	public void setUnDone() {
 		this.done = false;
-
 	}
 
 	@Override

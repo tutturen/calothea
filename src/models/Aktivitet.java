@@ -6,7 +6,7 @@ import java.util.Date;
 import requests.ReqClient;
 import requests.ReqService;
 
-public class Aktivitet {
+public class Aktivitet implements Comparable {
 
 	int id;
 	ArrayList<User> brukereInvitert;
@@ -138,6 +138,20 @@ public class Aktivitet {
 		if (updateDatabase) {
 			// Gjør endringer i databasen (retrofit)
 		}
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		
+		Aktivitet other = (Aktivitet) o;
+		
+		int thisStartTime = (int) this.startDate.getTime();
+		int otherStartTime = (int) other.startDate.getTime();
+		
+		if (thisStartTime == otherStartTime) {
+			return (int) (this.endDate.getTime() - other.endDate.getTime());
+		}
+		return (int) (this.startDate.getTime() - ((Aktivitet) o).startDate.getTime()); 
 	}
 
 }

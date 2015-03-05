@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class User {
 	private String email, name, rolle;
-	private int user_id;
+	private int id;
 	// For aa ikke ha konflikt
 	Kalender calendar = null;
 	ArrayList<Gruppe> medlemAv; // Ikke i klassediagrammet, men knyttet til
@@ -15,7 +15,7 @@ public class User {
 		if (!isValidId(userId)) {
 			throw new IllegalArgumentException("Illegal ID");
 		}
-		this.user_id = userId;
+		this.id = userId;
 		
 		if (checkMail(mail)) {
 			this.email = mail;
@@ -86,7 +86,7 @@ public class User {
 	}
 	
 	public int getId() {
-		return user_id;
+		return id;
 	}
 
 	public String getRole() {
