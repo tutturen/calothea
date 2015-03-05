@@ -51,11 +51,19 @@ public interface ReqService {
 	
 	// GruppeController
 	
+	@GET("/user/{user_id}/gruppe")
+	public ArrayList<String> getAllGruppe(@Path("user_id") int UserId);
+	
+	@GET("/gruppe/{gruppe_id}")
+	public Gruppe getGruppe(@Path("gruppe_id") int gruppeId);
+	
 	@POST("/gruppe/create")
 	public Gruppe createGruppe(@Field("calendar_id") int calendarId, @Field("first_member_Id") int userId, @Field("name") String gruppeNavn);
 	
-	@POST("gruppe/{gruppe_id}/invite/{person_id}")
-	public void inviteToGruppe(@Path("gruppe_id") int gruppeId, @Path("person_id") int userId);
+	@POST("gruppe/{gruppe_id}/add/{person_id}")
+	public void addToGruppe(@Path("gruppe_Id") int gruppeId, @Path("person_Id") int userId);
+	
+	
 	
 	
 	// UserController
