@@ -50,7 +50,7 @@ public interface ReqService {
 	public Gruppe createGruppe(@Field("calendar_id") int calendarId, @Field("first_member_Id") int userId, @Field("name") String gruppeNavn);
 	
 	@POST("gruppe/{gruppe_id}/invite/{person_id}")
-	public void inviteToGruppe(@Path("gruppe_Id") int gruppeId, @Path("person_Id") int userId);
+	public void inviteToGruppe(@Path("gruppe_id") int gruppeId, @Path("person_id") int userId);
 	
 	
 	// UserController

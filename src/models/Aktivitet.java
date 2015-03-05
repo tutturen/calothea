@@ -15,6 +15,8 @@ public class Aktivitet {
 	Rom rom;
 	User eier;
 	String name;
+	String location;
+	String message;
 	
 	ReqService db = ReqClient.getInstance().getService();
 
