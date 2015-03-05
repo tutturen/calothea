@@ -24,18 +24,21 @@ public class AvtaleController {
 		return aktivitet;
 	}
 	
+	public static ArrayList<Aktivitet> getAktiviteter(int userId, long start, long stop) {
+		return new ArrayList<Aktivitet>();
+	}
+	
 	public void editAvtale(Aktivitet avtale) {
 		
 	}
 	
 	public void deleteAvtale(int avtaleid) {
 		
-	
 	}
 
-	private void sendInvitation(Aktivitet avtale, String melding) {
+	/*private void sendInvitation(Aktivitet avtale, String melding) {
+		System.out.println("Sending inv");
 		
-		
-	}
+	}*/
 	
 }
