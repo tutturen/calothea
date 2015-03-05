@@ -43,6 +43,10 @@ public class Aktivitet {
 	public void setRom(Rom rom) {
 		this.rom = rom;
 	}
+	
+	public String getNavn() {
+		return name;
+	}
 
 	private boolean isValidEier(User eier) {
 		return eier != null;
@@ -83,13 +87,24 @@ public class Aktivitet {
 	}
 	
 	public void removeFromInvitedList(User user) {
+		removeFromInvitedList(user, true);
+	}
+	
+	public void removeFromInvitedList(User user, boolean updateDatabase) {
 		if (!brukereInvitert.contains(user)) {
 			throw new IllegalStateException("User not invited");
 		}
 		brukereInvitert.remove(user);
+		if (updateDatabase) {
+			// UPDATE THE DATABASE
+		}
 	}
 
 	public void addToInvitedList(User user) {
+		addToInvitedList(user, true);
+	}
+	
+	public void addToInvitedList(User user, boolean updateDatabase) {
 		if (brukereInvitert.contains(user)) {
 			throw new IllegalStateException("User already invited");
 		}
@@ -102,10 +117,16 @@ public class Aktivitet {
 			throw new IllegalStateException("Room is too small to invite more people.");
 		}
 		brukereInvitert.add(user);
-		db.inviteToAktivitet(this.getId(), user.getId());
+		if (updateDatabase) {
+			db.inviteToAktivitet(this.getId(), user.getId());
+		}
+	}
+	
+	public void acceptInvitation(User user) {
+		acceptInvitation(user, true);
 	}
 
-	public void acceptInvitation(User user) {
+	public void acceptInvitation(User user, boolean updateDatabase) {
 		if (deltagere.contains(user)) {
 			throw new IllegalStateException("User has already accepted");
 		}
@@ -114,6 +135,9 @@ public class Aktivitet {
 		}
 		brukereInvitert.remove(user);
 		deltagere.add(user);
+		if (updateDatabase) {
+			// Gjør endringer i databasen (retrofit)
+		}
 	}
 
 }

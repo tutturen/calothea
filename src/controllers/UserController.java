@@ -10,14 +10,14 @@ public class UserController {
 	
 	private static ReqService db = ReqClient.getInstance().getService();
 	
-	public static User register(String email, String username, String password, String role) {
-		User user = db.register(email, username, password, role);
+	public static User register(String email, String name, String password, String role) {
+		User user = db.register(email, name, password, role);
 		return MainUser.newInstance(user);
 	}
 	
 	public static User login(String email, String password) {
 		LoginResult result = db.login(email, password);
-		
+		System.out.println(result.getMessage());
 		if (!result.isSuccess()) {
 			return null;
 		}
