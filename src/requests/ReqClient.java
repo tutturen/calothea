@@ -19,7 +19,6 @@ public class ReqClient {
 	public ReqClient() {
 		 Gson gson = new GsonBuilder()
          .setDateFormat("yyyy-MM-dd HH:mm:ss")
-         .excludeFieldsWithoutExposeAnnotation()
          .create();
 		
 		RestAdapter restAdapter = new RestAdapter

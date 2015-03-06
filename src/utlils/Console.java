@@ -1,8 +1,8 @@
 package utlils;
 
 public class Console {
-	public static final int HEIGHT = 21;
-	public static final int WIDTH = 89;
+	public static final int HEIGHT = 24;
+	public static final int WIDTH = 80;
 	
 	public static String charLine(char c, int nr) {
 		String str = "";
