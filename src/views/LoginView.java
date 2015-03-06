@@ -79,8 +79,8 @@ public class LoginView implements View {
 				viewStack.push(new MessageView(res.getMessage()));
 			}
 			if (MainUser.getInstance() != null) {
-				viewStack.push(new MenuView());
 				done = true;
+				viewStack.push(new MenuView());
 			} else {
 				email = "";
 				emailWritten = false;

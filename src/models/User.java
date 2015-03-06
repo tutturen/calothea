@@ -7,7 +7,7 @@ public class User {
 	private int id;
 	// For aa ikke ha konflikt
 	Kalender calendar = null;
-	ArrayList<Gruppe> medlemAv; // Ikke i klassediagrammet, men knyttet til
+	ArrayList<Group> medlemAv; // Ikke i klassediagrammet, men knyttet til
 								// metoden
 
 	public User(int userId, String mail, String name, String role) {
@@ -30,7 +30,7 @@ public class User {
 		this.email = mail;
 		this.name = name;
 		this.rolle = role;
-		this.medlemAv = new ArrayList<Gruppe>();
+		this.medlemAv = new ArrayList<Group>();
 
 	}
 
@@ -98,7 +98,7 @@ public class User {
 		return email;
 	}
 
-	public ArrayList<Gruppe> getGrupper() {
+	public ArrayList<Group> getGrupper() {
 		return medlemAv;
 
 	}
@@ -107,7 +107,7 @@ public class User {
 		return name;
 	}
 
-	public Kalender getGruppeKalender(Gruppe gruppe) {
+	public Kalender getGruppeKalender(Group gruppe) {
 		return gruppe.getKalender();
 	}
 

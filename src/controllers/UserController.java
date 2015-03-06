@@ -11,7 +11,7 @@ public class UserController {
 
 	public static User register(String email, String name, String password, String role) {
 		User user = ReqClient.getInstance().getService().register(email, name, password, role);
-		return MainUser.newInstance(user);
+		return user;
 	}
 	
 	public static LoginResult login(String email, String password) {

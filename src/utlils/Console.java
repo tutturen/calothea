@@ -45,5 +45,20 @@ public class Console {
 			}
 		}
 		return res;
-	}	
+	}
+	
+	public static String tableHead(String name, int width) {
+		String extra = "";
+		if (name.length() % 2 != 0) {
+			extra = "-";
+		}
+		int charLen = (width - name.length()) / 2;
+		String line = charLine('-', charLen - 2);
+		return "+" + line + " " + name.toUpperCase() + " " + line + extra + "+";
+	}
+	
+	public static String tableRow(String content, int width) {
+		String c = matchLength(content, width - 4);
+		return "| " + c + " |"; 
+	}
 }
