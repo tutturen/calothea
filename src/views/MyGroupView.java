@@ -44,6 +44,8 @@ public class MyGroupView implements View{
 			String id = Console.matchLength(i++ + "" , 3);
 			content.add(" " + id + " | " + gruppe.getName());
 		}
+		content.add("");
+		content.add("TODO: Lag ny gruppe");
 		return content;
 		
 	}
