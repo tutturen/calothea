@@ -11,9 +11,9 @@ import models.MainUser;
 public class LoginView implements View {
 
 	private boolean done = false;
-	private boolean emailWritten = false;
-	private String email;
-	private String password;
+	private boolean emailWritten = true;
+	private String email= "admin@gmail.com";
+	private String password = "admin";
 
 	private void addSplash(ArrayList<String> content) {
 		content.add("     _______  _______  ___      _______  _______  __   __  _______  _______    ");
@@ -49,7 +49,7 @@ public class LoginView implements View {
 		content.add("");
 		content.add("");
 		content.add("Epost: " + (email == null ? "" : email));
-		
+
 		return content;
 	}
 

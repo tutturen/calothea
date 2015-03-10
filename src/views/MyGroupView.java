@@ -14,7 +14,6 @@ public class MyGroupView implements View{
 	private ArrayList<Group> grupper;
 
 	public MyGroupView(){
-		grupper = GroupController.getAllGroups(MainUser.getInstance());
 		this.done = false;
 	}
 	
@@ -36,6 +35,7 @@ public class MyGroupView implements View{
 
 	@Override
 	public ArrayList<String> getContent() {
+		grupper = GroupController.getAllGroups(MainUser.getInstance());
 		ArrayList<String> content = new ArrayList<String>();
 		int i = 1;
 		content.add(" ID  | NAVN");
@@ -52,7 +52,7 @@ public class MyGroupView implements View{
 
 	@Override
 	public String getQuery() {
-		return "Press 0 for å gå tilbake, eller velg gruppe";
+		return "Press 0 for å gå tilbake, velg gruppe eller opprett gruppe ved å presse '+'";
 	}
 
 	@Override
@@ -61,6 +61,11 @@ public class MyGroupView implements View{
 			this.done = true;
 			return;
 		}
+		if(input.equals("+")){
+			viewStack.push(new CreateGroupView());
+			return;
+		}
+		
 		try {
 			int id = Integer.parseInt(input);
 			if (id > 0 && id <= grupper.size()) {
