@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import controllers.AvtaleController;
 import utlils.Console;
 import models.Aktivitet;
 
@@ -14,8 +15,8 @@ public class AktivitetView implements View {
 	private String deltar = "  DELTAR   ";
 	private String deltarIkke = "DELTAR IKKE";
 
-	public AktivitetView(Aktivitet aktivitet) {
-		this.aktivitet = aktivitet;
+	public AktivitetView(int aktivitetId) {
+		this.aktivitet = AvtaleController.getAktivitet(aktivitetId);
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class AktivitetView implements View {
 		int tableWidth = 21;
 		ArrayList<String> lines = new ArrayList<String>();
 		
-		String ansvarlig = "Ansv.:   " + Console.matchLength(aktivitet.getEier().toString(),  tableWidth);
+		String ansvarlig = "Ansv.:   " + Console.matchLength(aktivitet.getAdmin().toString(),  tableWidth);
 		String datoStr = new SimpleDateFormat("dd. MMM").format(aktivitet.getStartDate());
 		String dato = "Dato:    " + Console.matchLength(datoStr, tableWidth);
 		String timeStartStr = new SimpleDateFormat("HH:mm").format(aktivitet.getStartDate());
@@ -74,7 +75,7 @@ public class AktivitetView implements View {
 
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
-		done = true;
+		//done = true;
 
 	}
 

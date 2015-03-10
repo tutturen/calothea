@@ -2,7 +2,6 @@ package views;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Stack;
 
@@ -75,14 +74,6 @@ public class PersonalCalendarView extends CalendarView {
 		return lines;
 	}
 
-	public ArrayList<View> getChildViews() {
-		ArrayList<View> childViews = new ArrayList<View>();
-		for (Aktivitet aktivitet : aktiviteter) {
-			childViews.add(new AktivitetView(aktivitet));
-		}
-		return childViews;
-	}
-
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
 		if (input.length() == 0) {
@@ -92,11 +83,15 @@ public class PersonalCalendarView extends CalendarView {
 			int id = Integer.parseInt(input);
 			if (id > 0 && id < aktiviteter.size() + 1) {
 				Aktivitet aktivitet = aktiviteter.get(id - 1);
-				viewStack.push(new AktivitetView(aktivitet));
+				viewStack.push(new AktivitetView(aktivitet.getId()));
 			}
 
 		} catch (Exception e) {
+			Console.print(e.getMessage());
 			char c = input.toLowerCase().charAt(0);
+			if (c == 'x') {
+				this.done = true;
+			}
 			if (c == 'a') {
 				if (index > 12) {
 					index -= 12;

@@ -33,7 +33,7 @@ public interface ReqService {
 	
 	
 	// AvtaleController
-	@GET("/aktivitet/{id}")
+	@GET("/appointment/{id}")
 	public Aktivitet getAktivitet(@Path("id") int aktivitetId);
 	
 	@POST("/avtale/create")
@@ -48,9 +48,9 @@ public interface ReqService {
 	@GET("/user/{user_id}/appointments")
 	public ArrayList<Aktivitet> getAlleBrukerAktiviteter(@Path("user_id") int userId);
 	
-	//Do we need an acceot appointment 
+	//Do we need an acceåt appointment
 	
-	// InnvitasjonsCoontroller
+	// InnvitasjonsController
 	
 	// GruppeController
 	
@@ -70,6 +70,9 @@ public interface ReqService {
 
 	@GET("/user/{id}")
 	public User getUser(@Path("id") int userId);
+	
+	@GET("/users")
+	public ArrayList<User> getAllUsers();
 	
 	// AuthController
 	

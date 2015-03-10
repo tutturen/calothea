@@ -1,8 +1,10 @@
 package models;
 
+import interfaces.Selectable;
+
 import java.util.ArrayList;
 
-public class User {
+public class User implements Selectable {
 	private String email, name, rolle;
 	private int id;
 	// For aa ikke ha konflikt

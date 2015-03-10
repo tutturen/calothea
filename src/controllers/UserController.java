@@ -1,14 +1,19 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import helpers.LoginResult;
 import requests.ReqClient;
-import requests.ReqService;
 import models.MainUser;
 import models.User;
 
 public class UserController {
 	
 
+	public static ArrayList<User> getAllUsers() {
+		return ReqClient.getInstance().getService().getAllUsers();
+	}
+	
 	public static User register(String email, String name, String password, String role) {
 		User user = ReqClient.getInstance().getService().register(email, name, password, role);
 		return user;

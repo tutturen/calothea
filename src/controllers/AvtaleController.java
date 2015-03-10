@@ -33,6 +33,10 @@ public class AvtaleController {
 		return db.getAlleBrukerAktiviteter(userId);
 	}
 	
+	public static Aktivitet getAktivitet(int aktivitetId) {
+		return db.getAktivitet(aktivitetId);
+	}
+	
 	public void editAvtale(Aktivitet avtale) {
 		
 	}

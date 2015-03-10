@@ -71,9 +71,6 @@ public class MyGroupView implements View{
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
-		
-		
 	}
 
 }
