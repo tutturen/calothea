@@ -37,7 +37,7 @@ public interface ReqService {
 	public Aktivitet getAktivitet(@Path("id") int aktivitetId);
 	
 	@POST("/avtale/create")
-	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("start_time") long start, @Field("end_time") long end);
+	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("message") String message, @Field("location") String location, @Field("start_time") long start, @Field("end_time") long end);
 	
 	@POST("avtale/{avtale_id}/invite/{person_id}")
 	public void inviteToAktivitet(@Path("avtale_id") int avtaleId, @Path("person_id") int userId);
