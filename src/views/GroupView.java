@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import controllers.GroupController;
+import controllers.UserController;
 import utlils.Console;
 import models.Group;
 import models.User;
@@ -15,11 +16,14 @@ public class GroupView implements View{
 	private boolean done;
 	private Group group;
 	private final static int WIDTH = 60;
+	private SelectView<User> sw;
+	
 	
 	public GroupView(int groupId){
 		done = false;
 		System.out.println("hey hey");
 		group = GroupController.getGroup(groupId);
+		sw = new SelectView<User>("Velg brukere", UserController.getAllUsers());
 		System.out.println("laget");
 	}
 	
@@ -53,16 +57,30 @@ public class GroupView implements View{
 			content.add("| " + Console.matchLength(user.getName(), 38) + " " + Console.matchLength(user.getRole(), 18) + "|");
 		}
 		content.add("+" + Console.charLine('-', WIDTH - 2) + "+");
+		if (sw.isDone()) {
+			content.add("DU HAR VALGT: " + sw.getSelected());
+		}
 		return content;
 	}
 
 	@Override
 	public String getQuery() {
-		return "Trykk enter for å gå tilbake";
+		return "Trykk enter for å gå tilbake, trykk + for å legge tid medlemmer";
 	}
 
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
+		if(input.equals("+")){
+			viewStack.push(sw);
+		}
+		if(sw.isDone()){
+			System.out.println(Integer.toString(group.getId()));
+			System.out.println(Integer.toString(sw.getSelected().getId()));
+			GroupController.addMember(group.getId(), sw.getSelected().getId());
+		}
+			
+			
+		
 		this.done = true;
 		
 	}
