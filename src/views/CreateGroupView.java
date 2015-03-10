@@ -56,8 +56,10 @@ public class CreateGroupView implements View {
 		}	
 		else{
 			this.done = true;
+			viewStack.remove(viewStack.size()-1);
 			this.group = GroupController.createGroup(groupName, 3);
 			GroupController.addMember(this.group.getId() ,MainUser.getInstance().getId());
+			viewStack.push(new GroupToolMenuView(this.group));
 			return;
 		}	
 	}

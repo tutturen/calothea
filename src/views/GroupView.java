@@ -63,7 +63,15 @@ public class GroupView implements View{
 
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
-		this.done = true;
+		if(input.length() ==0){
+			this.done = true;
+			return;
+		}
+		if(input.equals("tools")){
+			viewStack.add(new GroupToolMenuView(this.group));
+			return;
+		}
+
 		
 	}
 
