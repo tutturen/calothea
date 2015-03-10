@@ -2,7 +2,9 @@ package requests;
 
 
 import java.util.ArrayList;
+
 import helpers.LoginResult;
+import helpers.Result;
 import models.Aktivitet;
 import models.Kalender;
 import models.Rom;
@@ -18,6 +20,7 @@ import models.Group;
 public interface ReqService {
 	
 	// KalenderController
+	@FormUrlEncoded
 	@POST("/calendar/appointment/add")
 	public void addAvtaleToKalender(@Field("calendar_id") int kalenderId, @Field("avtale_id") int avtaleId);
 
@@ -36,12 +39,15 @@ public interface ReqService {
 	@GET("/appointment/{id}")
 	public Aktivitet getAktivitet(@Path("id") int aktivitetId);
 	
+	@FormUrlEncoded
 	@POST("/avtale/create")
 	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("start_time") long start, @Field("end_time") long end);
 	
+	@FormUrlEncoded
 	@POST("/avtale/{avtale_id}/invite/{person_id}")
 	public void inviteToAktivitet(@Path("avtale_id") int avtaleId, @Path("person_id") int userId);
 	
+	@FormUrlEncoded
 	@POST("/avtale/{avtale_id}/rom/{rom_id}")
 	public void setRom(@Path("avtale_id") int avtaleId, @Path("rom_id") int romId);
 	
@@ -60,11 +66,13 @@ public interface ReqService {
 	@GET("/group/{group_id}")
 	public Group getGroup(@Path("group_id") int groupId);
 	
+	@FormUrlEncoded
 	@POST("/group/create")
 	public Group createGroup(@Field("masterGroupId") int masterGroupID, @Field("groupName") String groupName);
 	
+	@FormUrlEncoded
 	@POST("/group/add_member")
-	public void addToGroup(@Path("group_id") int group_id, @Path("user_id") int user_id);
+	public Result addToGroup(@Field("group_id") int group_id, @Field("user_id") int user_id);
 
 	// UserController
 
