@@ -17,10 +17,12 @@ public class GroupView implements View{
 	private Group group;
 	private final static int WIDTH = 60;
 	private SelectView<User> sw;
+	int groupId;
 	
 	
 	public GroupView(int groupId){
 		done = false;
+		this.groupId = groupId;
 		System.out.println("hey hey");
 		group = GroupController.getGroup(groupId);
 		sw = new SelectView<User>("Velg brukere", UserController.getAllUsers());
@@ -45,6 +47,12 @@ public class GroupView implements View{
 
 	@Override
 	public ArrayList<String> getContent() {
+		if(sw.isDone()){
+			GroupController.addMember(group.getId(), sw.getSelected().getId());
+			sw.setUnDone();
+			
+		}
+		group = GroupController.getGroup(this.groupId);
 		ArrayList<String> content = new ArrayList<String>();
 		content.add(Console.tableHead(group.getName(), WIDTH));
 		if (group.getMasterGruppe() != null) {
@@ -72,16 +80,11 @@ public class GroupView implements View{
 	public void giveInput(String input, Stack<View> viewStack) {
 		if(input.equals("+")){
 			viewStack.push(sw);
-		}
-		if(sw.isDone()){
-			System.out.println(Integer.toString(group.getId()));
-			System.out.println(Integer.toString(sw.getSelected().getId()));
-			GroupController.addMember(group.getId(), sw.getSelected().getId());
-		}
 			
-			
+		}
 		
 		this.done = true;
+		
 		
 	}
 
