@@ -11,24 +11,13 @@ import models.User;
 public class MainProgram {
 
 	private Stack<View> views;
-	int consoleWidth = 89, consoleHeight = 21;
 
 	public MainProgram() {
 		views = new Stack<View>();
 	}
 
-	private static String SPLASH = "     _______  _______  ___      _______  _______  __   __  _______  _______    \n"
-			+ "    |       ||   _   ||   |    |       ||       ||  | |  ||       ||   _   |   \n"
-			+ "    |       ||  |_|  ||   |    |   _   ||_     _||  |_|  ||    ___||  |_|  |   \n"
-			+ "    |       ||       ||   |    |  | |  |  |   |  |       ||   |___ |       |   \n"
-			+ "    |      _||       ||   |___ |  |_|  |  |   |  |       ||    ___||       |   \n"
-			+ "    |     |_ |   _   ||       ||       |  |   |  |   _   ||   |___ |   _   |   \n"
-			+ "    |_______||__| |__||_______||_______|  |___|  |__| |__||_______||__| |__|   \n\n\n"
-			+ "    Velkommen til Calothea!\n    For å logge inn, skriv inn brukernavn og passord.   \n\n\n";
-
 	private void init() {
 		Console.clearConsole();
-		Console.print(SPLASH);
 	}
 
 	private void showView(View view) {
@@ -38,13 +27,13 @@ public class MainProgram {
 			Console.println(" "
 					+ user.getName()
 					+ Console.emptySpace(user.getName().length()
-							+ user.getEmail().length() + 2, consoleWidth)
+							+ user.getEmail().length() + 2, Console.WIDTH)
 					+ user.getEmail() + " ");
 		} else {
 			Console.println(" Ikke logget inn");
 		}
 
-		Console.println(Console.charLine('-', consoleWidth));
+		Console.println(Console.charLine('-', Console.WIDTH));
 
 		String viewStack = "";
 		for (View v : views) {
@@ -60,7 +49,7 @@ public class MainProgram {
 	}
 
 	private void printContent(ArrayList<String> content) {
-		for (int i = 0; i < consoleHeight - 6; i++) {
+		for (int i = 0; i < Console.HEIGHT - 6; i++) {
 			if (i >= content.size()) {
 				Console.println("");
 			} else {

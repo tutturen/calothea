@@ -6,42 +6,51 @@ import java.util.Date;
 import requests.ReqClient;
 import requests.ReqService;
 
-public class Aktivitet {
+public class Aktivitet implements Comparable<Aktivitet> {
 
-	int id;
-	ArrayList<User> brukereInvitert;
-	ArrayList<User> deltagere;
-	Date startDate, endDate;
-	Rom rom;
-	User eier;
- 
-	String location;
-	String message;
+	private int id;
+	private ArrayList<User> brukereInvitert;
+	private ArrayList<User> deltagere;
+	private Date start, end;
+	private Rom room;
+	private User administrator;
+	private String name;
+	private String location;
+	private String message;
 	
 	ReqService db = ReqClient.getInstance().getService();
 
-	public Aktivitet(User eier, String name, Date startDate, Date endDate) {
+	public Aktivitet(User administrator, String name, Date startDate, Date endDate) {
 		brukereInvitert = new ArrayList<User>();
 		deltagere = new ArrayList<User>();
-		if (!isValidEier(eier)) {
+		if (!isValidEier(administrator)) {
 			throw new IllegalArgumentException("User invalid");
 		}
-		this.eier = eier;
+		this.administrator = administrator;
 		if (!isValidDates(startDate, endDate)){
 			throw new IllegalArgumentException("Invalid dates");
 		}
-		this.startDate = startDate;
-		this.endDate = endDate;
+
+		this.start = startDate;
+		this.end = endDate;
 		this.name = name;
-		deltagere.add(eier);
+		deltagere.add(administrator);
 	}
 	
 	public int getId() {
 		return id;
 	}
 	
+	public String getLocation() {
+		return location;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+	
 	public void setRom(Rom rom) {
-		this.rom = rom;
+		this.room = rom;
 	}
 	
 	public String getNavn() {
@@ -71,19 +80,19 @@ public class Aktivitet {
 	}
 
 	public Date getStartDate() {
-		return startDate;
+		return start;
 	}
 
 	public Date getEndDate() {
-		return endDate;
+		return end;
 	}
 
 	public Rom getRom() {
-		return rom;
+		return room;
 	}
 
-	public User getEier() {
-		return eier;
+	public User getAdmin() {
+		return administrator;
 	}
 	
 	public void removeFromInvitedList(User user) {
@@ -108,12 +117,12 @@ public class Aktivitet {
 		if (brukereInvitert.contains(user)) {
 			throw new IllegalStateException("User already invited");
 		}
-		if (user == eier) {
+		if (user == administrator) {
 			throw new IllegalStateException("Cant invite owner");
 		}
 		// Sjekk at vi ikke potensielt overbooker
 		int potentialUsers = brukereInvitert.size() + deltagere.size();
-		if (potentialUsers > rom.getAntall()) {
+		if (potentialUsers > room.getAntall()) {
 			throw new IllegalStateException("Room is too small to invite more people.");
 		}
 		brukereInvitert.add(user);
@@ -138,6 +147,14 @@ public class Aktivitet {
 		if (updateDatabase) {
 			// Gjør endringer i databasen (retrofit)
 		}
+	}
+
+	@Override
+	public int compareTo(Aktivitet other) {
+		if (this.start.getTime() == other.start.getTime()) {
+			return (int) (this.end.getTime() - other.end.getTime());
+		}
+		return (int) (this.start.getTime() - other.start.getTime()); 
 	}
 
 }

@@ -29,7 +29,7 @@ public class AktivitetTest {
 		Aktivitet aktivitet = new Aktivitet(owner, navn,  startDate, endDate);
 		assertEquals(aktivitet.getBrukereInvitert().size(), 0);
 		assertEquals(aktivitet.getDeltagere().size(), 1);
-		assertEquals(aktivitet.getEier(), owner);
+		assertEquals(aktivitet.getAdmin(), owner);
 		assertEquals(aktivitet.getEndDate(), endDate);
 		assertEquals(aktivitet.getStartDate(), startDate);
 		assertEquals(aktivitet.getNavn(), navn);
