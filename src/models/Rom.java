@@ -1,6 +1,8 @@
 package models;
 
-public class Rom {
+import interfaces.Selectable;
+
+public class Rom implements Selectable {
 	private String name;
 	private int id;
 	private int kapasitet;
@@ -39,7 +41,7 @@ public class Rom {
 		return kapasitet;
 	}
 
-	public String getRomnavn() {
+	public String getName() {
 		return name;
 	}
 

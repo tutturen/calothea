@@ -10,7 +10,7 @@ public class Invitation {
 	//Opprettes when you receive the user is added to an activity
 	public Invitation(Aktivitet aktivitet) {
 		this.aktivitet = aktivitet;
-		this.melding = "Du er invitert til avtale klokken:" + aktivitet.getStartDate().toString() + "Slutt:" + aktivitet.getEndDate().toString() + "i rom:" + aktivitet.getRom().getRomnavn();
+		this.melding = "Du er invitert til avtale klokken:" + aktivitet.getStartDate().toString() + "Slutt:" + aktivitet.getEndDate().toString() + "i rom:" + aktivitet.getRom().getName();
 		this.accepted = false;
 		
 		

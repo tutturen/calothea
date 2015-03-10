@@ -1,8 +1,10 @@
 package models;
 
+import interfaces.Selectable;
+
 import java.util.ArrayList;
 
-public class Group {
+public class Group implements Selectable {
 
 	Kalender calendar;
 	ArrayList<User> members;
@@ -69,7 +71,7 @@ public class Group {
 		members.remove(user);
 	}
 
-	public void setKalender(Kalender kalender) { // byttet ut addKalender og removeKalender med en setKalender da du uansett bare kan ha en
+	public void setKalender(Kalender kalender) { 
 		this.calendar = kalender;
 	}
 

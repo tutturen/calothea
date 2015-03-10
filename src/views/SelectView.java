@@ -1,6 +1,7 @@
 package views;
 
 import interfaces.Selectable;
+import interfaces.View;
 
 import java.util.ArrayList;
 import java.util.Stack;

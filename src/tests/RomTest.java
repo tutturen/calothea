@@ -15,7 +15,7 @@ public class RomTest {
 	public void testConstructor() {
 		Rom rom = new Rom(legalRomName, legalRomNr, legalMaxAntall);
 		assertEquals(rom.getAntall(), legalMaxAntall);
-		assertEquals(rom.getRomnavn(), legalRomName);
+		assertEquals(rom.getName(), legalRomName);
 		assertEquals(rom.getRomNr(), legalRomNr);
 	}
 	

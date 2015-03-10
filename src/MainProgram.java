@@ -1,10 +1,11 @@
+import interfaces.View;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
 import utlils.Console;
 import views.LoginView;
-import views.View;
 import models.MainUser;
 import models.User;
 

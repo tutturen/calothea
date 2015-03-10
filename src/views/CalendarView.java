@@ -1,6 +1,6 @@
 package views;
 
-public abstract class CalendarView implements View {
+public abstract class CalendarView extends BaseView {
 
 	@Override
 	public String getTitle() {

@@ -1,5 +1,7 @@
 package views;
 
+import interfaces.View;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -8,10 +10,9 @@ import controllers.AvtaleController;
 import utlils.Console;
 import models.Aktivitet;
 
-public class AktivitetView implements View {
+public class AktivitetView extends BaseView {
 
 	private Aktivitet aktivitet;
-	private boolean done = false;
 	private String deltar = "  DELTAR   ";
 	private String deltarIkke = "DELTAR IKKE";
 
@@ -69,19 +70,10 @@ public class AktivitetView implements View {
 	}
 
 	@Override
-	public boolean isDone() {
-		return done;
-	}
-
-	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
+		super.giveInput(input, viewStack);
 		//done = true;
 
-	}
-
-	@Override
-	public void setUnDone() {
-		this.done = false;
 	}
 
 }

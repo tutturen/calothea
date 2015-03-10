@@ -9,8 +9,8 @@ import requests.ReqService;
 public class Aktivitet implements Comparable<Aktivitet> {
 
 	private int id;
-	private ArrayList<User> brukereInvitert;
-	private ArrayList<User> deltagere;
+	private ArrayList<User> invited;
+	private ArrayList<User> participants;
 	private Date start, end;
 	private Rom room;
 	private User administrator;
@@ -21,8 +21,8 @@ public class Aktivitet implements Comparable<Aktivitet> {
 	ReqService db = ReqClient.getInstance().getService();
 
 	public Aktivitet(User administrator, String name, Date startDate, Date endDate) {
-		brukereInvitert = new ArrayList<User>();
-		deltagere = new ArrayList<User>();
+		invited = new ArrayList<User>();
+		participants = new ArrayList<User>();
 		if (!isValidEier(administrator)) {
 			throw new IllegalArgumentException("User invalid");
 		}
@@ -34,7 +34,7 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		this.start = startDate;
 		this.end = endDate;
 		this.name = name;
-		deltagere.add(administrator);
+		participants.add(administrator);
 	}
 	
 	public int getId() {
@@ -72,11 +72,11 @@ public class Aktivitet implements Comparable<Aktivitet> {
 	}
 
 	public ArrayList<User> getBrukereInvitert() {
-		return brukereInvitert;
+		return invited;
 	}
 
 	public ArrayList<User> getDeltagere() {
-		return deltagere;
+		return participants;
 	}
 
 	public Date getStartDate() {
@@ -100,10 +100,10 @@ public class Aktivitet implements Comparable<Aktivitet> {
 	}
 	
 	public void removeFromInvitedList(User user, boolean updateDatabase) {
-		if (!brukereInvitert.contains(user)) {
+		if (!invited.contains(user)) {
 			throw new IllegalStateException("User not invited");
 		}
-		brukereInvitert.remove(user);
+		invited.remove(user);
 		if (updateDatabase) {
 			// UPDATE THE DATABASE
 		}
@@ -114,18 +114,18 @@ public class Aktivitet implements Comparable<Aktivitet> {
 	}
 	
 	public void addToInvitedList(User user, boolean updateDatabase) {
-		if (brukereInvitert.contains(user)) {
+		if (invited.contains(user)) {
 			throw new IllegalStateException("User already invited");
 		}
 		if (user == administrator) {
 			throw new IllegalStateException("Cant invite owner");
 		}
 		// Sjekk at vi ikke potensielt overbooker
-		int potentialUsers = brukereInvitert.size() + deltagere.size();
+		int potentialUsers = invited.size() + participants.size();
 		if (potentialUsers > room.getAntall()) {
 			throw new IllegalStateException("Room is too small to invite more people.");
 		}
-		brukereInvitert.add(user);
+		invited.add(user);
 		if (updateDatabase) {
 			db.inviteToAktivitet(this.getId(), user.getId());
 		}
@@ -136,14 +136,14 @@ public class Aktivitet implements Comparable<Aktivitet> {
 	}
 
 	public void acceptInvitation(User user, boolean updateDatabase) {
-		if (deltagere.contains(user)) {
+		if (participants.contains(user)) {
 			throw new IllegalStateException("User has already accepted");
 		}
-		if (!brukereInvitert.contains(user)) {
+		if (!invited.contains(user)) {
 			throw new IllegalStateException("User not invited");
 		}
-		brukereInvitert.remove(user);
-		deltagere.add(user);
+		invited.remove(user);
+		participants.add(user);
 		if (updateDatabase) {
 			// Gjør endringer i databasen (retrofit)
 		}

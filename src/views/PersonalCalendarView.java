@@ -1,5 +1,7 @@
 package views;
 
+import interfaces.View;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +16,6 @@ public class PersonalCalendarView extends CalendarView {
 
 	private String title;
 	private ArrayList<Aktivitet> aktiviteter;
-	private boolean done = false;
 	private int index;
 	private User user;
 
@@ -111,17 +112,6 @@ public class PersonalCalendarView extends CalendarView {
 	@Override
 	public String getQuery() {
 		return " Velg ID, A for forrige eller D for neste >";
-	}
-
-	@Override
-	public boolean isDone() {
-		return done;
-	}
-
-	@Override
-	public void setUnDone() {
-		this.done = false;
-
 	}
 
 }

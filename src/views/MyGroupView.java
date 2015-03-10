@@ -1,5 +1,7 @@
 package views;
 
+import interfaces.View;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -8,25 +10,13 @@ import controllers.GroupController;
 import models.Group;
 import models.MainUser;
 
-public class MyGroupView implements View{
+public class MyGroupView extends BaseView {
 	
-	private boolean done;
 	private ArrayList<Group> grupper;
 
 	public MyGroupView(){
 		grupper = GroupController.getAllGroups(MainUser.getInstance());
 		this.done = false;
-	}
-	
-	@Override
-	public boolean isDone() {
-		return done;
-	}
-
-	@Override
-	public void setUnDone() {
-		this.done = false;
-		
 	}
 
 	@Override
@@ -57,6 +47,7 @@ public class MyGroupView implements View{
 
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
+		super.giveInput(input, viewStack);
 		if(input.equals("0")){
 			this.done = true;
 			return;

@@ -1,15 +1,17 @@
 package views;
 
+import interfaces.View;
+
 import java.util.ArrayList;
 import java.util.Stack;
+
 import controllers.UserController;
 import models.MainUser;
 import models.User;
 
-public class MenuView implements View {
+public class MenuView extends BaseView {
 
 	ArrayList<View> applicationViews;
-	private boolean done = false;
 	private SelectView<User> sw;
 
 	public MenuView() {
@@ -20,11 +22,6 @@ public class MenuView implements View {
 		applicationViews.add(new MessageView("Du er skikkelig skikkelig kul! Bare så du vet det."));
 		sw = new SelectView<User>("Velg brukere", UserController.getAllUsers());
 		applicationViews.add(sw);
-	}
-
-	@Override
-	public boolean isDone() {
-		return done;
 	}
 
 	@Override
@@ -54,6 +51,7 @@ public class MenuView implements View {
 
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
+		super.giveInput(input, viewStack);
 		if (input.length() < 1) {
 			return;
 		}
@@ -66,10 +64,4 @@ public class MenuView implements View {
 		}
 
 	}
-
-	@Override
-	public void setUnDone() {
-		this.done = false;
-	}
-
 }

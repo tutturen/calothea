@@ -1,6 +1,7 @@
 package views;
 
 import helpers.LoginResult;
+import interfaces.View;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -8,9 +9,8 @@ import java.util.Stack;
 import controllers.UserController;
 import models.MainUser;
 
-public class LoginView implements View {
+public class LoginView extends BaseView {
 
-	private boolean done = false;
 	private boolean emailWritten = false;
 	private String email;
 	private String password;
@@ -23,16 +23,6 @@ public class LoginView implements View {
 		content.add("    |      _||       ||   |___ |  |_|  |  |   |  |       ||    ___||       |   ");
 		content.add("    |     |_ |   _   ||       ||       |  |   |  |   _   ||   |___ |   _   |   ");
 		content.add("    |_______||__| |__||_______||_______|  |___|  |__| |__||_______||__| |__|   ");
-	}
-
-	@Override
-	public boolean isDone() {
-		return done;
-	}
-
-	@Override
-	public void setUnDone() {
-		this.done = false;
 	}
 
 	@Override
@@ -63,6 +53,7 @@ public class LoginView implements View {
 
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
+		super.giveInput(input, viewStack);
 		if (input.toLowerCase().equals("registrer")) {
 			viewStack.push(new RegisterView());
 			this.email = "";
