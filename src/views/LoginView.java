@@ -49,7 +49,7 @@ public class LoginView implements View {
 		content.add("");
 		content.add("");
 		content.add("Epost: " + (email == null ? "" : email));
-		
+
 		return content;
 	}
 
