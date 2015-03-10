@@ -58,7 +58,7 @@ public class GroupView implements View{
 
 	@Override
 	public String getQuery() {
-		return "Trykk enter for å gå tilbake";
+		return "Trykk enter for å gå tilbake. Skriv 'tools' for å komme til verktøymeny";
 	}
 
 	@Override
