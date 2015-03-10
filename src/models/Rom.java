@@ -1,26 +1,26 @@
 package models;
 
 public class Rom {
-	private String romNavn;
-	private int romNr;
-	private int maxAntall;
-
+	private String name;
+	private int id;
+	private int kapasitet;
+	
 	public Rom(String romNavn, int romNr, int maxAntall) {
 
 		if (!isValidRomNr(romNr)) {
 			throw new IllegalArgumentException("Illegal romNr");
 		}
-		this.romNr = romNr;
+		this.id = romNr;
 		
 		if (!isValidName(romNavn)) {
 			throw new IllegalArgumentException("Illegal romNavn");
 		}
-		this.romNavn = romNavn;
+		this.name = romNavn;
 
 		if (!isValidMaxAntall(maxAntall)) {
 			throw new IllegalArgumentException("Max antall must be positive");
 		}
-		this.maxAntall = maxAntall;
+		this.kapasitet = maxAntall;
 	}
 
 	private boolean isValidRomNr(int nr) {
@@ -36,15 +36,20 @@ public class Rom {
 	}
 
 	public int getAntall() {
-		return maxAntall;
+		return kapasitet;
 	}
 
 	public String getRomnavn() {
-		return romNavn;
+		return name;
 	}
 
 	public int getRomNr() {
-		return romNr;
+		return id;
+	}
+	
+	@Override
+	public String toString() {
+		return name + " " + id + " [" + kapasitet + "]";
 	}
 
 }

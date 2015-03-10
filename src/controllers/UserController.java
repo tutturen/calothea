@@ -1,29 +1,34 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import helpers.LoginResult;
 import requests.ReqClient;
-import requests.ReqService;
 import models.MainUser;
 import models.User;
 
 public class UserController {
 	
-	private static ReqService db = ReqClient.getInstance().getService();
-	
-	public static User register(String email, String name, String password, String role) {
-		User user = db.register(email, name, password, role);
-		return MainUser.newInstance(user);
+
+	public static ArrayList<User> getAllUsers() {
+		return ReqClient.getInstance().getService().getAllUsers();
 	}
 	
-	public static User login(String email, String password) {
-		LoginResult result = db.login(email, password);
+	public static User register(String email, String name, String password, String role) {
+		User user = ReqClient.getInstance().getService().register(email, name, password, role);
+		return user;
+	}
+	
+	public static LoginResult login(String email, String password) {
+		LoginResult result = ReqClient.getInstance().getService().login(email, password);
 		System.out.println(result.getMessage());
 		if (!result.isSuccess()) {
-			return null;
+			return result;
 		}
 		
-		User dbUser = db.getUser(result.getUserId());
-		return MainUser.newInstance(dbUser);
+		User dbUser = ReqClient.getInstance().getService().getUser(result.getUserId());
+		MainUser.newInstance(dbUser);
+		return result;
 	}
 	
 }

@@ -2,13 +2,15 @@ package views;
 
 import java.util.ArrayList;
 import java.util.Stack;
-
+import controllers.UserController;
 import models.MainUser;
+import models.User;
 
 public class MenuView implements View {
 
 	ArrayList<View> applicationViews;
 	private boolean done = false;
+	private SelectView<User> sw;
 
 	public MenuView() {
 		applicationViews = new ArrayList<View>();
@@ -16,6 +18,8 @@ public class MenuView implements View {
 		applicationViews.add(new CreditsView());
 		applicationViews.add(new MyGroupView());
 		applicationViews.add(new MessageView("Du er skikkelig skikkelig kul! Bare så du vet det."));
+		sw = new SelectView<User>("Velg brukere", UserController.getAllUsers());
+		applicationViews.add(sw);
 	}
 
 	@Override
@@ -36,6 +40,9 @@ public class MenuView implements View {
 		for (int i = 0; i < applicationViews.size(); i++) {
 			content.add("  " + (i + 1) + " | "
 					+ applicationViews.get(i).getTitle());
+		}
+		if (sw.isDone()) {
+			content.add("DU HAR VALGT: " + sw.getSelected());
 		}
 		return content;
 	}
