@@ -29,8 +29,8 @@ public class GroupController {
 
 	}
 
-	public static void createGroup(String groupName, int masterGroupId) {
-		db.createGroup(masterGroupId, groupName);
+	public static Group createGroup(String groupName, int masterGroupId) {
+		return db.createGroup(masterGroupId, groupName);
 
 	}
 
