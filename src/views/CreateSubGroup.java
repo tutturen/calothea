@@ -13,12 +13,12 @@ public class CreateSubGroup implements View {
 	private String groupName;
 	private Group masterGroup;
 	private Group subGroup;
-
+	
 	public CreateSubGroup(Group masterGroup) {
 		this.masterGroup = masterGroup;
 		this.done = false;
 	}
-
+	
 	public boolean isDone() {
 		return done;
 	}
@@ -40,28 +40,28 @@ public class CreateSubGroup implements View {
 	}
 
 	public String getQuery() {
-		if (groupName == null)
+		if(groupName==null)
 			return "Angi gruppenavn - minst 5 tegn > ";
-		if (groupName.length() < 5)
+		if(groupName.length() < 5 )
 			return "Gruppenavnet ditt var ikke gyldig. \n Angi gruppenavn - minst 5 tegn > ";
 		else
 			return "";
 	}
 
 	public void giveInput(String input, Stack<View> viewStack) {
-		this.groupName = input;
-		if (groupName.length() < 5) {
+		this.groupName= input;
+		if(groupName.length() < 5) {
 			return;
-		} else {
+		}	
+		else{
 			this.done = true;
-			viewStack.remove(viewStack.size() - 1);
+			viewStack.remove(viewStack.size()-1);
 			int id = masterGroup.getId();
 			this.subGroup = GroupController.createGroup(groupName, id);
-			GroupController.addMember(this.subGroup.getId(), MainUser
-					.getInstance().getId());
+			GroupController.addMember(this.subGroup.getId() ,MainUser.getInstance().getId());
 			viewStack.push(new GroupToolMenuView(this.subGroup));
 			return;
 		}
 	}
-
+	
 }
