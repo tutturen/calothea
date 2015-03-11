@@ -66,6 +66,7 @@ public class MyGroupView implements View{
 		}
 		
 		try {
+			System.out.println(input);
 			int id = Integer.parseInt(input);
 			if (id > 0 && id <= grupper.size()) {
 				Group gruppe = grupper.get(id - 1);

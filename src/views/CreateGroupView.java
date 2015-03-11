@@ -33,7 +33,7 @@ public class CreateGroupView implements View {
 	@Override
 	public ArrayList<String> getContent() {
 		ArrayList<String> output = new ArrayList<String>();
-		output.add("For Œ opprette gruppe kreves det at du gir gruppen et navn. Navnet mŒ v¾re lenger enn 4 bokstaver");
+		output.add("For ï¿½ opprette gruppe kreves det at du gir gruppen et navn. Navnet mï¿½ vï¿½re lenger enn 4 bokstaver");
 		output.add("Du legger til medlemmer etter at gruppen er opprettet");
 		return output;
 	}
@@ -57,7 +57,7 @@ public class CreateGroupView implements View {
 		else{
 			this.done = true;
 			viewStack.remove(viewStack.size()-1);
-			this.group = GroupController.createGroup(groupName, 3);
+			this.group = GroupController.createGroup(groupName, 0);
 			GroupController.addMember(this.group.getId() ,MainUser.getInstance().getId());
 			viewStack.push(new GroupToolMenuView(this.group));
 			return;

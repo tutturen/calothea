@@ -16,17 +16,20 @@ public class GroupView implements View{
 	private boolean done;
 	private Group group;
 	private final static int WIDTH = 60;
-	private SelectView<User> sw;
+	private SelectView<User> sw1;
+	private SelectView<User> sw2;
 	int groupId;
 	
 	
 	public GroupView(int groupId){
 		done = false;
 		this.groupId = groupId;
-		System.out.println("hey hey");
 		group = GroupController.getGroup(groupId);
-		sw = new SelectView<User>("Velg brukere", UserController.getAllUsers());
-		System.out.println("laget");
+		sw1 = new SelectView<User>("Velg brukere", UserController.getAllUsers());
+		sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(groupId).getMembers());
+		
+		
+		
 	}
 	
 	@Override
@@ -47,11 +50,17 @@ public class GroupView implements View{
 
 	@Override
 	public ArrayList<String> getContent() {
-		if(sw.isDone()){
-			GroupController.addMember(group.getId(), sw.getSelected().getId());
-			sw.setUnDone();
-			
+		if(sw1.isDone()){
+			GroupController.addMember(group.getId(), sw1.getSelected().getId());
+			sw1.setUnDone();
+			sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(groupId).getMembers());
 		}
+		if(sw2.isDone()){
+			GroupController.removeMember(group.getId(), sw2.getSelected().getId());
+			sw2.setUnDone();
+			sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(groupId).getMembers());
+		}
+		
 		group = GroupController.getGroup(this.groupId);
 		ArrayList<String> content = new ArrayList<String>();
 		content.add(Console.tableHead(group.getName(), WIDTH));
@@ -65,8 +74,8 @@ public class GroupView implements View{
 			content.add("| " + Console.matchLength(user.getName(), 38) + " " + Console.matchLength(user.getRole(), 18) + "|");
 		}
 		content.add("+" + Console.charLine('-', WIDTH - 2) + "+");
-		if (sw.isDone()) {
-			content.add("DU HAR VALGT: " + sw.getSelected());
+		if (sw1.isDone()) {
+			content.add("DU HAR VALGT: " + sw1.getSelected());
 		}
 		return content;
 	}
@@ -74,7 +83,7 @@ public class GroupView implements View{
 	@Override
 	public String getQuery() {
 
-		return "Trykk enter for å gå tilbake, trykk + for å legge tid medlemmer";
+		return "Trykk enter for å gå tilbake, trykk + for å legge tid medlemmer eller - for å fjerne medlem";
 
 
 	}
@@ -83,11 +92,19 @@ public class GroupView implements View{
 	public void giveInput(String input, Stack<View> viewStack) {
 
 		if(input.equals("+")){
-			viewStack.push(sw);
+			viewStack.push(sw1);
+			
 			
 		}
+		else if(input.equals("-")){
+			viewStack.push(sw2);
+		}
 		
-		this.done = true;
+		else if(input.length() ==0){
+			this.done = true;
+			return;
+		
+		}
 		
 		
 	}

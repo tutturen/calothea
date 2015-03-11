@@ -25,7 +25,8 @@ public class GroupController {
 		db.addToGroup(group_id, user_id);
 	}
 
-	public static void removeMember(User user) { //
+	public static void removeMember(int group_id, int user_id) { 
+		db.removeFromGroup(group_id, user_id);
 
 	}
 

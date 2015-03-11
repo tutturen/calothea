@@ -73,6 +73,10 @@ public interface ReqService {
 	@FormUrlEncoded
 	@POST("/group/add_member")
 	public Result addToGroup(@Field("group_id") int group_id, @Field("user_id") int user_id);
+	
+	@FormUrlEncoded
+	@POST("/group/remove_member")
+	public Result removeFromGroup(@Field("group_id") int group_id, @Field("user_id") int user_id);
 
 
 	// UserController
