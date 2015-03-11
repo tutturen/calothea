@@ -12,9 +12,11 @@ public class MyGroupView implements View{
 	
 	private boolean done;
 	private ArrayList<Group> grupper;
+	private SelectView<Group> sw;
 
 	public MyGroupView(){
 		this.done = false;
+		sw = new SelectView<Group>("Velg gruppe du vil slette", GroupController.getAllGroups(MainUser.getInstance()));
 	}
 	
 	@Override
@@ -35,6 +37,11 @@ public class MyGroupView implements View{
 
 	@Override
 	public ArrayList<String> getContent() {
+		if(sw.isDone()){
+			GroupController.deleteGroup(sw.getSelected().getId());
+			sw = new SelectView<Group>("Velg gruppe du vil slette", GroupController.getAllGroups(MainUser.getInstance()));
+			
+		}
 		grupper = GroupController.getAllGroups(MainUser.getInstance());
 		ArrayList<String> content = new ArrayList<String>();
 		int i = 1;
@@ -51,7 +58,7 @@ public class MyGroupView implements View{
 
 	@Override
 	public String getQuery() {
-		return "Velg gruppe eller opprett gruppe ved å presse '+'. Press enter for å gå tilbake";
+		return "Velg gruppe ved å velge tilhørende tall, opprett gruppe ved å presse '+' eller fjern gruppe ved å skrive '-'. \nPress enter for å gå tilbake";
 	}
 
 	@Override
@@ -60,8 +67,12 @@ public class MyGroupView implements View{
 			this.done = true;
 			return;
 		}
-		if(input.equals("+")){
+		else if(input.equals("+")){
 			viewStack.push(new CreateGroupView());
+			return;
+		}
+		else if(input.equals("-")){
+			viewStack.push(sw);
 			return;
 		}
 		

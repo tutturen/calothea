@@ -15,6 +15,10 @@ public class GroupController {
 		return db.getAllGrupper(user.getId());
 
 	}
+	
+	public static void deleteGroup(int group_id){
+		db.deleteGroup(group_id);
+	}
 
 	public static Group getGroup(int groupId) { // Ligger allerede
 		return db.getGroup(groupId);

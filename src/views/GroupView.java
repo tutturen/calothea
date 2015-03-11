@@ -24,12 +24,10 @@ public class GroupView implements View {
 		done = false;
 		this.groupId = groupId;
 		group = GroupController.getGroup(groupId);
-		sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(
-				groupId).getMembers());
+		sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(groupId).getMembers());
 
 		try {
-			masterGroup = GroupController.getGroup(group.getMasterGruppe()
-					.getId());
+			masterGroup = GroupController.getGroup(group.getMasterGruppe().getId());
 		} catch (Exception e) {
 			masterGroup = null;
 		}
@@ -67,15 +65,12 @@ public class GroupView implements View {
 		if (sw1.isDone()) {
 			GroupController.addMember(group.getId(), sw1.getSelected().getId());
 			sw1.setUnDone();
-			sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(
-					groupId).getMembers());
+			sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(groupId).getMembers());
 		}
 		if (sw2.isDone()) {
-			GroupController.removeMember(group.getId(), sw2.getSelected()
-					.getId());
+			GroupController.removeMember(group.getId(), sw2.getSelected().getId());
 			sw2.setUnDone();
-			sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(
-					groupId).getMembers());
+			sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(groupId).getMembers());
 		}
 
 		group = GroupController.getGroup(this.groupId);
