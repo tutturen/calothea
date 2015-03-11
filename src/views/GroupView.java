@@ -58,12 +58,20 @@ public class GroupView implements View{
 
 	@Override
 	public String getQuery() {
-		return "Trykk enter for å gå tilbake";
+		return "Trykk enter for å gå tilbake. Skriv 'tools' for å komme til verktøymeny";
 	}
 
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
-		this.done = true;
+		if(input.length() ==0){
+			this.done = true;
+			return;
+		}
+		if(input.equals("tools")){
+			viewStack.add(new GroupToolMenuView(this.group));
+			return;
+		}
+
 		
 	}
 
