@@ -15,6 +15,7 @@ import models.User;
 public class AktivitetView extends BaseView {
 
 	private Aktivitet aktivitet;
+	private final static String NOT_ANSWERED    = " IKKE SVART  ";
 	private final static String ATTENDING 		= "   DELTAR    ";
 	private final static String NOT_ATTENDING 	= " DELTAR IKKE ";
 
@@ -53,7 +54,12 @@ public class AktivitetView extends BaseView {
 		lines.add("+------------------------- DELTAGERE -------------------------+");
 		lines.add("| " + Console.matchLength(aktivitet.getAdmin().getName(), 47) + ATTENDING + "|");
 		for (Invitation invitation : aktivitet.getInvitations()) {
-			String dText = invitation.isAccepted() ? ATTENDING : NOT_ATTENDING;
+			String dText;
+			if (invitation.isAccepted() == null) {
+				dText = NOT_ANSWERED;
+			} else {
+				dText = invitation.isAccepted() ? ATTENDING : NOT_ATTENDING;				
+			}
 			lines.add("| " + Console.matchLength(invitation.getUser().getName(), 47) + dText + "|");
 		}
 		lines.add("+-------------------------------------------------------------+");

@@ -5,7 +5,7 @@ public class Invitation {
 	private Aktivitet activity;
 	private User user;
 	private String message;
-	private boolean accepted;
+	private Boolean accepted;
 
 	public Invitation(Aktivitet aktivitet, User user) {
 		this.user = user;
@@ -21,7 +21,7 @@ public class Invitation {
 		return message;
 	}
 	
-	public boolean isAccepted() {
+	public Boolean isAccepted() {
 		return accepted;
 	}
 	
