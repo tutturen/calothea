@@ -7,38 +7,38 @@ import controllers.GroupController;
 import models.Group;
 import models.MainUser;
 
-public class CreateGroupView implements View {
+public class CreateSubGroup implements View {
 
 	private boolean done;
 	private String groupName;
-	private Group group;
+	private Group masterGroup;
+	private Group subGroup;
 	
-
-	@Override
+	public CreateSubGroup(Group masterGroup) {
+		this.masterGroup = masterGroup;
+		this.done = false;
+	}
+	
 	public boolean isDone() {
 		return done;
 	}
 
-	@Override
 	public void setUnDone() {
 		this.done = false;
 
 	}
 
-	@Override
 	public String getTitle() {
 		return "Lag gruppe";
 	}
 
-	@Override
 	public ArrayList<String> getContent() {
 		ArrayList<String> output = new ArrayList<String>();
-		output.add("For Œ opprette gruppe kreves det at du gir gruppen et navn. Navnet mŒ v¾re lenger enn 4 bokstaver");
+		output.add("For Œ opprette en subgruppe kreves det at du gir gruppen et navn. Navnet mŒ v¾re lenger enn 4 bokstaver");
 		output.add("Du legger til medlemmer etter at gruppen er opprettet");
 		return output;
 	}
 
-	@Override
 	public String getQuery() {
 		if(groupName==null)
 			return "Angi gruppenavn - minst 5 tegn > ";
@@ -48,7 +48,6 @@ public class CreateGroupView implements View {
 			return "";
 	}
 
-	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
 		this.groupName= input;
 		if(groupName.length() < 5) {
@@ -57,11 +56,12 @@ public class CreateGroupView implements View {
 		else{
 			this.done = true;
 			viewStack.remove(viewStack.size()-1);
-			this.group = GroupController.createGroup(groupName, 0);
-			GroupController.addMember(this.group.getId() ,MainUser.getInstance().getId());
-			viewStack.push(new GroupToolMenuView(this.group));
+			int id = masterGroup.getId();
+			this.subGroup = GroupController.createGroup(groupName, id);
+			GroupController.addMember(this.subGroup.getId() ,MainUser.getInstance().getId());
+			viewStack.push(new GroupToolMenuView(this.subGroup));
 			return;
-		}	
+		}
 	}
 	
 }

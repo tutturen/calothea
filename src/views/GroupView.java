@@ -18,16 +18,30 @@ public class GroupView implements View{
 	private final static int WIDTH = 60;
 	private SelectView<User> sw;
 	int groupId;
+	private String message;
+	private Group masterGroup;
 	
 	
 	public GroupView(int groupId){
 		done = false;
 		this.groupId = groupId;
-		System.out.println("hey hey");
 		group = GroupController.getGroup(groupId);
-		sw = new SelectView<User>("Velg brukere", UserController.getAllUsers());
-		System.out.println("laget");
+		
+		 try {masterGroup = GroupController.getGroup(group.getMasterGruppe().getId());
+		} catch(Exception e ) {
+			masterGroup = null;
+		}
+
+		if(group.getMasterGruppe() == null){
+			sw = new SelectView<User>("Velg brukere", UserController.getAllUsers());
+			this.message = "";
+		}
+		if(this.masterGroup!=null){
+			sw = new SelectView<User>("Velg brukere", masterGroup.getMembers());
+			this.message = "";
+		}
 	}
+
 	
 	@Override
 	public boolean isDone() {
@@ -68,14 +82,17 @@ public class GroupView implements View{
 		if (sw.isDone()) {
 			content.add("DU HAR VALGT: " + sw.getSelected());
 		}
+		if(this.message.length() > 0){
+			content.add(message);
+			message = "";
+		}
 		return content;
 	}
 
 	@Override
 	public String getQuery() {
 
-		return "Trykk enter for å gå tilbake, trykk + for å legge tid medlemmer";
-
+		return "Trykk enter for å gå tilbake, trykk + for å legge tid medlemmer.\nHvis du prøver å legge til medlemmer fra en subgruppe kan du bare velge fra de som er i Mastergruppen. \nHvis du vil lage en subgruppe til denne gruppen skriv '+sub'.";
 
 	}
 
@@ -83,12 +100,21 @@ public class GroupView implements View{
 	public void giveInput(String input, Stack<View> viewStack) {
 
 		if(input.equals("+")){
+			
 			viewStack.push(sw);
 			
 		}
 		
-		this.done = true;
+		if(this.masterGroup == null && input.toLowerCase().equals("+sub")){
+			viewStack.pop();
+			viewStack.push(new CreateSubGroup(group));
+		}
+		if(this.masterGroup != null && input.toLowerCase().equals("+sub")){
+			this.message = "Du kan ikke lage subgrupper i en subgruppe. Mastergruppe for denne gruppen er: "+ group.getMasterGruppe().getName();
+		}
 		
+		if(input.length() == 0)
+			this.done = true;
 		
 	}
 
