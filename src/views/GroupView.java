@@ -42,7 +42,7 @@ public class GroupView implements View{
 
 	@Override
 	public String getTitle() {
-		return group.getName();
+		return "Oversikt: " + group.getName();
 	}
 
 	@Override
