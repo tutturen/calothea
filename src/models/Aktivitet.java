@@ -3,14 +3,12 @@ package models;
 import java.util.ArrayList;
 import java.util.Date;
 
-import requests.ReqClient;
-import requests.ReqService;
-
 public class Aktivitet implements Comparable<Aktivitet> {
 
 	private int id;
-	private ArrayList<User> invited;
-	private ArrayList<User> participants;
+	//private ArrayList<User> invited;
+	//private ArrayList<User> participants;
+	private ArrayList<Invitation> invited;
 	private Date start, end;
 	private Rom room;
 	private User administrator;
@@ -18,11 +16,9 @@ public class Aktivitet implements Comparable<Aktivitet> {
 	private String location;
 	private String message;
 	
-	ReqService db = ReqClient.getInstance().getService();
-
 	public Aktivitet(User administrator, String name, Date startDate, Date endDate) {
-		invited = new ArrayList<User>();
-		participants = new ArrayList<User>();
+		invited = new ArrayList<Invitation>();
+		//participants = new ArrayList<User>();
 		if (!isValidEier(administrator)) {
 			throw new IllegalArgumentException("User invalid");
 		}
@@ -34,7 +30,7 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		this.start = startDate;
 		this.end = endDate;
 		this.name = name;
-		participants.add(administrator);
+		//participants.add(administrator);
 	}
 	
 	public int getId() {
@@ -71,13 +67,13 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		return (endDate.getTime() - startDate.getTime()) > 0;
 	}
 
-	public ArrayList<User> getBrukereInvitert() {
+	public ArrayList<Invitation> getInvitations() {
 		return invited;
 	}
 
-	public ArrayList<User> getDeltagere() {
+	/*public ArrayList<User> getDeltagere() {
 		return participants;
-	}
+	}*/
 
 	public Date getStartDate() {
 		return start;
@@ -95,7 +91,7 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		return administrator;
 	}
 	
-	public void removeFromInvitedList(User user) {
+	/*public void removeFromInvitedList(User user) {
 		removeFromInvitedList(user, true);
 	}
 	
@@ -107,13 +103,13 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		if (updateDatabase) {
 			// UPDATE THE DATABASE
 		}
-	}
+	}*/
 
-	public void addToInvitedList(User user) {
+	/*public void addToInvitedList(User user) {
 		addToInvitedList(user, true);
-	}
+	}*/
 	
-	public void addToInvitedList(User user, boolean updateDatabase) {
+	/*public void addToInvitedList(User user, boolean updateDatabase) {
 		if (invited.contains(user)) {
 			throw new IllegalStateException("User already invited");
 		}
@@ -129,13 +125,13 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		if (updateDatabase) {
 			db.inviteToAktivitet(this.getId(), user.getId());
 		}
-	}
+	}*/
 	
-	public void acceptInvitation(User user) {
+	/*public void acceptInvitation(User user) {
 		acceptInvitation(user, true);
-	}
+	}*/
 
-	public void acceptInvitation(User user, boolean updateDatabase) {
+	/*public void acceptInvitation(User user, boolean updateDatabase) {
 		if (participants.contains(user)) {
 			throw new IllegalStateException("User has already accepted");
 		}
@@ -147,7 +143,7 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		if (updateDatabase) {
 			// Gjør endringer i databasen (retrofit)
 		}
-	}
+	}*/
 
 	@Override
 	public int compareTo(Aktivitet other) {

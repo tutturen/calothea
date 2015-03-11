@@ -15,14 +15,11 @@ public class AvtaleController {
 	
 	static ReqService db = ReqClient.getInstance().getService();
 	
-	public Aktivitet createAvtale(User eier, String name, ArrayList<User> inviterte, Date startDate, Date endDate) {
-		Aktivitet aktivitet = db.createAktivitet(eier.getId(), name, startDate.getTime(), endDate.getTime());
-		for (User user:  inviterte) {
-			aktivitet.addToInvitedList(user);
-			
-		}
+	public Aktivitet createAvtale(User admin, String name, String message, String location, Date startDate, Date endDate) {
+		Aktivitet aktivitet = db.createAktivitet(admin.getId(), name, message, location, startDate.getTime(), endDate.getTime());
 		return aktivitet;
 	}
+
 	
 	public static ArrayList<Aktivitet> getAktiviteter(int userId, long start, long stop) {
 		

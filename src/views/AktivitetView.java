@@ -9,12 +9,14 @@ import java.util.Stack;
 import controllers.AvtaleController;
 import utlils.Console;
 import models.Aktivitet;
+import models.Invitation;
+import models.User;
 
 public class AktivitetView extends BaseView {
 
 	private Aktivitet aktivitet;
-	private String deltar = "  DELTAR   ";
-	private String deltarIkke = "DELTAR IKKE";
+	private final static String ATTENDING 		= "   DELTAR    ";
+	private final static String NOT_ATTENDING 	= " DELTAR IKKE ";
 
 	public AktivitetView(int aktivitetId) {
 		this.aktivitet = AvtaleController.getAktivitet(aktivitetId);
@@ -46,19 +48,14 @@ public class AktivitetView extends BaseView {
 		lines.add("| " + startTid + " |");
 		lines.add("| " + sluttTid + " |");
 		lines.add("| " + sted + " |");
-		/*lines.add("| Ansv.:    Thea Ullebust      |     | Det blir anledning til å    |");
-		lines.add("| Dato:     27. Mar            |     | ake så mye dere vil.        |");
-		lines.add("| Start:    12:25              |     | Ha en fin dag.              |");
-		lines.add("| Slutt:    12:25              |     |                             |");
-		lines.add("| Sted:     ROM 401, P15       |     |                             |");*/
 		lines.add("+--------------------------------+     +-----------------------------+");
 
 		lines.add("+------------------------- DELTAGERE -------------------------+");
-		lines.add("| Thor Even Tutturen                                DELTAR    |");
-		lines.add("| Per Oskar Isdahl                                  DELTAR    |");
-		lines.add("| Sjur Waagbø                                       DELTAR    |");
-		lines.add("| Simen Hellem                                      DELTAR    |");
-		lines.add("| Ahmed                                             DELTAR    |");
+		lines.add("| " + Console.matchLength(aktivitet.getAdmin().getName(), 47) + ATTENDING + "|");
+		for (Invitation invitation : aktivitet.getInvitations()) {
+			String dText = invitation.isAccepted() ? ATTENDING : NOT_ATTENDING;
+			lines.add("| " + Console.matchLength(invitation.getUser().getName(), 47) + dText + "|");
+		}
 		lines.add("+-------------------------------------------------------------+");
 
 		return lines;
