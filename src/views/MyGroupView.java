@@ -68,9 +68,11 @@ public class MyGroupView implements View{
 		try {
 			System.out.println(input);
 			int id = Integer.parseInt(input);
+			System.out.println(id);
 			if (id > 0 && id <= grupper.size()) {
 				Group gruppe = grupper.get(id - 1);
-				viewStack.push(new GroupToolMenuView(gruppe));			
+				System.out.println(gruppe.getName());
+				viewStack.push(new GroupToolMenuView(gruppe));	
 			}
 
 		} catch (Exception e) {
