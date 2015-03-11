@@ -69,7 +69,7 @@ public class MyGroupView implements View{
 			int id = Integer.parseInt(input);
 			if (id > 0 && id <= grupper.size()) {
 				Group gruppe = grupper.get(id - 1);
-				viewStack.push(new GroupView(gruppe.getId()));			
+				viewStack.push(new GroupToolMenuView(gruppe));			
 			}
 
 		} catch (Exception e) {

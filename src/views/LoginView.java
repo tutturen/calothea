@@ -11,7 +11,9 @@ import models.MainUser;
 public class LoginView implements View {
 
 	private boolean done = false;
-	private boolean emailWritten=false;
+
+	private boolean emailWritten = false;
+
 	private String email;
 	private String password;
 

@@ -54,7 +54,7 @@ public interface ReqService {
 	@GET("/user/{user_id}/appointments")
 	public ArrayList<Aktivitet> getAlleBrukerAktiviteter(@Path("user_id") int userId);
 	
-	//Do we need an acceåt appointment
+	//Do we need an acce��t appointment
 	
 	// InnvitasjonsController
 	
@@ -73,6 +73,7 @@ public interface ReqService {
 	@FormUrlEncoded
 	@POST("/group/add_member")
 	public Result addToGroup(@Field("group_id") int group_id, @Field("user_id") int user_id);
+
 
 	// UserController
 

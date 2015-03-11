@@ -14,7 +14,9 @@ public class GroupToolMenuView implements View {
 		this.group = group;
 		done = false;
 		editViews = new ArrayList<View>();
+		editViews.add(new GroupView(group.getId()));
 		editViews.add(new GroupCalendarView(group));
+		
 	}
 
 	public boolean isDone() {
