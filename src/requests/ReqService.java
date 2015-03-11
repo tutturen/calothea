@@ -67,12 +67,20 @@ public interface ReqService {
 	public Group getGroup(@Path("group_id") int groupId);
 	
 	@FormUrlEncoded
+	@POST("/group/delete")
+	public Result deleteGroup(@Field("group_id") int group_id);
+	
+	@FormUrlEncoded
 	@POST("/group/create")
 	public Group createGroup(@Field("masterGroupId") int masterGroupID, @Field("groupName") String groupName);
 	
 	@FormUrlEncoded
 	@POST("/group/add_member")
 	public Result addToGroup(@Field("group_id") int group_id, @Field("user_id") int user_id);
+	
+	@FormUrlEncoded
+	@POST("/group/remove_member")
+	public Result removeFromGroup(@Field("group_id") int group_id, @Field("user_id") int user_id);
 
 
 	// UserController
