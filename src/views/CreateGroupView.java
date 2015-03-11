@@ -33,7 +33,7 @@ public class CreateGroupView implements View {
 	@Override
 	public ArrayList<String> getContent() {
 		ArrayList<String> output = new ArrayList<String>();
-		output.add("For Œ opprette gruppe kreves det at du gir gruppen et navn. Navnet mŒ v¾re lenger enn 4 bokstaver");
+		output.add("For ï¿½ opprette gruppe kreves det at du gir gruppen et navn. Navnet mï¿½ vï¿½re lenger enn 4 bokstaver");
 		output.add("Du legger til medlemmer etter at gruppen er opprettet");
 		return output;
 	}

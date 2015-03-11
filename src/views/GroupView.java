@@ -14,7 +14,8 @@ public class GroupView implements View {
 	private boolean done;
 	private Group group;
 	private final static int WIDTH = 60;
-	private SelectView<User> sw;
+	private SelectView<User> sw1;
+	private SelectView<User> sw2;
 	int groupId;
 	private String message;
 	private Group masterGroup;
@@ -24,22 +25,25 @@ public class GroupView implements View {
 		this.groupId = groupId;
 		group = GroupController.getGroup(groupId);
 
+		sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(groupId).getMembers());
+
 		try {
-			masterGroup = GroupController.getGroup(group.getMasterGruppe()
-					.getId());
+			masterGroup = GroupController.getGroup(group.getMasterGruppe().getId());
+
 		} catch (Exception e) {
 			masterGroup = null;
 		}
 
 		if (group.getMasterGruppe() == null) {
-			sw = new SelectView<User>("Velg brukere",
+			sw1 = new SelectView<User>("Velg brukere",
 					UserController.getAllUsers());
 			this.message = "";
 		}
 		if (this.masterGroup != null) {
-			sw = new SelectView<User>("Velg brukere", masterGroup.getMembers());
+			sw1 = new SelectView<User>("Velg brukere", masterGroup.getMembers());
 			this.message = "";
 		}
+
 	}
 
 	@Override
@@ -60,11 +64,17 @@ public class GroupView implements View {
 
 	@Override
 	public ArrayList<String> getContent() {
-		if (sw.isDone()) {
-			GroupController.addMember(group.getId(), sw.getSelected().getId());
-			sw.setUnDone();
-
+		if (sw1.isDone()) {
+			GroupController.addMember(group.getId(), sw1.getSelected().getId());
+			sw1.setUnDone();
+			sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(groupId).getMembers());
 		}
+		if (sw2.isDone()) {
+			GroupController.removeMember(group.getId(), sw2.getSelected().getId());
+			sw2.setUnDone();
+			sw2 = new SelectView<User>("Velg bruker", GroupController.getGroup(groupId).getMembers());
+		}
+
 		group = GroupController.getGroup(this.groupId);
 		ArrayList<String> content = new ArrayList<String>();
 		content.add(Console.tableHead(group.getName(), WIDTH));
@@ -81,8 +91,8 @@ public class GroupView implements View {
 					+ Console.matchLength(user.getRole(), 18) + "|");
 		}
 		content.add("+" + Console.charLine('-', WIDTH - 2) + "+");
-		if (sw.isDone()) {
-			content.add("DU HAR VALGT: " + sw.getSelected());
+		if (sw1.isDone()) {
+			content.add("DU HAR VALGT: " + sw1.getSelected());
 		}
 		if (this.message.length() > 0) {
 			content.add(message);
@@ -101,7 +111,7 @@ public class GroupView implements View {
 	@Override
 	public String getQuery() {
 
-		return "Trykk enter for å gå tilbake, trykk + for å legge tid medlemmer.\nHvis du prøver å legge til medlemmer fra en subgruppe kan du bare velge fra de som er i Mastergruppen. \nHvis du vil lage en subgruppe til denne gruppen skriv '+sub'.";
+		return "Trykk enter for å gå tilbake, trykk + for å legge tid medlemmer eller - for å fjerne medlem. \nHvis du prøver å legge til medlemmer fra en subgruppe kan du bare velge fra de som er i Mastergruppen.\nHvis du vil lage en subgruppe til denne gruppen skriv '+sub'.";
 
 	}
 
@@ -110,21 +120,36 @@ public class GroupView implements View {
 
 		if (input.equals("+")) {
 
-			viewStack.push(sw);
+			viewStack.push(sw1);
 
+		} else if (input.equals("-")) {
+			viewStack.push(sw2);
 		}
 
-		if (this.masterGroup == null && input.toLowerCase().equals("+sub")) {
+		else if (input.length() == 0) {
+			this.done = true;
+			return;
+
+		} else if (this.masterGroup == null
+				&& input.toLowerCase().equals("+sub")) {
 			viewStack.pop();
 			viewStack.push(new CreateSubGroup(group));
+		} else if (this.masterGroup != null
+				&& input.toLowerCase().equals("+sub")) {
+			this.message = "Du kan ikke lage subgrupper i en subgruppe. Mastergruppe for denne gruppen er: "
+					+ group.getMasterGruppe().getName();
+
 		}
+
 		if (this.masterGroup != null && input.toLowerCase().equals("+sub")) {
 			this.message = "Du kan ikke lage subgrupper i en subgruppe. Mastergruppe for denne gruppen er: "
 					+ group.getMasterGruppe().getName();
 		}
 
-		if (input.length() == 0)
+		if (input.length() == 0){
 			this.done = true;
+		}
+
 
 	}
 

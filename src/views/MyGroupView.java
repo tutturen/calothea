@@ -13,10 +13,13 @@ public class MyGroupView implements View {
 	private boolean done;
 	private ArrayList<Group> grupper;
 	private int index;
+	private SelectView<Group> sw;
+
 
 	public MyGroupView() {
 		this.done = false;
-		
+		sw = new SelectView<Group>("Velg gruppe du vil slette", GroupController.getAllGroups(MainUser.getInstance()));
+
 	}
 
 	@Override
@@ -37,6 +40,11 @@ public class MyGroupView implements View {
 
 	@Override
 	public ArrayList<String> getContent() {
+		if(sw.isDone()){
+			GroupController.deleteGroup(sw.getSelected().getId());
+			sw = new SelectView<Group>("Velg gruppe du vil slette", GroupController.getAllGroups(MainUser.getInstance()));
+			
+		}
 		grupper = GroupController.getAllGroups(MainUser.getInstance());
 		ArrayList<String> content = new ArrayList<String>();
 		content.add(" ID  | NAVN");
@@ -58,7 +66,7 @@ public class MyGroupView implements View {
 
 	@Override
 	public String getQuery() {
-		return "Velg gruppe eller opprett gruppe ved å presse '+'. Press enter for å gå tilbake";
+		return "Velg gruppe ved å velge tilhørende tall, opprett gruppe ved å presse '+' eller fjern gruppe ved å skrive '-'. \nPress enter for å gå tilbake";
 	}
 
 	@Override
@@ -67,10 +75,7 @@ public class MyGroupView implements View {
 			this.done = true;
 			return;
 		}
-		if (input.equals("+")) {
-			viewStack.push(new CreateGroupView());
-			return;
-		}
+
 		if(input.equals("a") || input.equals("d")){
 			char c = input.toLowerCase().charAt(0);
 			if (c == 'a') {
@@ -88,7 +93,19 @@ public class MyGroupView implements View {
 			}
 	}
 
+
+		else if(input.equals("+")){
+			viewStack.push(new CreateGroupView());
+			return;
+		}
+		else if(input.equals("-")){
+			viewStack.push(sw);
+			return;
+		}
+		
+
 		try {
+			System.out.println(input);
 			int id = Integer.parseInt(input);
 			if (id > 0 && id <= grupper.size()) {
 				Group gruppe = grupper.get(id - 1);

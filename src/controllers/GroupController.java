@@ -15,6 +15,10 @@ public class GroupController {
 		return db.getAllGrupper(user.getId());
 
 	}
+	
+	public static void deleteGroup(int group_id){
+		db.deleteGroup(group_id);
+	}
 
 	public static Group getGroup(int groupId) { // Ligger allerede
 		return db.getGroup(groupId);
@@ -25,7 +29,8 @@ public class GroupController {
 		db.addToGroup(group_id, user_id);
 	}
 
-	public static void removeMember(User user) { //
+	public static void removeMember(int group_id, int user_id) { 
+		db.removeFromGroup(group_id, user_id);
 
 	}
 
