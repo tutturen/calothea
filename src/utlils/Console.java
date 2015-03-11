@@ -61,4 +61,9 @@ public class Console {
 		String c = matchLength(content, width - 4);
 		return "| " + c + " |"; 
 	}
+	
+	public static String tableRow(int width) {
+		String c = charLine('-', width - 2);
+		return "+" + c + "+"; 
+	}
 }

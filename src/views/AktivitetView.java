@@ -10,6 +10,7 @@ import controllers.AvtaleController;
 import utlils.Console;
 import models.Aktivitet;
 import models.Invitation;
+import models.MainUser;
 import models.User;
 
 public class AktivitetView extends BaseView {
@@ -18,6 +19,7 @@ public class AktivitetView extends BaseView {
 	private final static String NOT_ANSWERED    = " IKKE SVART  ";
 	private final static String ATTENDING 		= "   DELTAR    ";
 	private final static String NOT_ATTENDING 	= " DELTAR IKKE ";
+	private final static int WIDTH = 70;
 
 	public AktivitetView(int aktivitetId) {
 		this.aktivitet = AvtaleController.getAktivitet(aktivitetId);
@@ -63,6 +65,13 @@ public class AktivitetView extends BaseView {
 			lines.add("| " + Console.matchLength(invitation.getUser().getName(), 47) + dText + "|");
 		}
 		lines.add("+-------------------------------------------------------------+");
+		
+		// TODO: Endre aktivitet
+		if (userIsAdmin()) {
+			lines.add(Console.tableHead("ADMIN", WIDTH));
+			lines.add(Console.tableRow("1. Endre aktivitet", WIDTH));
+			lines.add(Console.tableRow(WIDTH));
+		}
 
 		return lines;
 	}
@@ -70,6 +79,10 @@ public class AktivitetView extends BaseView {
 	@Override
 	public String getQuery() {
 		return "Aktivitet >";
+	}
+	
+	private boolean userIsAdmin() {
+		return aktivitet.getAdmin().getId() == MainUser.getInstance().getId();
 	}
 
 	@Override
