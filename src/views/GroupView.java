@@ -73,11 +73,15 @@ public class GroupView implements View{
 
 	@Override
 	public String getQuery() {
+
 		return "Trykk enter for å gå tilbake, trykk + for å legge tid medlemmer";
+
+
 	}
 
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
+
 		if(input.equals("+")){
 			viewStack.push(sw);
 			

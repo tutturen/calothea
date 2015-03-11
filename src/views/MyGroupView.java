@@ -45,19 +45,18 @@ public class MyGroupView implements View{
 			content.add(" " + id + " | " + gruppe.getName());
 		}
 		content.add("");
-		content.add("TODO: Lag ny gruppe");
 		return content;
 		
 	}
 
 	@Override
 	public String getQuery() {
-		return "Press 0 for å gå tilbake, velg gruppe eller opprett gruppe ved å presse '+'";
+		return "Velg gruppe eller opprett gruppe ved å presse '+'. Press enter for å gå tilbake";
 	}
 
 	@Override
 	public void giveInput(String input, Stack<View> viewStack) {
-		if(input.equals("0")){
+		if(input.length() ==0){
 			this.done = true;
 			return;
 		}
