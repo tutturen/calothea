@@ -1,7 +1,7 @@
 package views;
 
 import interfaces.View;
-import java.util.Stack;
+import utlils.ViewStack;
 
 public abstract class BaseView implements View {
 
@@ -18,7 +18,7 @@ public abstract class BaseView implements View {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		if (input.length() == 1 && input.toLowerCase().charAt(0) == 'q') {
 			this.done = true;
 			return;

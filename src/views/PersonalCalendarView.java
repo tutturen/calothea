@@ -1,13 +1,10 @@
 package views;
 
-import interfaces.View;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Stack;
-
 import utlils.Console;
+import utlils.ViewStack;
 import controllers.AvtaleController;
 import models.Aktivitet;
 import models.User;
@@ -76,7 +73,7 @@ public class PersonalCalendarView extends CalendarView {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		if (input.length() == 0) {
 			return;
 		}

@@ -1,7 +1,7 @@
 package interfaces;
 
 import java.util.ArrayList;
-import java.util.Stack;
+import utlils.ViewStack;
 
 public interface View {
 
@@ -10,5 +10,5 @@ public interface View {
 	public String getTitle();
 	public ArrayList<String> getContent();
 	public String getQuery();
-	public void giveInput(String input, Stack<View> viewStack);
+	public void giveInput(String input, ViewStack viewStack);
 }

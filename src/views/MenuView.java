@@ -1,10 +1,8 @@
 package views;
 
 import interfaces.View;
-
 import java.util.ArrayList;
-import java.util.Stack;
-
+import utlils.ViewStack;
 import controllers.UserController;
 import models.MainUser;
 import models.User;
@@ -50,7 +48,7 @@ public class MenuView extends BaseView {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);
 		if (input.length() < 1) {
 			return;

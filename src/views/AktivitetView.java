@@ -1,17 +1,13 @@
 package views;
 
-import interfaces.View;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Stack;
-
 import controllers.AvtaleController;
 import utlils.Console;
+import utlils.ViewStack;
 import models.Aktivitet;
 import models.Invitation;
 import models.MainUser;
-import models.User;
 
 public class AktivitetView extends BaseView {
 
@@ -20,7 +16,7 @@ public class AktivitetView extends BaseView {
 	private final static String NOT_ANSWERED    = " IKKE SVART  ";
 	private final static String ATTENDING 		= "   DELTAR    ";
 	private final static String NOT_ATTENDING 	= " DELTAR IKKE ";
-	private final static int WIDTH = 70;
+	private final static int WIDTH = 80;
 	private int userId;
 	private Invitation userInvitation;
 	
@@ -48,27 +44,29 @@ public class AktivitetView extends BaseView {
 
 	@Override
 	public ArrayList<String> getContent() {
-		int tableWidth = 21;
+		int leftTableWidth = 26;
+		int rightTableWidth = 38;
 		ArrayList<String> lines = new ArrayList<String>();
 		
-		String ansvarlig = "Ansv.:   " + Console.matchLength(activity.getAdmin().toString(),  tableWidth);
+		String ansvarlig = "Ansv.:   " + Console.matchLength(activity.getAdmin().toString(),  leftTableWidth);
 		String datoStr = new SimpleDateFormat("dd. MMM").format(activity.getStartDate());
-		String dato = "Dato:    " + Console.matchLength(datoStr, tableWidth);
+		String dato = "Dato:    " + Console.matchLength(datoStr, leftTableWidth);
 		String timeStartStr = new SimpleDateFormat("HH:mm").format(activity.getStartDate());
-		String startTid = "Start:   " + Console.matchLength(timeStartStr, tableWidth);
+		String startTid = "Start:   " + Console.matchLength(timeStartStr, leftTableWidth);
 		String timeSluttStr = new SimpleDateFormat("HH:mm").format(activity.getEndDate());
-		String sluttTid = "Slutt:   " + Console.matchLength(timeSluttStr, tableWidth);
-		String sted = "Sted:    " + Console.matchLength(activity.getRom().toString(), tableWidth);
+		String sluttTid = "Slutt:   " + Console.matchLength(timeSluttStr, leftTableWidth);
+		String sted = "Sted:    " + Console.matchLength(activity.getRom().toString(), leftTableWidth);
 		
+		ArrayList<String> messageLines = Console.fitInBox(activity.getMessage(), 35, 5);
 		
-		lines.add("+-------------  INFO  -----------+     +---------- MELDING ----------+");
-		lines.add("| " + ansvarlig + " |");
-		lines.add("| " + dato + " |");
-		lines.add("| " + startTid + " |");
-		lines.add("| " + sluttTid + " |");
-		lines.add("| " + sted + " |");
-		lines.add("+--------------------------------+     +-----------------------------+");
-
+		lines.add("+--------------  INFO  ---------------+   " + Console.tableHead("MELDING", rightTableWidth));
+		lines.add("| "   + ansvarlig +                 " |   " + Console.tableRow(messageLines.get(0), rightTableWidth));
+		lines.add("| "   + dato +                      " |   " + Console.tableRow(messageLines.get(1), rightTableWidth));
+		lines.add("| "   + startTid +                  " |   " + Console.tableRow(messageLines.get(2), rightTableWidth));
+		lines.add("| "   + sluttTid +                  " |   " + Console.tableRow(messageLines.get(3), rightTableWidth));
+		lines.add("| "   + sted +                      " |   " + Console.tableRow(messageLines.get(4), rightTableWidth));
+		lines.add("+-------------------------------------+   " + Console.tableRow(rightTableWidth));
+ 
 		lines.add(Console.tableHead("DELTAGERE", WIDTH));
 		lines.add("| " + Console.matchLength(activity.getAdmin().getName(), WIDTH - 16) + ATTENDING + "|");
 		for (Invitation invitation : activity.getInvitations()) {
@@ -121,7 +119,7 @@ public class AktivitetView extends BaseView {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);
 		 
 		if (userIsInvited() && input.length() == 1 && input.charAt(0) == '1') {

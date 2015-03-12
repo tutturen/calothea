@@ -1,11 +1,8 @@
 package views;
 
 import helpers.LoginResult;
-import interfaces.View;
-
 import java.util.ArrayList;
-import java.util.Stack;
-
+import utlils.ViewStack;
 import controllers.UserController;
 import models.MainUser;
 
@@ -52,7 +49,7 @@ public class LoginView extends BaseView {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);
 		if (input.toLowerCase().equals("registrer")) {
 			viewStack.push(new RegisterView());

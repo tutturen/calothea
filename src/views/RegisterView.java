@@ -1,10 +1,7 @@
 package views;
 
-import interfaces.View;
-
 import java.util.ArrayList;
-import java.util.Stack;
-
+import utlils.ViewStack;
 import models.User;
 import controllers.UserController;
 
@@ -49,7 +46,7 @@ public class RegisterView extends BaseView {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);
 		if (input.toLowerCase().equals("quit")) {
 			this.done = true;

@@ -3,7 +3,8 @@ package views;
 import interfaces.View;
 
 import java.util.ArrayList;
-import java.util.Stack;
+
+import utlils.ViewStack;
 
 public class CreditsView implements View {
 
@@ -45,7 +46,7 @@ public class CreditsView implements View {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		this.done = true;
 	}
 

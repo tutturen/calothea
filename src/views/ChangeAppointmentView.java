@@ -1,13 +1,10 @@
 package views;
 
-import interfaces.View;
-
 import java.util.ArrayList;
-import java.util.Stack;
-
 import controllers.AvtaleController;
 import controllers.UserController;
 import utlils.Console;
+import utlils.ViewStack;
 import models.Aktivitet;
 import models.Group;
 import models.Invitation;
@@ -144,7 +141,7 @@ public class ChangeAppointmentView extends BaseView {
 		return message.length() > -1 && message.length() < 140;
 	}
 
-	private void displayInviteMemberView(Stack<View> viewStack) {
+	private void displayInviteMemberView(ViewStack viewStack) {
 		ArrayList<User> list = UserController.getAllUsers();
 		// Remove already invited users
 		for (Invitation inv : activity.getInvitations()) {
@@ -159,7 +156,7 @@ public class ChangeAppointmentView extends BaseView {
 		viewStack.push(userSelect);
 	}
 
-	private void displayRemoveMemberView(Stack<View> viewStack) {
+	private void displayRemoveMemberView(ViewStack viewStack) {
 		ArrayList<Invitation> invs = AvtaleController.getAktivitet(
 				activity.getId()).getInvitations();
 		ArrayList<User> invitedUsers = new ArrayList<User>();
@@ -172,11 +169,11 @@ public class ChangeAppointmentView extends BaseView {
 		viewStack.push(userSelect);
 	}
 	
-	private void displayInviteGroupView(Stack<View> viewStack) {
+	private void displayInviteGroupView(ViewStack viewStack) {
 		// TODO need to be filled
 	}
 	
-	private void displayRemoveGroupView(Stack<View> viewStack) {
+	private void displayRemoveGroupView(ViewStack viewStack) {
 		
 	}
 
@@ -209,7 +206,7 @@ public class ChangeAppointmentView extends BaseView {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);
 
 		if (status == NOTHING_CHOSEN && input.length() == 1) {

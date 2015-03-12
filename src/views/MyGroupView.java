@@ -1,11 +1,8 @@
 package views;
 
-import interfaces.View;
-
 import java.util.ArrayList;
-import java.util.Stack;
-
 import utlils.Console;
+import utlils.ViewStack;
 import controllers.GroupController;
 import models.Group;
 import models.MainUser;
@@ -46,7 +43,7 @@ public class MyGroupView extends BaseView {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);
 		if(input.equals("0")){
 			this.done = true;
