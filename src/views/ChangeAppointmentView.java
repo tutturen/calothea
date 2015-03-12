@@ -106,7 +106,7 @@ public class ChangeAppointmentView extends BaseView {
 		case CHANGE_MESSAGE:
 			return "Skriv ny melding >";
 		}
-		return "Velg NR fra lista > (" + status + ")te";
+		return "Velg NR fra lista >";
 	}
 
 	private boolean isInsideOptions(int nr) {
@@ -208,6 +208,10 @@ public class ChangeAppointmentView extends BaseView {
 	@Override
 	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);
+		if (status == NOTHING_CHOSEN && input.length() == 0) {
+			this.done = true;
+			return;
+		}
 
 		if (status == NOTHING_CHOSEN && input.length() == 1) {
 			int nr = input.charAt(0) - '0';

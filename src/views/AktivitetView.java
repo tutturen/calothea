@@ -44,6 +44,8 @@ public class AktivitetView extends BaseView {
 
 	@Override
 	public ArrayList<String> getContent() {
+		this.activity = AvtaleController.getAktivitet(activity.getId());
+		
 		int leftTableWidth = 26;
 		int rightTableWidth = 38;
 		ArrayList<String> lines = new ArrayList<String>();

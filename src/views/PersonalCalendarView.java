@@ -75,6 +75,7 @@ public class PersonalCalendarView extends CalendarView {
 	@Override
 	public void giveInput(String input, ViewStack viewStack) {
 		if (input.length() == 0) {
+			this.done = true;
 			return;
 		}
 		try {
