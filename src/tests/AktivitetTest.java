@@ -32,7 +32,7 @@ public class AktivitetTest {
 		assertEquals(aktivitet.getAdmin(), owner);
 		assertEquals(aktivitet.getEndDate(), endDate);
 		assertEquals(aktivitet.getStartDate(), startDate);
-		assertEquals(aktivitet.getNavn(), navn);
+		assertEquals(aktivitet.getName(), navn);
 	}
 	
 	@Test(expected = IllegalStateException.class)

@@ -65,7 +65,7 @@ public class PersonalCalendarView extends CalendarView {
 			line += endTime + " | ";
 
 			// NAVN
-			line += aktiviteter.get(i).getNavn();
+			line += aktiviteter.get(i).getName();
 			lines.add(line);
 
 			if ((i - index) > 10) {

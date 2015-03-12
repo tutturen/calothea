@@ -6,8 +6,6 @@ import java.util.Date;
 public class Aktivitet implements Comparable<Aktivitet> {
 
 	private int id;
-	//private ArrayList<User> invited;
-	//private ArrayList<User> participants;
 	private ArrayList<Invitation> invited;
 	private Date start, end;
 	private Rom room;
@@ -49,7 +47,7 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		this.room = rom;
 	}
 	
-	public String getNavn() {
+	public String getName() {
 		return name;
 	}
 
