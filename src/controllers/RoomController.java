@@ -34,7 +34,7 @@ public class RoomController{
 	
 	//Gir deg ingen informasjon annet enn at du henter et rom. 
 	public Rom getRoom(int romId){
-		return db.getRom(romId);
+		return db.getRoom(romId);
 		
 		
 	}

@@ -2,8 +2,10 @@ package requests;
 
 
 import java.util.ArrayList;
+
 import helpers.LoginResult;
 import models.Aktivitet;
+import models.Invitation;
 import models.Kalender;
 import models.Rom;
 import models.User;
@@ -19,38 +21,40 @@ public interface ReqService {
 	
 	// KalenderController
 	@POST("/calendar/appointment/add")
-	public void addAvtaleToKalender(@Field("calendar_id") int kalenderId, @Field("avtale_id") int avtaleId);
+	public void addActivityToCalendar(@Field("calendar_id") int kalenderId, @Field("avtale_id") int avtaleId);
 
 	@GET("/user/{id}/kalender")
 	public Kalender getUserKalender(@Path("id") int userId);
 	
 	// RomController
-	@GET("/rom/{id}")
-	public Rom getRom(@Path("id") int romId);
+	@GET("/room/{id}")
+	public Rom getRoom(@Path("id") int roomId);
 	
-	@GET("/rom/find")
+	@GET("/room/find")
 	public ArrayList<Rom> getFreeRooms(@Query("antall") int antall, @Query("start") long start, @Query("end") long end );
-	
 	
 	// AvtaleController
 	@GET("/appointment/{id}")
-	public Aktivitet getAktivitet(@Path("id") int aktivitetId);
+	public Aktivitet getActivity(@Path("id") int activityId);
 	
-	@POST("/avtale/create")
-	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("message") String message, @Field("location") String location, @Field("start_time") long start, @Field("end_time") long end);
+	@FormUrlEncoded
+	@POST("/appointment/create")
+	public Aktivitet createActivity(@Field("owner_id") int ownerId, @Field("name") String name, @Field("message") String message, @Field("location") String location, @Field("start_time") long start, @Field("end_time") long end);
 	
-	@POST("/avtale/{avtale_id}/invite/{person_id}")
-	public void inviteToAktivitet(@Path("avtale_id") int avtaleId, @Path("person_id") int userId);
+	@FormUrlEncoded
+	@POST("/appointment/invite")
+	public Invitation inviteUserToActivity(@Field("appointment_id") int activityId, @Field("user_id") int userId);
 	
-	@POST("/avtale/{avtale_id}/rom/{rom_id}")
-	public void setRom(@Path("avtale_id") int avtaleId, @Path("rom_id") int romId);
+	@FormUrlEncoded
+	@POST("/appointment/kick")
+	public Invitation kickUserFromActivity(@Field("appointment_id") int activityId, @Field("user_id") int userId);
+	
+	
+	@POST("/appointment/{appointment_id}/rom/{rom_id}")
+	public void setRoom(@Path("appointment_id") int appointmentId, @Path("room_id") int romId);
 	
 	@GET("/user/{user_id}/appointments")
 	public ArrayList<Aktivitet> getAlleBrukerAktiviteter(@Path("user_id") int userId);
-	
-	//Do we need an acceåt appointment
-	
-	// InnvitasjonsController
 	
 	// GruppeController
 	

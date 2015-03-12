@@ -16,7 +16,7 @@ public class AvtaleController {
 	static ReqService db = ReqClient.getInstance().getService();
 	
 	public Aktivitet createAvtale(User admin, String name, String message, String location, Date startDate, Date endDate) {
-		Aktivitet aktivitet = db.createAktivitet(admin.getId(), name, message, location, startDate.getTime(), endDate.getTime());
+		Aktivitet aktivitet = db.createActivity(admin.getId(), name, message, location, startDate.getTime(), endDate.getTime());
 		return aktivitet;
 	}
 
@@ -31,7 +31,7 @@ public class AvtaleController {
 	}
 	
 	public static Aktivitet getAktivitet(int aktivitetId) {
-		return db.getAktivitet(aktivitetId);
+		return db.getActivity(aktivitetId);
 	}
 	
 	public void editAvtale(Aktivitet avtale) {
@@ -67,11 +67,11 @@ public class AvtaleController {
 	}
 	
 	public static void inviteUser(int activityId, int userId) {
-		
+		db.inviteUserToActivity(activityId, userId);
 	}
 	
 	public static void removeUser(int activityId, int userId) {
-		
+		db.kickUserFromActivity(activityId, userId);
 	}
 	
 	public static void inviteGroup(int activityId, int groupId) {
