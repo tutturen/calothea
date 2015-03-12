@@ -41,6 +41,46 @@ public class AvtaleController {
 	public void deleteAvtale(int avtaleid) {
 		
 	}
+	
+	public static void setAttending(int activityId, int userId, boolean attending) {
+		
+	}
+	
+	public static void changeDate(int activityId, int day, int month, int year){
+		
+	}
+	
+	public static void changeStartTime(int activityId, int hours, int minues) {
+		
+	}
+	
+	public static void changeEndTime(int activityId, int hours, int minues) {
+		
+	}
+	
+	public static void changeLocation(int activityId, String location) {
+		
+	}
+	
+	public static void changeMessage(int activityId, String message) {
+		
+	}
+	
+	public static void inviteUser(int activityId, int userId) {
+		
+	}
+	
+	public static void removeUser(int activityId, int userId) {
+		
+	}
+	
+	public static void inviteGroup(int activityId, int groupId) {
+		
+	}
+	
+	public static void removeGroup(int activityId, int groupId) {
+		
+	}
 
 	/*private void sendInvitation(Aktivitet avtale, String melding) {
 		System.out.println("Sending inv");
