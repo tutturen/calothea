@@ -13,6 +13,7 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import models.Group;
@@ -34,6 +35,11 @@ public interface ReqService {
 	public ArrayList<Rom> getFreeRooms(@Query("antall") int antall, @Query("start") long start, @Query("end") long end );
 	
 	// AvtaleController
+	
+	@FormUrlEncoded
+	@POST("/appointment/attend")
+	public Invitation setAttending(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("attending") int isAttending);
+	
 	@GET("/appointment/{id}")
 	public Aktivitet getActivity(@Path("id") int activityId);
 	
@@ -49,6 +55,22 @@ public interface ReqService {
 	@POST("/appointment/kick")
 	public Invitation kickUserFromActivity(@Field("appointment_id") int activityId, @Field("user_id") int userId);
 	
+	@FormUrlEncoded
+	@PUT("/appointment/editstart")
+	public Aktivitet setStartTime(@Field("appointment_id") int activityId, @Field("start") long startTime);
+	
+	@FormUrlEncoded
+	@PUT("/appointment/editend")
+	public Aktivitet setEndTime(@Field("appointment_id") int activityId, @Field("end") long endTime);
+	
+	@FormUrlEncoded
+	@PUT("/appointment/editlocation")
+	public Aktivitet setLocation(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("location") String location);
+	
+	@FormUrlEncoded
+	@PUT("/appointment/editmessage")
+	public Aktivitet setMessage(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("message") String message);
+
 	
 	@POST("/appointment/{appointment_id}/rom/{rom_id}")
 	public void setRoom(@Path("appointment_id") int appointmentId, @Path("room_id") int romId);

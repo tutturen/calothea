@@ -5,13 +5,12 @@ public class Invitation {
 	private Aktivitet activity;
 	private User user;
 	private String message;
-	private Boolean participates;
+	private int participates;
 
 	public Invitation(Aktivitet aktivitet, User user) {
 		this.user = user;
 		this.activity = aktivitet;
 		this.message = "Du er invitert til avtale klokken:" + aktivitet.getStartDate().toString() + "Slutt:" + aktivitet.getEndDate().toString() + "i rom:" + aktivitet.getRom().getName();
-		this.participates = false;
 	}
 	
 	public Aktivitet getActivity(){
@@ -22,7 +21,10 @@ public class Invitation {
 	}
 	
 	public Boolean isAccepted() {
-		return participates;
+		if (participates == 0) {
+			return null;
+		}
+		return participates > 0;
 	}
 	
 	public User getUser() {
@@ -30,11 +32,11 @@ public class Invitation {
 	}
 	
 	public void accept(){
-		this.participates = true;
+		this.participates = 1;
 	}
 	
 	public void decline() {
-		this.participates = false;
+		this.participates = -1;
 	}
 	
 	@Override

@@ -1,6 +1,9 @@
 package views;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+
 import controllers.AvtaleController;
 import controllers.UserController;
 import utlils.Console;
@@ -73,8 +76,8 @@ public class ChangeAppointmentView extends BaseView {
 		lines.add(Console.tableRow("5. Endre melding", WIDTH));
 		lines.add(Console.tableRow("6. Legg til deltaker", WIDTH));
 		lines.add(Console.tableRow("7. Fjern deltaker", WIDTH));
-		lines.add(Console.tableRow("8. Legg til gruppe", WIDTH));
-		lines.add(Console.tableRow("9. Fjern gruppe", WIDTH));
+		lines.add(Console.tableRow("8. Legg til gruppe [MANGLER]", WIDTH));
+		lines.add(Console.tableRow("9. Fjern gruppe [MANGLER]", WIDTH));
 		lines.add(Console.tableRow(WIDTH));
 		lines.add("");
 		if (message != null && message.length() != 0) {
@@ -249,8 +252,9 @@ public class ChangeAppointmentView extends BaseView {
 				case DATE_YEAR:
 					if (isValidYear(nr)) {
 						year = nr;
-						AvtaleController.changeDate(activity.getId(), day,
-								month, year);
+						Date start = activity.getStartDate();
+						AvtaleController.changeStartTime(activity.getId(), year,
+								month, day, start.getHours(), start.getMinutes());
 						resetValues();
 						message = "Datoen på aktiviteten er nå endret.";
 					}
@@ -264,8 +268,13 @@ public class ChangeAppointmentView extends BaseView {
 		} else if (status == CHANGE_START) {
 			int[] time = getTime(input);
 			if (time != null) {
-				AvtaleController.changeStartTime(activity.getId(), time[0],
-						time[1]);
+				Date start = activity.getStartDate();
+				try {
+					AvtaleController.changeStartTime(activity.getId(), start.getYear() + 1900, start.getMonth() + 1, start.getDate(), time[0],
+							time[1]);
+				} catch (ParseException e) {
+					viewStack.push(new MessageView(e.getMessage()));
+				}
 				message = "Starttidspunktet på aktivteten er nå endret.";
 				resetValues();
 				return;
@@ -273,22 +282,27 @@ public class ChangeAppointmentView extends BaseView {
 		} else if (status == CHANGE_END) {
 			int[] time = getTime(input);
 			if (time != null) {
-				AvtaleController.changeEndTime(activity.getId(), time[0],
-						time[1]);
+				Date end = activity.getStartDate();
+				try {
+					AvtaleController.changeEndTime(activity.getId(), end.getYear() + 1900, end.getMonth() + 1, end.getDate(), time[0],
+							time[1]);
+				} catch (ParseException e) {
+					viewStack.push(new MessageView(e.getMessage()));
+				}
 				message = "Sluttidspunktet på aktivteten er nå endret.";
 				resetValues();
 				return;
 			}
 		} else if (status == CHANGE_LOCATION) {
 			if (isValidLocation(input)) {
-				AvtaleController.changeLocation(activity.getId(), input);
+				AvtaleController.changeLocation(activity.getId(), MainUser.getInstance().getId(), input);
 				resetValues();
 				message = "Stedet er endret til " + input;
 				return;
 			}
 		} else if (status == CHANGE_MESSAGE) {
 			if (isValidMessage(input)) {
-				AvtaleController.changeMessage(activity.getId(), input);
+				AvtaleController.changeMessage(activity.getId(), MainUser.getInstance().getId(), input);
 				resetValues();
 				message = "Meldingen til aktiviteten er nå endret.";
 				return;

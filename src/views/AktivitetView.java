@@ -125,6 +125,7 @@ public class AktivitetView extends BaseView {
 		super.giveInput(input, viewStack);
 		 
 		if (userIsInvited() && input.length() == 1 && input.charAt(0) == '1') {
+
 			userAttending = !userAttending;
 			AvtaleController.setAttending(activity.getId(), userId, userAttending);
 			if (userAttending) {
