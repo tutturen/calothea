@@ -17,6 +17,7 @@ public class MenuView extends BaseView {
 		applicationViews.add(new NewAppointmentView());
 		applicationViews.add(new ColleagueView());
 		applicationViews.add(new InvitationsView());
+		applicationViews.add(new AlertView());
 	}
 
 	@Override
