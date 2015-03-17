@@ -62,7 +62,7 @@ public class MyGroupView extends BaseView {
 		content.add(Console.tableRow("2. Opprett gruppe ved å presse '+'", 70));
 		content.add(Console.tableRow("3. Fjern gruppe ved å skrive '-'", 70));
 		content.add(Console.tableRow("4. Press enter for å gå tilbake", 70));
-		content.add(Console.tableRow("5. Bla til venstre ved å presse 'a' og bla til høyre ved å presse 'd'", 70));
+		content.add(Console.tableRow("5. Bla til venstre ved å presse 'a' og til høyre med 'd'", 70));
 		content.add(Console.tableRow(70));
 		return content;
 		}
