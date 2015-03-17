@@ -3,14 +3,11 @@ package views;
 import interfaces.View;
 import java.util.ArrayList;
 import utlils.ViewStack;
-import controllers.UserController;
 import models.MainUser;
-import models.User;
 
 public class MenuView extends BaseView {
 
 	ArrayList<View> applicationViews;
-	private SelectView<User> sw;
 
 	public MenuView() {
 		applicationViews = new ArrayList<View>();
@@ -18,9 +15,6 @@ public class MenuView extends BaseView {
 		applicationViews.add(new CreditsView());
 		applicationViews.add(new MyGroupView());
 		applicationViews.add(new NewAppointmentView());
-		/*applicationViews.add(new MessageView("Du er skikkelig skikkelig kul! Bare så du vet det."));
-		sw = new SelectView<User>("Velg brukere", UserController.getAllUsers());
-		applicationViews.add(sw);*/
 	}
 
 	@Override

@@ -4,6 +4,7 @@ package requests;
 import java.util.ArrayList;
 
 import helpers.LoginResult;
+import helpers.Result;
 import models.Aktivitet;
 import models.Invitation;
 import models.Kalender;
@@ -21,6 +22,7 @@ import models.Group;
 public interface ReqService {
 	
 	// KalenderController
+	@FormUrlEncoded
 	@POST("/calendar/appointment/add")
 	public void addActivityToCalendar(@Field("calendar_id") int kalenderId, @Field("avtale_id") int avtaleId);
 
@@ -54,7 +56,7 @@ public interface ReqService {
 	@FormUrlEncoded
 	@POST("/appointment/kick")
 	public Invitation kickUserFromActivity(@Field("appointment_id") int activityId, @Field("user_id") int userId);
-	
+
 	@FormUrlEncoded
 	@PUT("/appointment/editstart")
 	public Aktivitet setStartTime(@Field("appointment_id") int activityId, @Field("start") long startTime);
@@ -67,7 +69,7 @@ public interface ReqService {
 	@PUT("/appointment/editlocation")
 	public Aktivitet setLocation(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("location") String location);
 	
-	@FormUrlEncoded
+
 	@PUT("/appointment/editmessage")
 	public Aktivitet setMessage(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("message") String message);
 
@@ -86,11 +88,22 @@ public interface ReqService {
 	@GET("/group/{group_id}")
 	public Group getGroup(@Path("group_id") int groupId);
 	
-	@POST("/gruppe/create")
-	public Group createGruppe(@Field("calendar_id") int calendarId, @Field("first_member_Id") int userId, @Field("name") String gruppeNavn);
+	@FormUrlEncoded
+	@POST("/group/delete")
+	public Result deleteGroup(@Field("group_id") int group_id);
 	
-	@POST("/gruppe/{gruppe_id}/invite/{person_id}")
-	public void inviteToGruppe(@Path("gruppe_id") int gruppeId, @Path("person_id") int userId);
+	@FormUrlEncoded
+	@POST("/group/create")
+	public Group createGroup(@Field("masterGroupId") int masterGroupID, @Field("groupName") String groupName);
+	
+	@FormUrlEncoded
+	@POST("/group/add_member")
+	public Result addToGroup(@Field("group_id") int group_id, @Field("user_id") int user_id);
+	
+	@FormUrlEncoded
+	@POST("/group/remove_member")
+	public Result removeFromGroup(@Field("group_id") int group_id, @Field("user_id") int user_id);
+
 
 	// UserController
 

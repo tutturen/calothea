@@ -12,8 +12,6 @@ public class Group implements Selectable {
 	Group master_group;
 	String name;
 	int id;
-	
-	
 
 	public Group(Kalender kalender, String gruppeNavn) {
 		members = new ArrayList<User>();
@@ -24,7 +22,7 @@ public class Group implements Selectable {
 		}
 		this.name = gruppeNavn;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -33,26 +31,29 @@ public class Group implements Selectable {
 		return (name != null && !name.equals(""));
 	}
 
-	public ArrayList<User> getMembers() { // Denne metoden skal ogs�� v��re i GruppeController som getMedlemmer(), skal den ogs�� v��re her da?
+	public ArrayList<User> getMembers() { // Denne metoden skal ogs�� v��re i
+											// GruppeController som
+											// getMedlemmer(), skal den ogs��
+											// v��re her da?
 		return members;
 	}
 
 	public ArrayList<Group> getSubgrupper() {
 		return subGroups;
 	}
-	
+
 	public Group getMasterGruppe() {
 		return master_group;
 	}
 
-	public Kalender getKalender() { 
+	public Kalender getKalender() {
 		return calendar;
 	}
 
-	public String getName() { 
+	public String getName() {
 		return name;
 	}
-	
+
 	public void setMasterGruppe(Group gruppe) {
 		this.master_group = gruppe;
 	}
@@ -71,11 +72,15 @@ public class Group implements Selectable {
 		members.remove(user);
 	}
 
-	public void setKalender(Kalender kalender) { 
+
+	public void setKalender(Kalender kalender) { // byttet ut addKalender og
+													// removeKalender med en
+													// setKalender da du uansett
+
 		this.calendar = kalender;
 	}
 
-	public void setGruppeNavn(String gruppeNavn) { 
+	public void setGruppeNavn(String gruppeNavn) {
 		if (!isValidName(gruppeNavn)) {
 			throw new IllegalArgumentException("Illegal gruppeNavn");
 		}
@@ -95,5 +100,5 @@ public class Group implements Selectable {
 		}
 		subGroups.remove(gruppe);
 	}
-	
+
 }

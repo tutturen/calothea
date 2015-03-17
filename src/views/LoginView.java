@@ -9,6 +9,7 @@ import models.MainUser;
 public class LoginView extends BaseView {
 
 	private boolean emailWritten = false;
+
 	private String email;
 	private String password;
 
@@ -36,7 +37,7 @@ public class LoginView extends BaseView {
 		content.add("");
 		content.add("");
 		content.add("Epost: " + (email == null ? "" : email));
-		
+
 		return content;
 	}
 
