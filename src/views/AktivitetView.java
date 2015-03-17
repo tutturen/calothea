@@ -2,12 +2,14 @@ package views;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import controllers.AvtaleController;
 import utlils.Console;
 import utlils.ViewStack;
 import models.Aktivitet;
 import models.Invitation;
 import models.MainUser;
+import models.User;
 
 public class AktivitetView extends BaseView {
 
@@ -57,7 +59,7 @@ public class AktivitetView extends BaseView {
 		String startTid = "Start:   " + Console.matchLength(timeStartStr, leftTableWidth);
 		String timeSluttStr = new SimpleDateFormat("HH:mm").format(activity.getEndDate());
 		String sluttTid = "Slutt:   " + Console.matchLength(timeSluttStr, leftTableWidth);
-		String sted = "Sted:    " + Console.matchLength(activity.getRom().toString(), leftTableWidth);
+		String sted = "Sted:    " + Console.matchLength(activity.getLocation(), leftTableWidth);
 		
 		ArrayList<String> messageLines = Console.fitInBox(activity.getMessage(), 35, 5);
 		
@@ -69,9 +71,11 @@ public class AktivitetView extends BaseView {
 		lines.add("| "   + sted +                      " |   " + Console.tableRow(messageLines.get(4), rightTableWidth));
 		lines.add("+-------------------------------------+   " + Console.tableRow(rightTableWidth));
  
-		lines.add(Console.tableHead("DELTAGERE", WIDTH));
+		lines.add(Console.tableHead("TRE KULE DELTAGERE", WIDTH));
 		lines.add("| " + Console.matchLength(activity.getAdmin().getName(), WIDTH - 16) + ATTENDING + "|");
-		for (Invitation invitation : activity.getInvitations()) {
+		int max = activity.getInvitations().size() > 3 ? 3 : activity.getInvitations().size();
+		for (int i = 0; i < max; i++) {
+			Invitation invitation = activity.getInvitations().get(i);
 			String dText;
 			if (invitation.isAccepted() == null) {
 				dText = NOT_ANSWERED;
@@ -92,8 +96,9 @@ public class AktivitetView extends BaseView {
 				lines.add(Console.tableRow("1. " + att, WIDTH));
 				
 			}
+			lines.add(Console.tableRow("2. Se alle deltagere", WIDTH));
 			if (userIsAdmin()) {
-				lines.add(Console.tableRow("2. Endre aktivitet", WIDTH));				
+				lines.add(Console.tableRow("3. Endre aktivitet", WIDTH));				
 			}
 			lines.add(Console.tableRow(WIDTH));
 
@@ -135,9 +140,15 @@ public class AktivitetView extends BaseView {
 			}
 			return;
 		}
-		else if (userIsAdmin() && input.length() == 1 && input.charAt(0) == '2') {
+		else if (userIsAdmin() && input.length() == 1 && input.charAt(0) == '3') {
 			viewStack.push(new ChangeAppointmentView(activity));
 			return;
+		} else if (input.length() == 1 && input.charAt(0) == '2') {
+			ArrayList<User> members = new ArrayList<User>();
+			for (Invitation inv : activity.getInvitations()) {
+				members.add(inv.getUser());
+			}
+			viewStack.push(new SelectView<User>("Alle deltagere", members));
 		} else {
 			this.done = true;
 			return;

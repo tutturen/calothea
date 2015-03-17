@@ -18,7 +18,7 @@ public class AvtaleController {
 
 	static ReqService db = ReqClient.getInstance().getService();
 
-	public Aktivitet createAvtale(User admin, String name, String message,
+	public static Aktivitet createAvtale(User admin, String name, String message,
 			String location, Date startDate, Date endDate) {
 		Aktivitet aktivitet = db.createActivity(admin.getId(), name, message,
 				location, startDate.getTime(), endDate.getTime());
