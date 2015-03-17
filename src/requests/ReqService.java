@@ -105,6 +105,9 @@ public interface ReqService {
 	@POST("/group/remove_member")
 	public Result removeFromGroup(@Field("group_id") int group_id, @Field("user_id") int user_id);
 
+	
+	@GET("/user/{id}/invitations")
+	public ArrayList<Invitation> getNewInvitations(@Path("id") int userId);
 
 	// UserController
 
