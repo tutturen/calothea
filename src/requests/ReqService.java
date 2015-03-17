@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import helpers.LoginResult;
 import helpers.Result;
 import models.Aktivitet;
+import models.Alert;
 import models.Invitation;
 import models.Kalender;
 import models.Rom;
@@ -112,6 +113,9 @@ public interface ReqService {
 	
 	@GET("/users")
 	public ArrayList<User> getAllUsers();
+	
+	@GET("/user/{user_id}/alerts")
+	public ArrayList<Alert> getUserAlerts(@Path("user_id") int userId);
 	
 	// AuthController
 	
