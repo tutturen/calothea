@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import controllers.AvtaleController;
+import controllers.GroupController;
 import controllers.UserController;
 import utlils.Console;
 import utlils.ViewStack;
@@ -44,11 +45,11 @@ public class ChangeAppointmentView extends BaseView {
 			User selectedUser = userSelect.getSelected();
 			if (status == ADD_MEMBER) {
 				AvtaleController.inviteUser(activity.getId(), selectedUser.getId());
-				message = selectedUser.getName() + " er nå invitert!";
+				message = selectedUser.getName() + " er n�� invitert!";
 			} else if (status == REMOVE_MEMBER) {
 				AvtaleController.removeUser(activity.getId(),
 						selectedUser.getId());
-				message = selectedUser.getName() + " er nå fjernet.";
+				message = selectedUser.getName() + " er n�� fjernet.";
 			}
 			resetValues();
 		} else if (groupSelect != null && groupSelect.isDone()) {
@@ -57,12 +58,12 @@ public class ChangeAppointmentView extends BaseView {
 				AvtaleController.inviteGroup(activity.getId(),
 						selectedGroup.getId());
 				message = "Gruppen " + selectedGroup.getName()
-						+ " er nå invitert!";
+						+ " er n�� invitert!";
 			} else if (status == REMOVE_GROUP) {
 				AvtaleController.removeGroup(activity.getId(),
 						selectedGroup.getId());
 				message = "Gruppen " + selectedGroup.getName()
-						+ " er nå fjernet.";
+						+ " er n�� fjernet.";
 			}
 			resetValues();
 		}
@@ -93,11 +94,11 @@ public class ChangeAppointmentView extends BaseView {
 		switch (status) {
 		case CHANGE_DATE:
 			if (subStatus == DATE_DAY) {
-				return "Skriv nummer på dag i måneden >";
+				return "Skriv nummer p�� dag i m��neden >";
 			} else if (subStatus == DATE_MONTH) {
-				return "Skriv inn nummer på måneden i året >";
+				return "Skriv inn nummer p�� m��neden i ��ret >";
 			} else if (subStatus == DATE_YEAR) {
-				return "Skriv år >";
+				return "Skriv ��r >";
 			}
 			break;
 		case CHANGE_START:
@@ -173,7 +174,9 @@ public class ChangeAppointmentView extends BaseView {
 	}
 	
 	private void displayInviteGroupView(ViewStack viewStack) {
-		// TODO need to be filled
+		ArrayList<Group> glist = GroupController.getAllGroups(MainUser.getInstance());
+		groupSelect = new SelectView<Group>("Legg til en gruppe. Hvis du legger til en eksisterende vil ingenting skje", glist);
+		viewStack.push(groupSelect);
 	}
 	
 	private void displayRemoveGroupView(ViewStack viewStack) {
@@ -256,7 +259,7 @@ public class ChangeAppointmentView extends BaseView {
 						AvtaleController.changeStartTime(activity.getId(), year,
 								month, day, start.getHours(), start.getMinutes());
 						resetValues();
-						message = "Datoen på aktiviteten er nå endret.";
+						message = "Datoen p�� aktiviteten er n�� endret.";
 					}
 					return;
 				}
@@ -275,7 +278,7 @@ public class ChangeAppointmentView extends BaseView {
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));
 				}
-				message = "Starttidspunktet på aktivteten er nå endret.";
+				message = "Starttidspunktet p�� aktivteten er n�� endret.";
 				resetValues();
 				return;
 			}
@@ -289,7 +292,7 @@ public class ChangeAppointmentView extends BaseView {
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));
 				}
-				message = "Sluttidspunktet på aktivteten er nå endret.";
+				message = "Sluttidspunktet p�� aktivteten er n�� endret.";
 				resetValues();
 				return;
 			}
@@ -304,7 +307,7 @@ public class ChangeAppointmentView extends BaseView {
 			if (isValidMessage(input)) {
 				AvtaleController.changeMessage(activity.getId(), MainUser.getInstance().getId(), input);
 				resetValues();
-				message = "Meldingen til aktiviteten er nå endret.";
+				message = "Meldingen til aktiviteten er n�� endret.";
 				return;
 			}
 		}
