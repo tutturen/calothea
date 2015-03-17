@@ -32,26 +32,45 @@ public class MyGroupView extends BaseView {
 		}
 		grupper = GroupController.getAllGroups(MainUser.getInstance());
 		ArrayList<String> content = new ArrayList<String>();
-		content.add(" ID  | NAVN");
-		content.add("-----+---------------------");
-		for (int i = index ; i< grupper.size() ; i++) {
+		content.add(Console.tableRow(70));
+		content.add("| ID | NAVN                     | MASTERGRUPPE                       |");
+		content.add("+----+--------------------------+------------------------------------+");
+		
+		int teller = index;
+		for (int i = index ; i< index+6 ; i++) {
+			if(i>= grupper.size()){
+				break;
+			}
+			teller++;
 			Group group = grupper.get(i);
 			
 			String id = Console.matchLength((i+1) + "", 3);
 			if(group.getMasterGruppe().getName()== null){
-				content.add(" " + id + " | " + group.getName());}
+				content.add("| " + id + "| " + Console.matchLength(group.getName() , 25) + Console.tableRow("", 38)); }
 			else{
-				content.add(" " + id + " | " + Console.matchLength(group.getName() , 25) +"| Master: " + group.getMasterGruppe().getName());
+				content.add("| " + id + "| " + Console.matchLength(group.getName() , 25) +Console.tableRow("Master: " + group.getMasterGruppe().getName(), 38));
 			}
 		}
+		content.add(Console.tableRow(70));
+		for(int k = teller ; k < index+5 ; k++) {
+			content.add("");
+		}
+		
 		content.add("");
+		content.add(Console.tableHead("Handlinger", 70));
+		content.add(Console.tableRow("1. Velg gruppe ved å velge tilhørende tall", 70));
+		content.add(Console.tableRow("2. Opprett gruppe ved å presse '+'", 70));
+		content.add(Console.tableRow("3. Fjern gruppe ved å skrive '-'", 70));
+		content.add(Console.tableRow("4. Press enter for å gå tilbake", 70));
+		content.add(Console.tableRow("5. Bla til venstre ved å presse 'a' og til høyre med 'd'", 70));
+		content.add(Console.tableRow(70));
 		return content;
 		}
 
 
 	@Override
 	public String getQuery() {
-		return "Velg gruppe ved å velge tilhørende tall, opprett gruppe ved å presse '+' eller fjern gruppe ved å skrive '-'. \nPress enter for å gå tilbake";
+		return "Velg hva du vil gjøre > ";
 	}
 
 	@Override
@@ -64,18 +83,19 @@ public class MyGroupView extends BaseView {
 		}
 
 		if(input.equals("a") || input.equals("d")){
+			int antallGrupperPrSide = 6;
 			char c = input.toLowerCase().charAt(0);
 			if (c == 'a') {
-				if (index > 16) {
-					index -= 16;
+				if (index > antallGrupperPrSide) {
+					index -= antallGrupperPrSide;
 				} else {
 					index = 0;
 				}
 			} else if (c == 'd') {
-				if (index > (grupper.size() - 16)) {
+				if (index > (grupper.size() - antallGrupperPrSide-1)) {
 					index = 0;
 				} else {
-					index += 16;
+					index += antallGrupperPrSide;
 				}
 			}
 	}

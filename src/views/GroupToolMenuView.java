@@ -5,6 +5,7 @@ import interfaces.View;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import utlils.ViewStack;
 import models.Group;
 
 public class GroupToolMenuView extends BaseView {
@@ -48,7 +49,7 @@ public class GroupToolMenuView extends BaseView {
 		return "Velg NR >";
 	}
 
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		if (input.length() == 0) {
 			this.done = true;
 			return;
