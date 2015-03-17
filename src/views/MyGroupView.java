@@ -1,35 +1,20 @@
 package views;
 
 import java.util.ArrayList;
-import java.util.Stack;
-
 import utlils.Console;
+import utlils.ViewStack;
 import controllers.GroupController;
 import models.Group;
 import models.MainUser;
 
-public class MyGroupView implements View {
-
-	private boolean done;
+public class MyGroupView extends BaseView {
 	private ArrayList<Group> grupper;
 	private int index;
 	private SelectView<Group> sw;
 
-
 	public MyGroupView() {
 		this.done = false;
 		sw = new SelectView<Group>("Velg gruppe du vil slette", GroupController.getAllGroups(MainUser.getInstance()));
-
-	}
-
-	@Override
-	public boolean isDone() {
-		return done;
-	}
-
-	@Override
-	public void setUnDone() {
-		this.done = false;
 
 	}
 
@@ -70,8 +55,10 @@ public class MyGroupView implements View {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+
+	public void giveInput(String input, ViewStack viewStack) {
 		if (input.length() == 0) {
+
 			this.done = true;
 			return;
 		}

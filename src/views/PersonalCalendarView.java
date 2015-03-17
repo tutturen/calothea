@@ -3,9 +3,8 @@ package views;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Stack;
-
 import utlils.Console;
+import utlils.ViewStack;
 import controllers.AvtaleController;
 import models.Aktivitet;
 import models.User;
@@ -14,7 +13,6 @@ public class PersonalCalendarView extends CalendarView {
 
 	private String title;
 	private ArrayList<Aktivitet> aktiviteter;
-	private boolean done = false;
 	private int index;
 	private User user;
 
@@ -64,7 +62,7 @@ public class PersonalCalendarView extends CalendarView {
 			line += endTime + " | ";
 
 			// NAVN
-			line += aktiviteter.get(i).getNavn();
+			line += aktiviteter.get(i).getName();
 			lines.add(line);
 
 			if ((i - index) > 10) {
@@ -75,8 +73,9 @@ public class PersonalCalendarView extends CalendarView {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		if (input.length() == 0) {
+			this.done = true;
 			return;
 		}
 		try {
@@ -111,17 +110,6 @@ public class PersonalCalendarView extends CalendarView {
 	@Override
 	public String getQuery() {
 		return " Velg ID, A for forrige eller D for neste >";
-	}
-
-	@Override
-	public boolean isDone() {
-		return done;
-	}
-
-	@Override
-	public void setUnDone() {
-		this.done = false;
-
 	}
 
 }

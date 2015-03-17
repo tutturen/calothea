@@ -3,14 +3,10 @@ package models;
 import java.util.ArrayList;
 import java.util.Date;
 
-import requests.ReqClient;
-import requests.ReqService;
-
 public class Aktivitet implements Comparable<Aktivitet> {
 
 	private int id;
-	private ArrayList<User> brukereInvitert;
-	private ArrayList<User> deltagere;
+	private ArrayList<Invitation> invited;
 	private Date start, end;
 	private Rom room;
 	private User administrator;
@@ -18,11 +14,9 @@ public class Aktivitet implements Comparable<Aktivitet> {
 	private String location;
 	private String message;
 	
-	ReqService db = ReqClient.getInstance().getService();
-
 	public Aktivitet(User administrator, String name, Date startDate, Date endDate) {
-		brukereInvitert = new ArrayList<User>();
-		deltagere = new ArrayList<User>();
+		invited = new ArrayList<Invitation>();
+		//participants = new ArrayList<User>();
 		if (!isValidEier(administrator)) {
 			throw new IllegalArgumentException("User invalid");
 		}
@@ -34,7 +28,7 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		this.start = startDate;
 		this.end = endDate;
 		this.name = name;
-		deltagere.add(administrator);
+		//participants.add(administrator);
 	}
 	
 	public int getId() {
@@ -53,7 +47,7 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		this.room = rom;
 	}
 	
-	public String getNavn() {
+	public String getName() {
 		return name;
 	}
 
@@ -71,13 +65,13 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		return (endDate.getTime() - startDate.getTime()) > 0;
 	}
 
-	public ArrayList<User> getBrukereInvitert() {
-		return brukereInvitert;
+	public ArrayList<Invitation> getInvitations() {
+		return invited;
 	}
 
-	public ArrayList<User> getDeltagere() {
-		return deltagere;
-	}
+	/*public ArrayList<User> getDeltagere() {
+		return participants;
+	}*/
 
 	public Date getStartDate() {
 		return start;
@@ -95,59 +89,59 @@ public class Aktivitet implements Comparable<Aktivitet> {
 		return administrator;
 	}
 	
-	public void removeFromInvitedList(User user) {
+	/*public void removeFromInvitedList(User user) {
 		removeFromInvitedList(user, true);
 	}
 	
 	public void removeFromInvitedList(User user, boolean updateDatabase) {
-		if (!brukereInvitert.contains(user)) {
+		if (!invited.contains(user)) {
 			throw new IllegalStateException("User not invited");
 		}
-		brukereInvitert.remove(user);
+		invited.remove(user);
 		if (updateDatabase) {
 			// UPDATE THE DATABASE
 		}
-	}
+	}*/
 
-	public void addToInvitedList(User user) {
+	/*public void addToInvitedList(User user) {
 		addToInvitedList(user, true);
-	}
+	}*/
 	
-	public void addToInvitedList(User user, boolean updateDatabase) {
-		if (brukereInvitert.contains(user)) {
+	/*public void addToInvitedList(User user, boolean updateDatabase) {
+		if (invited.contains(user)) {
 			throw new IllegalStateException("User already invited");
 		}
 		if (user == administrator) {
 			throw new IllegalStateException("Cant invite owner");
 		}
 		// Sjekk at vi ikke potensielt overbooker
-		int potentialUsers = brukereInvitert.size() + deltagere.size();
+		int potentialUsers = invited.size() + participants.size();
 		if (potentialUsers > room.getAntall()) {
 			throw new IllegalStateException("Room is too small to invite more people.");
 		}
-		brukereInvitert.add(user);
+		invited.add(user);
 		if (updateDatabase) {
 			db.inviteToAktivitet(this.getId(), user.getId());
 		}
-	}
+	}*/
 	
-	public void acceptInvitation(User user) {
+	/*public void acceptInvitation(User user) {
 		acceptInvitation(user, true);
-	}
+	}*/
 
-	public void acceptInvitation(User user, boolean updateDatabase) {
-		if (deltagere.contains(user)) {
+	/*public void acceptInvitation(User user, boolean updateDatabase) {
+		if (participants.contains(user)) {
 			throw new IllegalStateException("User has already accepted");
 		}
-		if (!brukereInvitert.contains(user)) {
+		if (!invited.contains(user)) {
 			throw new IllegalStateException("User not invited");
 		}
-		brukereInvitert.remove(user);
-		deltagere.add(user);
+		invited.remove(user);
+		participants.add(user);
 		if (updateDatabase) {
 			// Gjør endringer i databasen (retrofit)
 		}
-	}
+	}*/
 
 	@Override
 	public int compareTo(Aktivitet other) {

@@ -1,5 +1,7 @@
 package utlils;
 
+import java.util.ArrayList;
+
 public class Console {
 	public static final int HEIGHT = 24;
 	public static final int WIDTH = 80;
@@ -60,5 +62,32 @@ public class Console {
 	public static String tableRow(String content, int width) {
 		String c = matchLength(content, width - 4);
 		return "| " + c + " |"; 
+	}
+	
+	public static String tableRow(int width) {
+		String c = charLine('-', width - 2);
+		return "+" + c + "+"; 
+	}
+	
+	public static ArrayList<String> fitInBox(String msg, int maxWidth, int minimumLines) {
+		ArrayList<String> lines = new ArrayList<String>();
+		String[] words = msg.split(" ");
+		String line = " ";
+		for (int i = 0; i < words.length; i++) {
+			int totalWidth = line.length() + words[i].length() + 2;
+			if (totalWidth < maxWidth) {
+				line += words[i] + " ";
+			} else {
+				lines.add(line);
+				line = " ";
+				i--;
+			}
+		}
+		lines.add(line);
+		while (lines.size() < minimumLines) {
+			lines.add("");
+		}
+		return lines;
+		
 	}
 }

@@ -2,33 +2,46 @@ package models;
 
 public class Invitation {
 	
-	Aktivitet aktivitet;
-	String melding;
-	boolean accepted;
-	//Do we need to have a user here?
+	private Aktivitet activity;
+	private User user;
+	private String message;
+	private int participates;
 
-	//Opprettes when you receive the user is added to an activity
-	public Invitation(Aktivitet aktivitet) {
-		this.aktivitet = aktivitet;
-		this.melding = "Du er invitert til avtale klokken:" + aktivitet.getStartDate().toString() + "Slutt:" + aktivitet.getEndDate().toString() + "i rom:" + aktivitet.getRom().getRomnavn();
-		this.accepted = false;
-		
-		
+	public Invitation(Aktivitet aktivitet, User user) {
+		this.user = user;
+		this.activity = aktivitet;
+		this.message = "Du er invitert til avtale klokken:" + aktivitet.getStartDate().toString() + "Slutt:" + aktivitet.getEndDate().toString() + "i rom:" + aktivitet.getRom().getName();
 	}
 	
-	public Aktivitet getAktivitet(){
-		return aktivitet;
-		
+	public Aktivitet getActivity(){
+		return activity;
 	}
-	public String getMelding(){
-		return melding;
-		
+	public String getMessage(){
+		return message;
 	}
 	
-	//Hvis denne kan brukes til aa akkseptere invitasjon
-	public void acceptInvitation(){
-		this.accepted = true;
+	public Boolean isAccepted() {
+		if (participates == 0) {
+			return null;
+		}
+		return participates > 0;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+	
+	public void accept(){
+		this.participates = 1;
+	}
+	
+	public void decline() {
+		this.participates = -1;
+	}
+	
+	@Override
+	public String toString() {
+		return "[Invitation user: " + user.getName() + ", p: " + participates + " ]";
+	}
 	
 }

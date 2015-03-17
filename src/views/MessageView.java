@@ -1,27 +1,15 @@
 package views;
 
 import java.util.ArrayList;
-import java.util.Stack;
-
 import utlils.Console;
+import utlils.ViewStack;
 
-public class MessageView implements View {
+public class MessageView extends BaseView {
 
 	private String message;
-	private boolean done;
 	
 	public MessageView(String message) {
 		this.message = message;
-	}
-	
-	@Override
-	public boolean isDone() {
-		return done;
-	}
-
-	@Override
-	public void setUnDone() {
-		done = false;
 	}
 
 	@Override
@@ -47,7 +35,8 @@ public class MessageView implements View {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
+		super.giveInput(input, viewStack);
 		this.done = true;
 	}
 

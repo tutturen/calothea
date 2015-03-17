@@ -72,10 +72,11 @@ public class Group implements Selectable {
 		members.remove(user);
 	}
 
+
 	public void setKalender(Kalender kalender) { // byttet ut addKalender og
 													// removeKalender med en
 													// setKalender da du uansett
-													// bare kan ha en
+
 		this.calendar = kalender;
 	}
 

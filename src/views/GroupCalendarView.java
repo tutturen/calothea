@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Stack;
 
 import utlils.Console;
+import utlils.ViewStack;
 import controllers.AvtaleController;
 import models.Aktivitet;
 import models.Group;
@@ -64,7 +65,7 @@ public class GroupCalendarView extends CalendarView {
 			line += endTime + " | ";
 
 			// NAVN
-			line += aktiviteter.get(i).getNavn();
+			line += aktiviteter.get(i).getName();
 			lines.add(line);
 
 			if ((i - index) > 10) {
@@ -75,7 +76,7 @@ public class GroupCalendarView extends CalendarView {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		if (input.length() == 0) {
 			this.done=true;
 			return;

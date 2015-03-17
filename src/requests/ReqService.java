@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import helpers.LoginResult;
 import helpers.Result;
 import models.Aktivitet;
+import models.Invitation;
 import models.Kalender;
 import models.Rom;
 import models.User;
@@ -13,6 +14,7 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import models.Group;
@@ -22,41 +24,61 @@ public interface ReqService {
 	// KalenderController
 	@FormUrlEncoded
 	@POST("/calendar/appointment/add")
-	public void addAvtaleToKalender(@Field("calendar_id") int kalenderId, @Field("avtale_id") int avtaleId);
+	public void addActivityToCalendar(@Field("calendar_id") int kalenderId, @Field("avtale_id") int avtaleId);
 
 	@GET("/user/{id}/kalender")
 	public Kalender getUserKalender(@Path("id") int userId);
 	
 	// RomController
-	@GET("/rom/{id}")
-	public Rom getRom(@Path("id") int romId);
+	@GET("/room/{id}")
+	public Rom getRoom(@Path("id") int roomId);
 	
-	@GET("/rom/find")
+	@GET("/room/find")
 	public ArrayList<Rom> getFreeRooms(@Query("antall") int antall, @Query("start") long start, @Query("end") long end );
 	
-	
 	// AvtaleController
+	
+	@FormUrlEncoded
+	@POST("/appointment/attend")
+	public Invitation setAttending(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("attending") int isAttending);
+	
 	@GET("/appointment/{id}")
-	public Aktivitet getAktivitet(@Path("id") int aktivitetId);
+	public Aktivitet getActivity(@Path("id") int activityId);
 	
 	@FormUrlEncoded
-	@POST("/avtale/create")
-	public Aktivitet createAktivitet(@Field("owner_id") int ownerId, @Field("name") String name, @Field("message") String message, @Field("location") String location, @Field("start_time") long start, @Field("end_time") long end);
+	@POST("/appointment/create")
+	public Aktivitet createActivity(@Field("owner_id") int ownerId, @Field("name") String name, @Field("message") String message, @Field("location") String location, @Field("start_time") long start, @Field("end_time") long end);
 	
 	@FormUrlEncoded
-	@POST("/avtale/{avtale_id}/invite/{person_id}")
-	public void inviteToAktivitet(@Path("avtale_id") int avtaleId, @Path("person_id") int userId);
+	@POST("/appointment/invite")
+	public Invitation inviteUserToActivity(@Field("appointment_id") int activityId, @Field("user_id") int userId);
 	
 	@FormUrlEncoded
-	@POST("/avtale/{avtale_id}/rom/{rom_id}")
-	public void setRom(@Path("avtale_id") int avtaleId, @Path("rom_id") int romId);
+	@POST("/appointment/kick")
+	public Invitation kickUserFromActivity(@Field("appointment_id") int activityId, @Field("user_id") int userId);
+
+	@FormUrlEncoded
+	@PUT("/appointment/editstart")
+	public Aktivitet setStartTime(@Field("appointment_id") int activityId, @Field("start") long startTime);
+	
+	@FormUrlEncoded
+	@PUT("/appointment/editend")
+	public Aktivitet setEndTime(@Field("appointment_id") int activityId, @Field("end") long endTime);
+	
+	@FormUrlEncoded
+	@PUT("/appointment/editlocation")
+	public Aktivitet setLocation(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("location") String location);
+	
+
+	@PUT("/appointment/editmessage")
+	public Aktivitet setMessage(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("message") String message);
+
+	
+	@POST("/appointment/{appointment_id}/rom/{rom_id}")
+	public void setRoom(@Path("appointment_id") int appointmentId, @Path("room_id") int romId);
 	
 	@GET("/user/{user_id}/appointments")
 	public ArrayList<Aktivitet> getAlleBrukerAktiviteter(@Path("user_id") int userId);
-	
-	//Do we need an acce��t appointment
-	
-	// InnvitasjonsController
 	
 	// GruppeController
 	

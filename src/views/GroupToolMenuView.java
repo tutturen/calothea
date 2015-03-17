@@ -1,11 +1,13 @@
 package views;
 
+import interfaces.View;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
 import models.Group;
 
-public class GroupToolMenuView implements View {
+public class GroupToolMenuView extends BaseView {
 	private Group group;
 	private boolean done;
 	private ArrayList<View> editViews;

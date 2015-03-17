@@ -1,19 +1,19 @@
+import interfaces.View;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Stack;
-
 import utlils.Console;
+import utlils.ViewStack;
 import views.LoginView;
-import views.View;
 import models.MainUser;
 import models.User;
 
 public class MainProgram {
 
-	private Stack<View> views;
+	private ViewStack views;
 
 	public MainProgram() {
-		views = new Stack<View>();
+		views = new ViewStack();
 	}
 
 	private void init() {
@@ -35,11 +35,7 @@ public class MainProgram {
 
 		Console.println(Console.charLine('-', Console.WIDTH));
 
-		String viewStack = "";
-		for (View v : views) {
-			viewStack += " » " + v.getTitle();
-		}
-		Console.println(viewStack);
+		Console.println(views.toString());
 		Console.println("");
 
 		printContent(view.getContent());
@@ -62,7 +58,7 @@ public class MainProgram {
 		Scanner scanner = new Scanner(System.in);
 		MainProgram program = new MainProgram();
 		program.init();
-		program.views.add(new LoginView());
+		program.views.push(new LoginView());
 
 		while (!program.views.isEmpty()) {
 			View view = program.views.peek();

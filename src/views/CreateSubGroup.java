@@ -3,11 +3,12 @@ package views;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import utlils.ViewStack;
 import controllers.GroupController;
 import models.Group;
 import models.MainUser;
 
-public class CreateSubGroup implements View {
+public class CreateSubGroup extends BaseView {
 
 	private boolean done;
 	private String groupName;
@@ -34,7 +35,7 @@ public class CreateSubGroup implements View {
 
 	public ArrayList<String> getContent() {
 		ArrayList<String> output = new ArrayList<String>();
-		output.add("For Œ opprette en subgruppe kreves det at du gir gruppen et navn. Navnet mŒ v¾re lenger enn 4 bokstaver");
+		output.add("For ï¿½ opprette en subgruppe kreves det at du gir gruppen et navn. Navnet mï¿½ vï¿½re lenger enn 4 bokstaver");
 		output.add("Du legger til medlemmer etter at gruppen er opprettet");
 		return output;
 	}
@@ -48,13 +49,13 @@ public class CreateSubGroup implements View {
 			return "";
 	}
 
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		this.groupName = input;
 		if (groupName.length() < 5) {
 			return;
 		} else {
 			this.done = true;
-			viewStack.remove(viewStack.size() - 1);
+			viewStack.pop();
 			int id = masterGroup.getId();
 			this.subGroup = GroupController.createGroup(groupName, id);
 			GroupController.addMember(this.subGroup.getId(), MainUser

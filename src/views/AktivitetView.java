@@ -2,63 +2,107 @@ package views;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Stack;
 
 import controllers.AvtaleController;
 import utlils.Console;
+import utlils.ViewStack;
 import models.Aktivitet;
+import models.Invitation;
+import models.MainUser;
+import models.User;
 
-public class AktivitetView implements View {
+public class AktivitetView extends BaseView {
 
-	private Aktivitet aktivitet;
-	private boolean done = false;
-	private String deltar = "  DELTAR   ";
-	private String deltarIkke = "DELTAR IKKE";
-
+	private Aktivitet activity;
+	private Boolean userAttending;
+	private final static String NOT_ANSWERED    = " IKKE SVART  ";
+	private final static String ATTENDING 		= "   DELTAR    ";
+	private final static String NOT_ATTENDING 	= " DELTAR IKKE ";
+	private final static int WIDTH = 80;
+	private int userId;
+	private Invitation userInvitation;
+	
 	public AktivitetView(int aktivitetId) {
-		this.aktivitet = AvtaleController.getAktivitet(aktivitetId);
+		this.activity = AvtaleController.getAktivitet(aktivitetId);
+		this.userId = MainUser.getInstance().getId();
+		// Get if user is attending
+		for (Invitation inv : activity.getInvitations()) {
+			if (inv.getUser().getId() == userId) {
+				if (inv.isAccepted() == null) {
+					userAttending = false;
+				} else {
+					userAttending = inv.isAccepted();
+				}
+				userInvitation = inv;
+				break;
+			}
+		}
 	}
 
 	@Override
 	public String getTitle() {
-		return aktivitet.getNavn();
+		return activity.getName();
 	}
 
 	@Override
 	public ArrayList<String> getContent() {
-		int tableWidth = 21;
+		this.activity = AvtaleController.getAktivitet(activity.getId());
+		
+		int leftTableWidth = 26;
+		int rightTableWidth = 38;
 		ArrayList<String> lines = new ArrayList<String>();
 		
-		String ansvarlig = "Ansv.:   " + Console.matchLength(aktivitet.getAdmin().toString(),  tableWidth);
-		String datoStr = new SimpleDateFormat("dd. MMM").format(aktivitet.getStartDate());
-		String dato = "Dato:    " + Console.matchLength(datoStr, tableWidth);
-		String timeStartStr = new SimpleDateFormat("HH:mm").format(aktivitet.getStartDate());
-		String startTid = "Start:   " + Console.matchLength(timeStartStr, tableWidth);
-		String timeSluttStr = new SimpleDateFormat("HH:mm").format(aktivitet.getEndDate());
-		String sluttTid = "Slutt:   " + Console.matchLength(timeSluttStr, tableWidth);
-		String sted = "Sted:    " + Console.matchLength(aktivitet.getRom().toString(), tableWidth);
+		String ansvarlig = "Ansv.:   " + Console.matchLength(activity.getAdmin().toString(),  leftTableWidth);
+		String datoStr = new SimpleDateFormat("dd. MMM").format(activity.getStartDate());
+		String dato = "Dato:    " + Console.matchLength(datoStr, leftTableWidth);
+		String timeStartStr = new SimpleDateFormat("HH:mm").format(activity.getStartDate());
+		String startTid = "Start:   " + Console.matchLength(timeStartStr, leftTableWidth);
+		String timeSluttStr = new SimpleDateFormat("HH:mm").format(activity.getEndDate());
+		String sluttTid = "Slutt:   " + Console.matchLength(timeSluttStr, leftTableWidth);
+		String sted = "Sted:    " + Console.matchLength(activity.getLocation(), leftTableWidth);
 		
+		ArrayList<String> messageLines = Console.fitInBox(activity.getMessage(), 35, 5);
 		
-		lines.add("+-------------  INFO  -----------+     +---------- MELDING ----------+");
-		lines.add("| " + ansvarlig + " |");
-		lines.add("| " + dato + " |");
-		lines.add("| " + startTid + " |");
-		lines.add("| " + sluttTid + " |");
-		lines.add("| " + sted + " |");
-		/*lines.add("| Ansv.:    Thea Ullebust      |     | Det blir anledning til å    |");
-		lines.add("| Dato:     27. Mar            |     | ake så mye dere vil.        |");
-		lines.add("| Start:    12:25              |     | Ha en fin dag.              |");
-		lines.add("| Slutt:    12:25              |     |                             |");
-		lines.add("| Sted:     ROM 401, P15       |     |                             |");*/
-		lines.add("+--------------------------------+     +-----------------------------+");
+		lines.add("+--------------  INFO  ---------------+   " + Console.tableHead("MELDING", rightTableWidth));
+		lines.add("| "   + ansvarlig +                 " |   " + Console.tableRow(messageLines.get(0), rightTableWidth));
+		lines.add("| "   + dato +                      " |   " + Console.tableRow(messageLines.get(1), rightTableWidth));
+		lines.add("| "   + startTid +                  " |   " + Console.tableRow(messageLines.get(2), rightTableWidth));
+		lines.add("| "   + sluttTid +                  " |   " + Console.tableRow(messageLines.get(3), rightTableWidth));
+		lines.add("| "   + sted +                      " |   " + Console.tableRow(messageLines.get(4), rightTableWidth));
+		lines.add("+-------------------------------------+   " + Console.tableRow(rightTableWidth));
+ 
+		lines.add(Console.tableHead("TRE KULE DELTAGERE", WIDTH));
+		lines.add("| " + Console.matchLength(activity.getAdmin().getName(), WIDTH - 16) + ATTENDING + "|");
+		int max = activity.getInvitations().size() > 3 ? 3 : activity.getInvitations().size();
+		for (int i = 0; i < max; i++) {
+			Invitation invitation = activity.getInvitations().get(i);
+			String dText;
+			if (invitation.isAccepted() == null) {
+				dText = NOT_ANSWERED;
+			} else {
+				dText = invitation.isAccepted() ? ATTENDING : NOT_ATTENDING;				
+			}
+			lines.add("| " + Console.matchLength(invitation.getUser().getName(), WIDTH - 16) + dText + "|");
+		}
+		lines.add(Console.tableRow(WIDTH));
+		
+		// TODO: Endre aktivitet
+		
+		if (userIsAdmin() || userIsInvited()) {
+			lines.add(Console.tableHead("HANDLINGER", WIDTH));
+			
+			if (userIsInvited()) {
+				String att = userAttending ? "Si at du ikke deltar" : "Si at du deltar.";
+				lines.add(Console.tableRow("1. " + att, WIDTH));
+				
+			}
+			lines.add(Console.tableRow("2. Se alle deltagere", WIDTH));
+			if (userIsAdmin()) {
+				lines.add(Console.tableRow("3. Endre aktivitet", WIDTH));				
+			}
+			lines.add(Console.tableRow(WIDTH));
 
-		lines.add("+------------------------- DELTAGERE -------------------------+");
-		lines.add("| Thor Even Tutturen                                DELTAR    |");
-		lines.add("| Per Oskar Isdahl                                  DELTAR    |");
-		lines.add("| Sjur Waagbø                                       DELTAR    |");
-		lines.add("| Simen Hellem                                      DELTAR    |");
-		lines.add("| Ahmed                                             DELTAR    |");
-		lines.add("+-------------------------------------------------------------+");
+		}
 
 		return lines;
 	}
@@ -67,21 +111,49 @@ public class AktivitetView implements View {
 	public String getQuery() {
 		return "Aktivitet >";
 	}
-
-	@Override
-	public boolean isDone() {
-		return done;
+	
+	private boolean userIsAdmin() {
+		return activity.getAdmin().getId() == userId;
+	}
+	
+	private boolean userIsInvited() {
+		for (Invitation invite : activity.getInvitations()) {
+			if (userId == invite.getUser().getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
-		//done = true;
+	public void giveInput(String input, ViewStack viewStack) {
+		super.giveInput(input, viewStack);
+		 
+		if (userIsInvited() && input.length() == 1 && input.charAt(0) == '1') {
 
-	}
+			userAttending = !userAttending;
+			AvtaleController.setAttending(activity.getId(), userId, userAttending);
+			if (userAttending) {
+				userInvitation.accept();
+			} else {
+				userInvitation.decline();
+			}
+			return;
+		}
+		else if (userIsAdmin() && input.length() == 1 && input.charAt(0) == '3') {
+			viewStack.push(new ChangeAppointmentView(activity));
+			return;
+		} else if (input.length() == 1 && input.charAt(0) == '2') {
+			ArrayList<User> members = new ArrayList<User>();
+			for (Invitation inv : activity.getInvitations()) {
+				members.add(inv.getUser());
+			}
+			viewStack.push(new SelectView<User>("Alle deltagere", members));
+		} else {
+			this.done = true;
+			return;
+		}
 
-	@Override
-	public void setUnDone() {
-		this.done = false;
 	}
 
 }

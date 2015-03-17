@@ -1,19 +1,16 @@
 package views;
 
 import java.util.ArrayList;
-import java.util.Stack;
-
 import controllers.GroupController;
 import controllers.UserController;
 import utlils.Console;
+import utlils.ViewStack;
 import models.Group;
 import models.User;
 
-public class GroupView implements View {
-
-	private boolean done;
-	private Group group;
+public class GroupView extends BaseView{
 	private final static int WIDTH = 60;
+	private Group group;
 	private SelectView<User> sw1;
 	private SelectView<User> sw2;
 	int groupId;
@@ -43,17 +40,6 @@ public class GroupView implements View {
 			sw1 = new SelectView<User>("Velg brukere", masterGroup.getMembers());
 			this.message = "";
 		}
-
-	}
-
-	@Override
-	public boolean isDone() {
-		return done;
-	}
-
-	@Override
-	public void setUnDone() {
-		this.done = false;
 
 	}
 
@@ -110,14 +96,12 @@ public class GroupView implements View {
 
 	@Override
 	public String getQuery() {
-
 		return "Trykk enter for å gå tilbake, trykk + for å legge tid medlemmer eller - for å fjerne medlem. \nHvis du prøver å legge til medlemmer fra en subgruppe kan du bare velge fra de som er i Mastergruppen.\nHvis du vil lage en subgruppe til denne gruppen skriv '+sub'.";
-
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
-
+	public void giveInput(String input, ViewStack viewStack) {
+		super.giveInput(input, viewStack);
 		if (input.equals("+")) {
 
 			viewStack.push(sw1);
@@ -149,7 +133,6 @@ public class GroupView implements View {
 		if (input.length() == 0){
 			this.done = true;
 		}
-
 
 	}
 

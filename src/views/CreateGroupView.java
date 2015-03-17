@@ -1,8 +1,11 @@
 package views;
 
+import interfaces.View;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
+import utlils.ViewStack;
 import controllers.GroupController;
 import models.Group;
 import models.MainUser;
@@ -49,14 +52,14 @@ public class CreateGroupView implements View {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		this.groupName= input;
 		if(groupName.length() < 5) {
 			return;
 		}	
 		else{
 			this.done = true;
-			viewStack.remove(viewStack.size()-1);
+			viewStack.pop();
 			this.group = GroupController.createGroup(groupName, 0);
 			GroupController.addMember(this.group.getId() ,MainUser.getInstance().getId());
 			viewStack.push(new GroupToolMenuView(this.group));

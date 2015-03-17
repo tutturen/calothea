@@ -1,11 +1,10 @@
 package views;
 
 import interfaces.Selectable;
-
+import interfaces.View;
 import java.util.ArrayList;
-import java.util.Stack;
-
 import utlils.Console;
+import utlils.ViewStack;
 
 public class SelectView<T extends Selectable> implements View {
 
@@ -43,7 +42,7 @@ public class SelectView<T extends Selectable> implements View {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
 		if (input.length() == 0) {
 			return;
 		}

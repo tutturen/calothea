@@ -1,29 +1,16 @@
 package views;
 
 import java.util.ArrayList;
-import java.util.Stack;
-
+import utlils.ViewStack;
 import models.User;
 import controllers.UserController;
 
-public class RegisterView implements View {
+public class RegisterView extends BaseView {
 
-	private boolean done;
 	private String email = "";
 	private String name = "";
 	private String role = "";
 	private String password = "";
-
-	@Override
-	public boolean isDone() {
-		return done;
-	}
-
-	@Override
-	public void setUnDone() {
-		this.done = false;
-
-	}
 
 	@Override
 	public String getTitle() {
@@ -33,8 +20,8 @@ public class RegisterView implements View {
 	@Override
 	public ArrayList<String> getContent() {
 		ArrayList<String> output = new ArrayList<String>();
-		output.add("For å registrer bruker kreves at du oppgir: Navn, stillingsrolle, email og passord");
-		output.add("Dette har du skrevet så langt:");
+		output.add("For √• registrerw bruker kreves at du oppgir: Navn, stillingsrolle, email og passord");
+		output.add("Dette har du skrevet s√• langt:");
 		output.add("Navn: " + (name == null ? "" : name));
 		output.add("Rolle: " + (role == null ? "" : role));
 		output.add("Email: " + (email == null ? "" : email));
@@ -59,7 +46,8 @@ public class RegisterView implements View {
 	}
 
 	@Override
-	public void giveInput(String input, Stack<View> viewStack) {
+	public void giveInput(String input, ViewStack viewStack) {
+		super.giveInput(input, viewStack);
 		if (input.toLowerCase().equals("quit")) {
 			this.done = true;
 			return;

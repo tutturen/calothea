@@ -6,9 +6,6 @@ import requests.ReqService;
 import models.Rom;
 import models.Aktivitet;
 
-
-
-
 public class RoomController{
 	
 	ReqService db = ReqClient.getInstance().getService();
@@ -21,20 +18,20 @@ public class RoomController{
 	
 	public void addRom(Aktivitet aktivitet, Rom rom){
 		aktivitet.setRom(rom);
-		db.setRom(aktivitet.getId(), rom.getRomNr());
+		db.setRoom(aktivitet.getId(), rom.getRomNr());
 		
 	}
 	
 	
 	public void deleteRom(Aktivitet aktivitet){
 		aktivitet.setRom(null);
-		db.setRom(aktivitet.getId(), 0);
+		db.setRoom(aktivitet.getId(), 0);
 		
 	}
 	
 	//Gir deg ingen informasjon annet enn at du henter et rom. 
 	public Rom getRoom(int romId){
-		return db.getRom(romId);
+		return db.getRoom(romId);
 		
 		
 	}
