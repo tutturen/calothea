@@ -84,8 +84,8 @@ public class ChangeAppointmentView extends BaseView {
 		lines.add(Console.tableRow("5. Endre melding", WIDTH));
 		lines.add(Console.tableRow("6. Legg til deltaker", WIDTH));
 		lines.add(Console.tableRow("7. Fjern deltaker", WIDTH));
-		lines.add(Console.tableRow("8. Legg til gruppe [MANGLER]", WIDTH));
-		lines.add(Console.tableRow("9. Fjern gruppe [MANGLER]", WIDTH));
+		lines.add(Console.tableRow("8. Legg til gruppe", WIDTH));
+		lines.add(Console.tableRow("9. Fjern gruppe", WIDTH));
 		lines.add(Console.tableRow("10. Velg rom", WIDTH));
 		lines.add(Console.tableRow(WIDTH));
 		lines.add("");
