@@ -1,6 +1,8 @@
 package views;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import models.Alert;
 import models.MainUser;
@@ -12,6 +14,7 @@ public class AlertView extends BaseView {
 	
 	private int userId;
 	private ArrayList<Alert> alerts;
+	private int index;
 	private final static int WIDTH = 80;
 	
 	public AlertView() {
@@ -26,17 +29,21 @@ public class AlertView extends BaseView {
 	@Override
 	public ArrayList<String> getContent() {
 		alerts = AlertController.getAlerts(userId);
+		Collections.sort(alerts);
 		ArrayList<String> lines = new ArrayList<String>();
 		lines.add(Console.tableHead("Dine varsler", WIDTH));
-		lines.add("| AVTALENAVN                                                 MELDING           |");
+		lines.add("|     DATO           MELDING                                                   |");
 		lines.add(Console.tableRow(WIDTH));
-		int max = alerts.size() > 9 ? 9 : alerts.size();
 		if (alerts.size() > 0) {			
-			for (int i = 1; i <= max; i++) {
-				Alert alert = alerts.get(i - 1);
-				String name = Console.matchLength(i + ". " + alert.getActivity().getName(), 55);
-				String msg = Console.matchLength(alert.getMessage(), 20);
-				lines.add(Console.tableRow(name + " " + msg, WIDTH));
+			for (int i = index; i <= alerts.size() - 1; i++) {
+				Alert alert = alerts.get(i);
+				String id = Console.matchLength(i + 1 + ".", 4);
+				String date = Console.matchLength("" + new SimpleDateFormat("dd. MMM HH:mm").format(alert.getUpdated_at()), 14);
+				String msg = Console.matchLength(alert.getMessage(), 58);
+				lines.add(Console.tableRow(id + date + " " + msg, WIDTH));
+				if ((i - index) > 10) {
+					break;
+				}
 			}
 		} else {
 			lines.add(Console.tableRow("Du har ingen varsler. Grattis.", WIDTH));
@@ -48,7 +55,7 @@ public class AlertView extends BaseView {
 
 	@Override
 	public String getQuery() {
-		return " Velg ID for å gå til avtalen. Trykk Enter for å avslutte >";
+		return " Velg ID, A for forrige eller D for neste >";
 	}
 	
 	
@@ -59,13 +66,32 @@ public class AlertView extends BaseView {
 			this.done = true;
 			return;
 		}
-		int nr = input.charAt(0) - '0';
-		if (nr > 0 && nr <= alerts.size()) {
-			viewStack.push(new AktivitetView(alerts.get(nr - 1).getActivity().getId()));
+		
+		try {
+			int id = Integer.parseInt(input);
+			if (id > 0 && id < alerts.size() + 1) {
+				viewStack.push(new BigMessageView(alerts.get(id-1).getMessage()));
+			}
+
+		} catch (Exception e) {
+			Console.print(e.getMessage());
+			char c = input.toLowerCase().charAt(0);
+			if (c == 'x') {
+				this.done = true;
+			}
+			if (c == 'a') {
+				if (index > 12) {
+					index -= 12;
+				} else {
+					index = 0;
+				}
+			} else if (c == 'd') {
+				if (index > (alerts.size() - 12)) {
+					index = 0;
+				} else {
+					index += 12;
+				}
+			}
 		}
-		
-		
 	}
-
-
 }
