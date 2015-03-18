@@ -256,7 +256,7 @@ public class ChangeAppointmentView extends BaseView {
 					if (isValidYear(nr)) {
 						year = nr;
 						Date start = activity.getStartDate();
-						AvtaleController.changeStartTime(activity.getId(), year,
+						AvtaleController.changeStartTime(activity.getId(), MainUser.getInstance().getId(),  year,
 								month, day, start.getHours(), start.getMinutes());
 						resetValues();
 						message = "Datoen på aktiviteten er nå endret.";
@@ -273,7 +273,7 @@ public class ChangeAppointmentView extends BaseView {
 			if (time != null) {
 				Date start = activity.getStartDate();
 				try {
-					AvtaleController.changeStartTime(activity.getId(), start.getYear() + 1900, start.getMonth() + 1, start.getDate(), time[0],
+					AvtaleController.changeStartTime(activity.getId(), MainUser.getInstance().getId(), start.getYear() + 1900, start.getMonth() + 1, start.getDate(), time[0],
 							time[1]);
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));
@@ -287,7 +287,7 @@ public class ChangeAppointmentView extends BaseView {
 			if (time != null) {
 				Date end = activity.getStartDate();
 				try {
-					AvtaleController.changeEndTime(activity.getId(), end.getYear() + 1900, end.getMonth() + 1, end.getDate(), time[0],
+					AvtaleController.changeEndTime(activity.getId(), MainUser.getInstance().getId(), end.getYear() + 1900, end.getMonth() + 1, end.getDate(), time[0],
 							time[1]);
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));

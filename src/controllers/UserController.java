@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import helpers.LoginResult;
 import requests.ReqClient;
+import models.Alert;
 import models.MainUser;
 import models.User;
 

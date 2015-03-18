@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import helpers.LoginResult;
 import helpers.Result;
 import models.Aktivitet;
+import models.Alert;
 import models.Invitation;
 import models.Kalender;
 import models.Rom;
@@ -59,11 +60,11 @@ public interface ReqService {
 
 	@FormUrlEncoded
 	@PUT("/appointment/editstart")
-	public Aktivitet setStartTime(@Field("appointment_id") int activityId, @Field("start") long startTime);
+	public Aktivitet setStartTime(@Field("appointment_id") int activityId, @Field("user_id") int userId, @Field("start") long startTime);
 	
 	@FormUrlEncoded
 	@PUT("/appointment/editend")
-	public Aktivitet setEndTime(@Field("appointment_id") int activityId, @Field("end") long endTime);
+	public Aktivitet setEndTime(@Field("appointment_id") int activityId, @Field("user_id") int userId, @Field("end") long endTime);
 	
 	@FormUrlEncoded
 	@PUT("/appointment/editlocation")
@@ -120,6 +121,9 @@ public interface ReqService {
 	
 	@GET("/users")
 	public ArrayList<User> getAllUsers();
+	
+	@GET("/user/{user_id}/alerts")
+	public ArrayList<Alert> getUserAlerts(@Path("user_id") int userId);
 	
 	// AuthController
 	

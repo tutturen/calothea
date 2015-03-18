@@ -57,20 +57,20 @@ public class AvtaleController {
 		db.setAttending(activityId, userId, att);
 	}
 
-	public static void changeStartTime(int activityId, int year, int month,
+	public static void changeStartTime(int activityId, int userId, int year, int month,
 			int day, int hours, int minutes) throws ParseException {
 		Date date = makeDate(year, month, day, hours, minutes);
-		db.setStartTime(activityId, date.getTime());
+		db.setStartTime(activityId, userId, date.getTime());
 	}
 
-	public static void changeEndTime(int activityId, int year, int month, int day, int hours, int minutes) throws ParseException {
+	public static void changeEndTime(int activityId, int userId, int year, int month, int day, int hours, int minutes) throws ParseException {
 		String datestring = hours + ":" + minutes + "-" + day + "." + month
 				+ "." + year;
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm-dd.MM.yyyy",
 				Locale.GERMAN);
 		format.setTimeZone(TimeZone.getTimeZone("GMT"));
 		Date date = format.parse(datestring);
-		db.setEndTime(activityId, date.getTime());
+		db.setEndTime(activityId, userId, date.getTime());
 	}
 
 	public static void changeLocation(int activityId, int userId, String location) {
