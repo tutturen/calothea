@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import controllers.AvtaleController;
+import controllers.GroupController;
 import controllers.UserController;
 import utlils.Console;
 import utlils.ViewStack;
@@ -173,7 +174,9 @@ public class ChangeAppointmentView extends BaseView {
 	}
 	
 	private void displayInviteGroupView(ViewStack viewStack) {
-		// TODO need to be filled
+		ArrayList<Group> glist = GroupController.getAllGroups(MainUser.getInstance());
+		groupSelect = new SelectView<Group>("Legg til en gruppe. Hvis du legger til en eksisterende vil ingenting skje", glist);
+		viewStack.push(groupSelect);
 	}
 	
 	private void displayRemoveGroupView(ViewStack viewStack) {

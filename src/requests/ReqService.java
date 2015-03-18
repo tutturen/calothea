@@ -81,6 +81,11 @@ public interface ReqService {
 	@GET("/user/{user_id}/appointments")
 	public ArrayList<Aktivitet> getAlleBrukerAktiviteter(@Path("user_id") int userId);
 	
+	@FormUrlEncoded
+	@POST("/appointment/inviteGroup")
+	public Group inviteGroupAcitivity(@Field("appointment_id") int appointmentId, @Field("group_id") int groupId);
+	
+	
 	// GruppeController
 	
 	@GET("/user/{user_id}/groups")
