@@ -1,7 +1,10 @@
 package views;
 
 import helpers.LoginResult;
+
 import java.util.ArrayList;
+
+import utlils.Console;
 import utlils.ViewStack;
 import controllers.UserController;
 import models.MainUser;
@@ -9,9 +12,17 @@ import models.MainUser;
 public class LoginView extends BaseView {
 
 	private boolean emailWritten = false;
+	private final static int WIDTH = 50;
 
 	private String email;
 	private String password;
+	
+	@Override
+	public void setUnDone() {
+		super.setUnDone();
+		this.email = "";
+		emailWritten = false;
+	}
 
 	private void addSplash(ArrayList<String> content) {
 		content.add("     _______  _______  ___      _______  _______  __   __  _______  _______    ");
@@ -36,7 +47,9 @@ public class LoginView extends BaseView {
 		content.add("                     Hvis du vil registere deg, skriv 'registrer'");
 		content.add("");
 		content.add("");
-		content.add("Epost: " + (email == null ? "" : email));
+		content.add("                 " + Console.tableHead("Logg inn", WIDTH));
+		content.add("                 " + Console.tableRow("Epost: " + (email == null ? "" : email), WIDTH));
+		content.add("                 " + Console.tableRow(WIDTH));
 
 		return content;
 	}
@@ -70,6 +83,7 @@ public class LoginView extends BaseView {
 			if (MainUser.getInstance() != null) {
 				done = true;
 				viewStack.push(new MenuView());
+				this.setUnDone();
 			} else {
 				email = "";
 				emailWritten = false;
