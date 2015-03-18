@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
+import models.Group;
 import requests.ReqClient;
 import requests.ReqService;
 import models.Aktivitet;
@@ -91,12 +91,17 @@ public class AvtaleController {
 
 	public static void inviteGroup(int appointmentId, int groupId) {
 		db.inviteGroupAcitivity(appointmentId, groupId);
-		
-		
-
+	}
+	
+	public static ArrayList<Group> getAllGroupsInAppointment(int appointmentId){
+		return db.getAppointmentGroups(appointmentId);
 	}
 
-	public static void removeGroup(int activityId, int groupId) {
+	
+
+	public static void removeGroup(int appointmentId, int groupId) {
+		db.removeAppointmentGroup(appointmentId, groupId);
+		
 
 	}
 
