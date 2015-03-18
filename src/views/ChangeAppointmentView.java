@@ -84,8 +84,8 @@ public class ChangeAppointmentView extends BaseView {
 		lines.add(Console.tableRow("5. Endre melding", WIDTH));
 		lines.add(Console.tableRow("6. Legg til deltaker", WIDTH));
 		lines.add(Console.tableRow("7. Fjern deltaker", WIDTH));
-		lines.add(Console.tableRow("8. Legg til gruppe [MANGLER]", WIDTH));
-		lines.add(Console.tableRow("9. Fjern gruppe [MANGLER]", WIDTH));
+		lines.add(Console.tableRow("8. Legg til gruppe", WIDTH));
+		lines.add(Console.tableRow("9. Fjern gruppe", WIDTH));
 		lines.add(Console.tableRow("10. Velg rom", WIDTH));
 		lines.add(Console.tableRow(WIDTH));
 		lines.add("");
@@ -283,8 +283,11 @@ public class ChangeAppointmentView extends BaseView {
 					if (isValidYear(nr)) {
 						year = nr;
 						Date start = activity.getStartDate();
+						Date end = activity.getEndDate();
 						AvtaleController.changeStartTime(activity.getId(), MainUser.getInstance().getId(),  year,
 								month, day, start.getHours(), start.getMinutes());
+						AvtaleController.changeEndTime(activity.getId(), MainUser.getInstance().getId(),  year,
+								month, day, end.getHours(), end.getMinutes());
 						resetValues();
 						message = "Datoen på aktiviteten er nå endret.";
 					}
@@ -319,7 +322,7 @@ public class ChangeAppointmentView extends BaseView {
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));
 				}
-				message = "Sluttidspunktet på aktivteten er nå endret.";
+				message = "Sluttidspunktet på aktiviteten er nå endret.";
 				resetValues();
 				return;
 			}
