@@ -283,8 +283,11 @@ public class ChangeAppointmentView extends BaseView {
 					if (isValidYear(nr)) {
 						year = nr;
 						Date start = activity.getStartDate();
+						Date end = activity.getEndDate();
 						AvtaleController.changeStartTime(activity.getId(), MainUser.getInstance().getId(),  year,
 								month, day, start.getHours(), start.getMinutes());
+						AvtaleController.changeEndTime(activity.getId(), MainUser.getInstance().getId(),  year,
+								month, day, end.getHours(), end.getMinutes());
 						resetValues();
 						message = "Datoen på aktiviteten er nå endret.";
 					}
@@ -319,7 +322,7 @@ public class ChangeAppointmentView extends BaseView {
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));
 				}
-				message = "Sluttidspunktet på aktivteten er nå endret.";
+				message = "Sluttidspunktet på aktiviteten er nå endret.";
 				resetValues();
 				return;
 			}
