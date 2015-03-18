@@ -69,7 +69,7 @@ public interface ReqService {
 	@PUT("/appointment/editlocation")
 	public Aktivitet setLocation(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("location") String location);
 	
-
+	@FormUrlEncoded
 	@PUT("/appointment/editmessage")
 	public Aktivitet setMessage(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("message") String message);
 
@@ -83,6 +83,14 @@ public interface ReqService {
 	@FormUrlEncoded
 	@POST("/appointment/inviteGroup")
 	public Group inviteGroupAcitivity(@Field("appointment_id") int appointmentId, @Field("group_id") int groupId);
+	
+	
+	@GET("/appointment/{appointment_id}/getInvitedGroups")
+	public ArrayList<Group> getAppointmentGroups(@Path("appointment_id") int appointmentId);
+	
+	@FormUrlEncoded
+	@POST("/appointment/removeGroup")
+	public Group removeAppointmentGroup(@Field("appointment_id") int appointmentId, @Field("group_id") int groupId);
 	
 	
 	// GruppeController

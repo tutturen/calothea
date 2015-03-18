@@ -114,7 +114,7 @@ public class ChangeAppointmentView extends BaseView {
 	}
 
 	private boolean isInsideOptions(int nr) {
-		return (nr > 0 && nr < 9);
+		return (nr > 0 && nr < 10);
 	}
 
 	private boolean isValidMinute(int minute) {
@@ -180,6 +180,9 @@ public class ChangeAppointmentView extends BaseView {
 	}
 	
 	private void displayRemoveGroupView(ViewStack viewStack) {
+		ArrayList<Group> glist = AvtaleController.getAllGroupsInAppointment(this.activity.getId());
+		groupSelect = new SelectView<Group>("Fjern en gruppe, alle medlemmer vil bli fjernet fra aktivitet", glist);
+		viewStack.push(groupSelect);
 		
 	}
 
@@ -214,6 +217,7 @@ public class ChangeAppointmentView extends BaseView {
 	@Override
 	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);
+		System.out.println(input);
 		if (status == NOTHING_CHOSEN && input.length() == 0) {
 			this.done = true;
 			return;

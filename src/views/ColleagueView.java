@@ -39,7 +39,7 @@ public class ColleagueView extends BaseView {
 	@Override
 	public String getQuery() {
 		if (sv.isDone()) {
-			return "Trykk enter for å se kalenderen til " + sv.getSelected().getName() + " >";
+			return "Trykk enter for �� se kalenderen til " + sv.getSelected().getName() + " >";
 		}
 		return "Velg NR >";
 	}
@@ -57,6 +57,9 @@ public class ColleagueView extends BaseView {
 			viewStack.push(sv);
 			stack = viewStack;
 			return;
+			
+		}else if (input.equals("")){
+			this.done = true;
 		}
 	}
 
