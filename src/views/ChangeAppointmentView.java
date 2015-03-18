@@ -3,7 +3,6 @@ package views;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-
 import controllers.AvtaleController;
 import controllers.RoomController;
 import controllers.GroupController;
@@ -231,6 +230,7 @@ public class ChangeAppointmentView extends BaseView {
 		return null;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);

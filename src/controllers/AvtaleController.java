@@ -18,8 +18,8 @@ public class AvtaleController {
 
 	static ReqService db = ReqClient.getInstance().getService();
 
-	public static Aktivitet createAvtale(User admin, String name, String message,
-			String location, Date startDate, Date endDate) {
+	public static Aktivitet createAvtale(User admin, String name,
+			String message, String location, Date startDate, Date endDate) {
 		Aktivitet aktivitet = db.createActivity(admin.getId(), name, message,
 				location, startDate.getTime(), endDate.getTime());
 		return aktivitet;
@@ -34,10 +34,10 @@ public class AvtaleController {
 	public static ArrayList<Aktivitet> getAlleAktiviteter(int userId) {
 		return db.getAlleBrukerAktiviteter(userId);
 	}
-	
-	//public static ArrayList<Aktivitet> getAlleGroupAktiviteter(int gruppeId){
-		
-	//}
+
+	// public static ArrayList<Aktivitet> getAlleGroupAktiviteter(int gruppeId){
+
+	// }
 
 	public static Aktivitet getAktivitet(int aktivitetId) {
 		return db.getActivity(aktivitetId);
@@ -57,13 +57,14 @@ public class AvtaleController {
 		db.setAttending(activityId, userId, att);
 	}
 
-	public static void changeStartTime(int activityId, int userId, int year, int month,
-			int day, int hours, int minutes) throws ParseException {
+	public static void changeStartTime(int activityId, int userId, int year,
+			int month, int day, int hours, int minutes) throws ParseException {
 		Date date = makeDate(year, month, day, hours, minutes);
 		db.setStartTime(activityId, userId, date.getTime());
 	}
 
-	public static void changeEndTime(int activityId, int userId, int year, int month, int day, int hours, int minutes) throws ParseException {
+	public static void changeEndTime(int activityId, int userId, int year,
+			int month, int day, int hours, int minutes) throws ParseException {
 		String datestring = hours + ":" + minutes + "-" + day + "." + month
 				+ "." + year;
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm-dd.MM.yyyy",
@@ -73,11 +74,13 @@ public class AvtaleController {
 		db.setEndTime(activityId, userId, date.getTime());
 	}
 
-	public static void changeLocation(int activityId, int userId, String location) {
+	public static void changeLocation(int activityId, int userId,
+			String location) {
 		db.setLocation(activityId, userId, location);
 	}
 
-	public static void changeMessage(int appointmentId, int userId, String message) {
+	public static void changeMessage(int appointmentId, int userId,
+			String message) {
 		db.setMessage(appointmentId, userId, message);
 	}
 
@@ -92,19 +95,16 @@ public class AvtaleController {
 	public static void inviteGroup(int appointmentId, int groupId) {
 		db.inviteGroupAcitivity(appointmentId, groupId);
 	}
-	
-	public static ArrayList<Group> getAllGroupsInAppointment(int appointmentId){
+
+	public static ArrayList<Group> getAllGroupsInAppointment(int appointmentId) {
 		return db.getAppointmentGroups(appointmentId);
 	}
 
-	
-
 	public static void removeGroup(int appointmentId, int groupId) {
 		db.removeAppointmentGroup(appointmentId, groupId);
-		
 
 	}
-	
+
 	public static void setRoom(int roomId, int appointmentId) {
 		db.setRoom(appointmentId, roomId);
 	}
@@ -116,7 +116,8 @@ public class AvtaleController {
 	 * }
 	 */
 
-	private static Date makeDate(int year, int month, int day, int hours, int minutes) {
+	private static Date makeDate(int year, int month, int day, int hours,
+			int minutes) {
 		String datestring = hours + ":" + minutes + "-" + day + "." + month
 				+ "." + year;
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm-dd.MM.yyyy",
