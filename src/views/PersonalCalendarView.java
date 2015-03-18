@@ -2,7 +2,9 @@ package views;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+
 import utlils.Console;
 import utlils.ViewStack;
 import controllers.AvtaleController;
@@ -20,7 +22,7 @@ public class PersonalCalendarView extends CalendarView {
 		this.user = user;
 		this.title = user.getName() + " sin kalender";
 		aktiviteter = AvtaleController.getAlleAktiviteter(user.getId());
-		//Collections.sort(aktiviteter);
+		Collections.sort(aktiviteter);
 	}
 
 	@Override
@@ -36,9 +38,12 @@ public class PersonalCalendarView extends CalendarView {
 		int listCiphers = (aktiviteter.size() + "").length();
 		String ciphers = Console.charLine('-', listCiphers);
 		String spaces = Console.charLine(' ', listCiphers);
+		lines.add("---" + ciphers
+				+ "+--------------+-------+-------+-------------------------------------------");
+		
 		lines.add(" ID" + spaces + "| DATO         | START | SLUTT | NAVN ");
 		lines.add("---" + ciphers
-				+ "+---------------------------------------------------");
+				+ "+--------------+-------+-------+-------------------------------------------");
 		for (int i = index; i < aktiviteter.size(); i++) {
 
 			// ID
@@ -69,6 +74,8 @@ public class PersonalCalendarView extends CalendarView {
 				break;
 			}
 		}
+		lines.add("---" + ciphers
+				+ "+--------------+-------+-------+-------------------------------------------");
 		return lines;
 	}
 
