@@ -8,12 +8,11 @@ import models.Aktivitet;
 
 public class RoomController{
 	
-	ReqService db = ReqClient.getInstance().getService();
+	static ReqService db = ReqClient.getInstance().getService();
 	
 	
-	public ArrayList<Rom> finnRom(int antall, long start, long slutt){
-		return db.getFreeRooms(antall, start, slutt); 
-		
+	public static ArrayList<Rom> finnRom(int antall, int id){
+		return db.getFreeRooms(antall, id);
 	}
 	
 	public void addRom(Aktivitet aktivitet, Rom rom){

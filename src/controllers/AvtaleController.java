@@ -92,6 +92,10 @@ public class AvtaleController {
 	public static void removeGroup(int activityId, int groupId) {
 
 	}
+	
+	public static void setRoom(int roomId, int appointmentId) {
+		db.setRoom(appointmentId, roomId);
+	}
 
 	/*
 	 * private void sendInvitation(Aktivitet avtale, String melding) {

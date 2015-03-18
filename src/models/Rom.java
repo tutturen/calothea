@@ -53,5 +53,9 @@ public class Rom implements Selectable {
 	public String toString() {
 		return name + " " + id + " [" + kapasitet + "]";
 	}
+	
+	public int getId() {
+		return this.id;
+	}
 
 }
