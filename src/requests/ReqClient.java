@@ -9,7 +9,7 @@ import retrofit.converter.GsonConverter;
 public class ReqClient {
 	
 	private static ReqClient instance = new ReqClient();
-	private static final String API_URL = "http://localhost:8888";
+	private static final String API_URL = "http://188.166.53.47/index.php";
 	private ReqService service;
 	
 	public static ReqClient getInstance() {
