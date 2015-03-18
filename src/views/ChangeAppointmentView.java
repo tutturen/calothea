@@ -6,6 +6,7 @@ import java.util.Date;
 
 import controllers.AvtaleController;
 import controllers.RoomController;
+import controllers.GroupController;
 import controllers.UserController;
 import utlils.Console;
 import utlils.ViewStack;
@@ -70,7 +71,7 @@ public class ChangeAppointmentView extends BaseView {
 			resetValues();
 		}else if(roomSelect!=null && roomSelect.isDone()){
 			AvtaleController.setRoom(roomSelect.getSelected().getId(), activity.getId() );
-			message = "Du har en reservasjon på rommet " + roomSelect.getSelected().getName() + " til denne avtalen";
+			message = "Du har en reservasjon pÔøΩ rommet " + roomSelect.getSelected().getName() + " til denne avtalen";
 			status=NOTHING_CHOSEN;
 		}
 
@@ -117,7 +118,7 @@ public class ChangeAppointmentView extends BaseView {
 		case CHANGE_MESSAGE:
 			return "Skriv ny melding >";
 		case CHANGE_ROOM:
-			return "Trykk på enter, eller dø. >";
+			return "Trykk pÔøΩ enter, eller dÔøΩ. >";
 		}
 		return "Velg NR fra lista >";
 	}
@@ -183,10 +184,15 @@ public class ChangeAppointmentView extends BaseView {
 	}
 	
 	private void displayInviteGroupView(ViewStack viewStack) {
-		// TODO need to be filled
+		ArrayList<Group> glist = GroupController.getAllGroups(MainUser.getInstance());
+		groupSelect = new SelectView<Group>("Legg til en gruppe. Hvis du legger til en eksisterende vil ingenting skje", glist);
+		viewStack.push(groupSelect);
 	}
 	
 	private void displayRemoveGroupView(ViewStack viewStack) {
+		ArrayList<Group> glist = AvtaleController.getAllGroupsInAppointment(this.activity.getId());
+		groupSelect = new SelectView<Group>("Fjern en gruppe, alle medlemmer vil bli fjernet fra aktivitet", glist);
+		viewStack.push(groupSelect);
 		
 	}
 	
@@ -228,6 +234,7 @@ public class ChangeAppointmentView extends BaseView {
 	@Override
 	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);
+		System.out.println(input);
 		if (status == NOTHING_CHOSEN && input.length() == 0) {
 			this.done = true;
 			return;
@@ -276,7 +283,7 @@ public class ChangeAppointmentView extends BaseView {
 					if (isValidYear(nr)) {
 						year = nr;
 						Date start = activity.getStartDate();
-						AvtaleController.changeStartTime(activity.getId(), year,
+						AvtaleController.changeStartTime(activity.getId(), MainUser.getInstance().getId(),  year,
 								month, day, start.getHours(), start.getMinutes());
 						resetValues();
 						message = "Datoen p√• aktiviteten er n√• endret.";
@@ -293,7 +300,7 @@ public class ChangeAppointmentView extends BaseView {
 			if (time != null) {
 				Date start = activity.getStartDate();
 				try {
-					AvtaleController.changeStartTime(activity.getId(), start.getYear() + 1900, start.getMonth() + 1, start.getDate(), time[0],
+					AvtaleController.changeStartTime(activity.getId(), MainUser.getInstance().getId(), start.getYear() + 1900, start.getMonth() + 1, start.getDate(), time[0],
 							time[1]);
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));
@@ -307,7 +314,7 @@ public class ChangeAppointmentView extends BaseView {
 			if (time != null) {
 				Date end = activity.getStartDate();
 				try {
-					AvtaleController.changeEndTime(activity.getId(), end.getYear() + 1900, end.getMonth() + 1, end.getDate(), time[0],
+					AvtaleController.changeEndTime(activity.getId(), MainUser.getInstance().getId(), end.getYear() + 1900, end.getMonth() + 1, end.getDate(), time[0],
 							time[1]);
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import helpers.LoginResult;
 import helpers.Result;
 import models.Aktivitet;
+import models.Alert;
 import models.Invitation;
 import models.Kalender;
 import models.Rom;
@@ -59,17 +60,17 @@ public interface ReqService {
 
 	@FormUrlEncoded
 	@PUT("/appointment/editstart")
-	public Aktivitet setStartTime(@Field("appointment_id") int activityId, @Field("start") long startTime);
+	public Aktivitet setStartTime(@Field("appointment_id") int activityId, @Field("user_id") int userId, @Field("start") long startTime);
 	
 	@FormUrlEncoded
 	@PUT("/appointment/editend")
-	public Aktivitet setEndTime(@Field("appointment_id") int activityId, @Field("end") long endTime);
+	public Aktivitet setEndTime(@Field("appointment_id") int activityId, @Field("user_id") int userId, @Field("end") long endTime);
 	
 	@FormUrlEncoded
 	@PUT("/appointment/editlocation")
 	public Aktivitet setLocation(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("location") String location);
 	
-
+	@FormUrlEncoded
 	@PUT("/appointment/editmessage")
 	public Aktivitet setMessage(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("message") String message);
 
@@ -79,6 +80,19 @@ public interface ReqService {
 	
 	@GET("/user/{user_id}/appointments")
 	public ArrayList<Aktivitet> getAlleBrukerAktiviteter(@Path("user_id") int userId);
+	
+	@FormUrlEncoded
+	@POST("/appointment/inviteGroup")
+	public Group inviteGroupAcitivity(@Field("appointment_id") int appointmentId, @Field("group_id") int groupId);
+	
+	
+	@GET("/appointment/{appointment_id}/getInvitedGroups")
+	public ArrayList<Group> getAppointmentGroups(@Path("appointment_id") int appointmentId);
+	
+	@FormUrlEncoded
+	@POST("/appointment/removeGroup")
+	public Group removeAppointmentGroup(@Field("appointment_id") int appointmentId, @Field("group_id") int groupId);
+	
 	
 	// GruppeController
 	
@@ -104,6 +118,9 @@ public interface ReqService {
 	@POST("/group/remove_member")
 	public Result removeFromGroup(@Field("group_id") int group_id, @Field("user_id") int user_id);
 
+	
+	@GET("/user/{id}/invitations")
+	public ArrayList<Invitation> getNewInvitations(@Path("id") int userId);
 
 	// UserController
 
@@ -112,6 +129,9 @@ public interface ReqService {
 	
 	@GET("/users")
 	public ArrayList<User> getAllUsers();
+	
+	@GET("/user/{user_id}/alerts")
+	public ArrayList<Alert> getUserAlerts(@Path("user_id") int userId);
 	
 	// AuthController
 	

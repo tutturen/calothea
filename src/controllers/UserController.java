@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import helpers.LoginResult;
 import requests.ReqClient;
+import models.Alert;
 import models.MainUser;
 import models.User;
 
@@ -29,6 +30,10 @@ public class UserController {
 		User dbUser = ReqClient.getInstance().getService().getUser(result.getUserId());
 		MainUser.newInstance(dbUser);
 		return result;
+	}
+	
+	public static void logout() {
+		MainUser.newInstance(null);
 	}
 	
 }

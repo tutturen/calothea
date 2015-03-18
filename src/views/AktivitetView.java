@@ -92,7 +92,14 @@ public class AktivitetView extends BaseView {
 			lines.add(Console.tableHead("HANDLINGER", WIDTH));
 			
 			if (userIsInvited()) {
-				String att = userAttending ? "Si at du ikke deltar" : "Si at du deltar.";
+				String att = "";
+				if(userAttending == null){
+					att = "Si at du deltar";
+				}
+				else{
+					att = userAttending ? "Si at du ikke deltar" : "Si at du deltar.";
+					
+				}
 				lines.add(Console.tableRow("1. " + att, WIDTH));
 				
 			}

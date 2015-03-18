@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
+import models.Group;
 import requests.ReqClient;
 import requests.ReqService;
 import models.Aktivitet;
@@ -34,6 +34,10 @@ public class AvtaleController {
 	public static ArrayList<Aktivitet> getAlleAktiviteter(int userId) {
 		return db.getAlleBrukerAktiviteter(userId);
 	}
+	
+	//public static ArrayList<Aktivitet> getAlleGroupAktiviteter(int gruppeId){
+		
+	//}
 
 	public static Aktivitet getAktivitet(int aktivitetId) {
 		return db.getActivity(aktivitetId);
@@ -53,20 +57,20 @@ public class AvtaleController {
 		db.setAttending(activityId, userId, att);
 	}
 
-	public static void changeStartTime(int activityId, int year, int month,
+	public static void changeStartTime(int activityId, int userId, int year, int month,
 			int day, int hours, int minutes) throws ParseException {
 		Date date = makeDate(year, month, day, hours, minutes);
-		db.setStartTime(activityId, date.getTime());
+		db.setStartTime(activityId, userId, date.getTime());
 	}
 
-	public static void changeEndTime(int activityId, int year, int month, int day, int hours, int minutes) throws ParseException {
+	public static void changeEndTime(int activityId, int userId, int year, int month, int day, int hours, int minutes) throws ParseException {
 		String datestring = hours + ":" + minutes + "-" + day + "." + month
 				+ "." + year;
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm-dd.MM.yyyy",
 				Locale.GERMAN);
 		format.setTimeZone(TimeZone.getTimeZone("GMT"));
 		Date date = format.parse(datestring);
-		db.setEndTime(activityId, date.getTime());
+		db.setEndTime(activityId, userId, date.getTime());
 	}
 
 	public static void changeLocation(int activityId, int userId, String location) {
@@ -85,11 +89,19 @@ public class AvtaleController {
 		db.kickUserFromActivity(activityId, userId);
 	}
 
-	public static void inviteGroup(int activityId, int groupId) {
-
+	public static void inviteGroup(int appointmentId, int groupId) {
+		db.inviteGroupAcitivity(appointmentId, groupId);
+	}
+	
+	public static ArrayList<Group> getAllGroupsInAppointment(int appointmentId){
+		return db.getAppointmentGroups(appointmentId);
 	}
 
-	public static void removeGroup(int activityId, int groupId) {
+	
+
+	public static void removeGroup(int appointmentId, int groupId) {
+		db.removeAppointmentGroup(appointmentId, groupId);
+		
 
 	}
 	
