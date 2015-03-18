@@ -22,6 +22,7 @@ public class GroupCalendarView extends CalendarView {
 	public GroupCalendarView(Group group) {
 		this.group = group;
 		this.title = group.getName() + " sin kalender";
+		// maa endres: 
 		aktiviteter = AvtaleController.getAlleAktiviteter(group.getId());
 		//Collections.sort(aktiviteter);
 	}

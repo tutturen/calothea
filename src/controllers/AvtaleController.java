@@ -34,6 +34,10 @@ public class AvtaleController {
 	public static ArrayList<Aktivitet> getAlleAktiviteter(int userId) {
 		return db.getAlleBrukerAktiviteter(userId);
 	}
+	
+	//public static ArrayList<Aktivitet> getAlleGroupAktiviteter(int gruppeId){
+		
+	//}
 
 	public static Aktivitet getAktivitet(int aktivitetId) {
 		return db.getActivity(aktivitetId);
@@ -85,7 +89,10 @@ public class AvtaleController {
 		db.kickUserFromActivity(activityId, userId);
 	}
 
-	public static void inviteGroup(int activityId, int groupId) {
+	public static void inviteGroup(int appointmentId, int groupId) {
+		db.inviteGroupAcitivity(appointmentId, groupId);
+		
+		
 
 	}
 
