@@ -45,11 +45,11 @@ public class ChangeAppointmentView extends BaseView {
 			User selectedUser = userSelect.getSelected();
 			if (status == ADD_MEMBER) {
 				AvtaleController.inviteUser(activity.getId(), selectedUser.getId());
-				message = selectedUser.getName() + " er n�� invitert!";
+				message = selectedUser.getName() + " er nå invitert!";
 			} else if (status == REMOVE_MEMBER) {
 				AvtaleController.removeUser(activity.getId(),
 						selectedUser.getId());
-				message = selectedUser.getName() + " er n�� fjernet.";
+				message = selectedUser.getName() + " er nå fjernet.";
 			}
 			resetValues();
 		} else if (groupSelect != null && groupSelect.isDone()) {
@@ -58,12 +58,12 @@ public class ChangeAppointmentView extends BaseView {
 				AvtaleController.inviteGroup(activity.getId(),
 						selectedGroup.getId());
 				message = "Gruppen " + selectedGroup.getName()
-						+ " er n�� invitert!";
+						+ " er nå invitert!";
 			} else if (status == REMOVE_GROUP) {
 				AvtaleController.removeGroup(activity.getId(),
 						selectedGroup.getId());
 				message = "Gruppen " + selectedGroup.getName()
-						+ " er n�� fjernet.";
+						+ " er nå fjernet.";
 			}
 			resetValues();
 		}
@@ -94,11 +94,11 @@ public class ChangeAppointmentView extends BaseView {
 		switch (status) {
 		case CHANGE_DATE:
 			if (subStatus == DATE_DAY) {
-				return "Skriv nummer p�� dag i m��neden >";
+				return "Skriv nummer på dag i måneden >";
 			} else if (subStatus == DATE_MONTH) {
-				return "Skriv inn nummer p�� m��neden i ��ret >";
+				return "Skriv inn nummer på måneden i året >";
 			} else if (subStatus == DATE_YEAR) {
-				return "Skriv ��r >";
+				return "Skriv år >";
 			}
 			break;
 		case CHANGE_START:
@@ -259,7 +259,7 @@ public class ChangeAppointmentView extends BaseView {
 						AvtaleController.changeStartTime(activity.getId(), year,
 								month, day, start.getHours(), start.getMinutes());
 						resetValues();
-						message = "Datoen p�� aktiviteten er n�� endret.";
+						message = "Datoen på aktiviteten er nå endret.";
 					}
 					return;
 				}
@@ -278,7 +278,7 @@ public class ChangeAppointmentView extends BaseView {
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));
 				}
-				message = "Starttidspunktet p�� aktivteten er n�� endret.";
+				message = "Starttidspunktet på aktivteten er nå endret.";
 				resetValues();
 				return;
 			}
@@ -292,7 +292,7 @@ public class ChangeAppointmentView extends BaseView {
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));
 				}
-				message = "Sluttidspunktet p�� aktivteten er n�� endret.";
+				message = "Sluttidspunktet på aktivteten er nå endret.";
 				resetValues();
 				return;
 			}
@@ -307,7 +307,7 @@ public class ChangeAppointmentView extends BaseView {
 			if (isValidMessage(input)) {
 				AvtaleController.changeMessage(activity.getId(), MainUser.getInstance().getId(), input);
 				resetValues();
-				message = "Meldingen til aktiviteten er n�� endret.";
+				message = "Meldingen til aktiviteten er nå endret.";
 				return;
 			}
 		}
