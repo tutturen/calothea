@@ -48,7 +48,7 @@ public class GroupToolMenuView extends BaseView {
 	public String getQuery() {
 		return "Velg NR >";
 	}
-	
+
 	@Override
 	public void giveInput(String input, ViewStack viewStack) {
 		if (input.length() == 0) {
