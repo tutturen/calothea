@@ -4,6 +4,7 @@ import interfaces.View;
 
 import java.util.ArrayList;
 
+import controllers.UserController;
 import utlils.Console;
 import utlils.ViewStack;
 import models.MainUser;
@@ -40,6 +41,7 @@ public class MenuView extends BaseView {
 		for (int i = 0; i < applicationViews.size(); i++) {
 			content.add(Console.tableRow(" " + (i + 1) + ". " + applicationViews.get(i).getTitle() ,WIDTH));
 		}
+		content.add(Console.tableRow(" q: Logg ut", WIDTH));
 		content.add(Console.tableRow(WIDTH));
 		return content;
 	}
@@ -53,6 +55,12 @@ public class MenuView extends BaseView {
 	public void giveInput(String input, ViewStack viewStack) {
 		super.giveInput(input, viewStack);
 		if (input.length() < 1) {
+			return;
+		}
+		
+		if (input.toLowerCase().equals("q")) {
+			UserController.logout();
+			this.done = true;
 			return;
 		}
 

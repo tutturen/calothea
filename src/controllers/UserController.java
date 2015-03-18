@@ -31,4 +31,8 @@ public class UserController {
 		return result;
 	}
 	
+	public static void logout() {
+		MainUser.newInstance(null);
+	}
+	
 }
