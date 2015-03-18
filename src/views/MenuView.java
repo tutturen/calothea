@@ -1,12 +1,16 @@
 package views;
 
 import interfaces.View;
+
 import java.util.ArrayList;
+
+import utlils.Console;
 import utlils.ViewStack;
 import models.MainUser;
 
 public class MenuView extends BaseView {
 
+	private final static int WIDTH = 80;
 	ArrayList<View> applicationViews;
 
 	public MenuView() {
@@ -27,12 +31,16 @@ public class MenuView extends BaseView {
 	@Override
 	public ArrayList<String> getContent() {
 		ArrayList<String> content = new ArrayList<String>();
-		content.add(" NR | FUNKSJON");
-		content.add("--- + -------------------------------------------------------------------");
+		content.add("                     ____ ____ ____ ____ ____ ____ ____ ____ ");
+		content.add("                    ||c |||a |||l |||o |||t |||h |||e |||a ||");
+		content.add("                    ||__|||__|||__|||__|||__|||__|||__|||__||");
+		content.add("                    |/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|");
+		content.add("");
+		content.add(Console.tableHead("Funksjoner", WIDTH));
 		for (int i = 0; i < applicationViews.size(); i++) {
-			content.add("  " + (i + 1) + " | "
-					+ applicationViews.get(i).getTitle());
+			content.add(Console.tableRow(" " + (i + 1) + ". " + applicationViews.get(i).getTitle() ,WIDTH));
 		}
+		content.add(Console.tableRow(WIDTH));
 		return content;
 	}
 
