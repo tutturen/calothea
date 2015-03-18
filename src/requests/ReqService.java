@@ -34,8 +34,8 @@ public interface ReqService {
 	@GET("/room/{id}")
 	public Rom getRoom(@Path("id") int roomId);
 	
-	@GET("/room/find")
-	public ArrayList<Rom> getFreeRooms(@Query("antall") int antall, @Query("start") long start, @Query("end") long end );
+	@GET("/room/find/{id}/{quantity}")
+	public ArrayList<Rom> getFreeRooms(@Path("quantity") int antall, @Path("id") int id);
 	
 	// AvtaleController
 	
@@ -74,9 +74,9 @@ public interface ReqService {
 	@PUT("/appointment/editmessage")
 	public Aktivitet setMessage(@Field("appointment_id") int appointmentId, @Field("user_id") int userId, @Field("message") String message);
 
-	
-	@POST("/appointment/{appointment_id}/rom/{rom_id}")
-	public void setRoom(@Path("appointment_id") int appointmentId, @Path("room_id") int romId);
+	@FormUrlEncoded
+	@POST("/appointment/setRoom")
+	public Rom setRoom(@Field("appointment_id") int appointmentId, @Field("rom_id") int romId);
 	
 	@GET("/user/{user_id}/appointments")
 	public ArrayList<Aktivitet> getAlleBrukerAktiviteter(@Path("user_id") int userId);

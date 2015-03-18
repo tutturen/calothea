@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import controllers.AvtaleController;
+import controllers.RoomController;
 import controllers.GroupController;
 import controllers.UserController;
 import utlils.Console;
@@ -13,6 +14,7 @@ import models.Aktivitet;
 import models.Group;
 import models.Invitation;
 import models.MainUser;
+import models.Rom;
 import models.User;
 
 public class ChangeAppointmentView extends BaseView {
@@ -22,13 +24,14 @@ public class ChangeAppointmentView extends BaseView {
 	private final static int NOTHING_CHOSEN = 0;
 	private final static int WIDTH = 70, CHANGE_DATE = 1, CHANGE_START = 2,
 			CHANGE_END = 3, CHANGE_LOCATION = 4, CHANGE_MESSAGE = 5,
-			ADD_MEMBER = 6, REMOVE_MEMBER = 7, ADD_GROUP = 8, REMOVE_GROUP = 9;
+			ADD_MEMBER = 6, REMOVE_MEMBER = 7, ADD_GROUP = 8, REMOVE_GROUP = 9, CHANGE_ROOM = 10;
 	private final static int DATE_DAY = 1, DATE_MONTH = 2, DATE_YEAR = 3;
 	private int day, month, year;
 	private String message;
 
 	private SelectView<User> userSelect;
 	private SelectView<Group> groupSelect;
+	private SelectView<Rom> roomSelect;
 
 	public ChangeAppointmentView(Aktivitet activity) {
 		this.activity = activity;
@@ -66,6 +69,10 @@ public class ChangeAppointmentView extends BaseView {
 						+ " er nå fjernet.";
 			}
 			resetValues();
+		}else if(roomSelect!=null && roomSelect.isDone()){
+			AvtaleController.setRoom(roomSelect.getSelected().getId(), activity.getId() );
+			message = "Du har en reservasjon p� rommet " + roomSelect.getSelected().getName() + " til denne avtalen";
+			status=NOTHING_CHOSEN;
 		}
 
 		ArrayList<String> lines = new ArrayList<String>();
@@ -79,6 +86,7 @@ public class ChangeAppointmentView extends BaseView {
 		lines.add(Console.tableRow("7. Fjern deltaker", WIDTH));
 		lines.add(Console.tableRow("8. Legg til gruppe [MANGLER]", WIDTH));
 		lines.add(Console.tableRow("9. Fjern gruppe [MANGLER]", WIDTH));
+		lines.add(Console.tableRow("10. Velg rom", WIDTH));
 		lines.add(Console.tableRow(WIDTH));
 		lines.add("");
 		if (message != null && message.length() != 0) {
@@ -109,12 +117,14 @@ public class ChangeAppointmentView extends BaseView {
 			return "Skriv nytt sted >";
 		case CHANGE_MESSAGE:
 			return "Skriv ny melding >";
+		case CHANGE_ROOM:
+			return "Trykk p� enter, eller d�. >";
 		}
 		return "Velg NR fra lista >";
 	}
 
 	private boolean isInsideOptions(int nr) {
-		return (nr > 0 && nr < 10);
+		return (nr > 0 && nr < 11);
 	}
 
 	private boolean isValidMinute(int minute) {
@@ -185,6 +195,13 @@ public class ChangeAppointmentView extends BaseView {
 		viewStack.push(groupSelect);
 		
 	}
+	
+	private void displayChangeRoomView(ViewStack viewStack) {
+		ArrayList<Rom> muligeRom = RoomController.finnRom(activity.getInvitations().size(), activity.getId());
+		this.roomSelect = new SelectView<Rom>("Velg rom", muligeRom);
+		viewStack.push(roomSelect);
+		return;
+	}
 
 	private void resetValues() {
 		day = 0;
@@ -223,8 +240,12 @@ public class ChangeAppointmentView extends BaseView {
 			return;
 		}
 
-		if (status == NOTHING_CHOSEN && input.length() == 1) {
-			int nr = input.charAt(0) - '0';
+		if (status == NOTHING_CHOSEN && input.length() < 3) {
+			int nr = 0;
+			try{nr = Integer.parseInt(input);
+			} catch(Exception e) {
+				status = 0;
+			}
 			if (isInsideOptions(nr)) {
 				status = nr;
 				if (status == ADD_MEMBER) {
@@ -236,6 +257,8 @@ public class ChangeAppointmentView extends BaseView {
 					displayInviteGroupView(viewStack);
 				} else if (status == REMOVE_GROUP) {
 					displayRemoveGroupView(viewStack);
+				} else if (status == CHANGE_ROOM) {
+					displayChangeRoomView(viewStack);
 				}
 				message = "";
 				return;
