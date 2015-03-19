@@ -1,5 +1,5 @@
 @startuml
-
+left to right direction
 package interfaces {
 	interface Selectable {
 		getName()
@@ -148,6 +148,73 @@ package models {
   Selectable <|-- Group
   
   
+}
+
+package utils {
+	class Console {
+		final static int WIDTH, HEIGHT
+		charLine(Char c, int length)
+		clearConsole()
+		fitInBox(String message, int width, int minLines)
+		matchLength, String text, int length)
+		print(String text)
+		println(String text)
+		tableHead(String title, int width)
+		tableRow(int width)
+		tableRow(String text, int width)
+	}
+	
+	class ViewStack {
+		Stack<View> stack
+		isEmpty()
+		peek()
+		pop()
+		push(View v)
+		toString()
+	}
+	ViewStack *- View
+}
+
+package views {
+	
+	class AktivitetView
+	View <|-- AktivitetView
+	
+	class AlertView
+	View <|-up- AlertView
+	class BigMessageView
+	View <|- BigMessageView
+	class CalendarView
+	View <|- CalendarView
+	class ChangeAppointmentView
+	View <|- ChangeAppointmentView
+	class ColleagueView
+	View <|- ColleagueView
+	class CreateGroupView
+	View <|- CreateGroupView
+	class CreateSubGroupView
+	View <|- CreateSubGroupView
+	class CreditsView
+	View <|- CreditsView
+	class InvitationsView
+	View <|- InvitationsView
+	class LoginView
+	View <|- LoginView
+	class MenuView
+	View <|- MenuView
+	class MessageView
+	View <|- MessageView
+	class MyGroupView
+	View <|- MyGroupView
+	class NewAppointmentView
+	View <|- NewAppointmentView
+	class PersonalCalendarView
+	View <|- PersonalCalendarView
+	class RegisterView
+	View <|- RegisterView
+	class SelectView
+	View <|- SelectView
+	
 }
 
 
