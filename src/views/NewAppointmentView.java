@@ -11,7 +11,7 @@ import utlils.ViewStack;
 public class NewAppointmentView extends BaseView {
 
 	private int status = 1;
-	private final static int NOT_CREATED = 0, SET_NAME = 1, SET_START = 2, SET_END = 3, SET_LOCATION = 4;
+	private final static int NOT_CREATED = 0, SET_NAME = 1;
 	
 	
 	@Override

@@ -1,8 +1,6 @@
 package views;
 
 import java.util.ArrayList;
-import java.util.Stack;
-
 import utlils.ViewStack;
 import controllers.GroupController;
 import models.Group;

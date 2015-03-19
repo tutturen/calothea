@@ -1,0 +1,155 @@
+@startuml
+
+package interfaces {
+	interface Selectable {
+		getName()
+	}
+	
+	interface View {
+		getContent()
+		getQuery()
+		getTitle()
+		giveInput()
+		isDone()
+		setUnDone()
+	}
+	
+}
+
+package controllers {
+	class AlertController {
+		ReqService db
+	}
+	AlertController : getAlerts(int userId)
+	
+	class AppointmentController {
+		ReqService db
+	}
+	AppointmentController : changeStartTime(int appointmentId, int userId, Date date) 
+	AppointmentController : changeEndTime(int appointmentId, int userId, Date date)
+	AppointmentController : changeMessage(int appointmentId, int userId, String message)
+	AppointmentController : createAppointment(User admin, String name, String message, String location, Date start, Date end)
+	AppointmentController : getAppointment(int id)
+	AppointmentController : getUserAppointments(int userId)
+	AppointmentController : getGroupsInAppointment(int appointmentId)
+	AppointmentController : inviteGroup(int appointmentId, int groupId)
+	AppointmentController : inviteUser(int appointmentId, int userId)
+	AppointmentController : removeGroup(int appointmentId, int groupId)
+	AppointmentController : removeUser(int appointmentId, int userId)
+	AppointmentController : setAttending(int appointmentId, int userId, boolean attending)
+	AppointmentController : setRoom(int appointmentId, int roomId)
+	
+	class GroupController {
+		ReqService db
+	}
+	GroupController : addMember(int groupId, int userId)
+	GroupController : createGroup(String name, int userId)
+	GroupController : getAllUserGroups(int userId)
+	GroupController : getGroup(int id)
+	GroupController : removeMember(int groupId, int userId)
+	
+	class InvitationController {
+		ReqService db
+	}
+	InvitationController : getNewInvitations(int userId)
+	
+	class RoomController {
+		ReqService db
+	}
+	RoomController : findRoom(int activityId, int capacity)
+	RoomController : getRoom(int roomId)
+	
+	class UserController {
+		ReqService db
+	}
+	UserController : getAllUsers()
+	UserController : login(String email, String password)
+	UserController : logout()
+	UserController : register(String email, String password, String name, String role) 
+}
+
+package helpers {
+	
+	class Result {
+		String message
+		boolean success	
+	}
+
+}
+
+package models {
+  class Appointment {
+  	User administrator
+  	Date start, end
+  	int id
+  	String message, location, name
+  	ArrayList<Invitation> invited
+  }
+
+  Appointment *- Room
+  Appointment *-- Invitation
+  
+  class Alert {
+  	String message
+  	Appointment appointment
+  	User user
+  }
+  Alert *- Appointment
+  Alert *-- User
+  
+  class Group {
+  	Calendar calendar
+  	int id
+  	Group master_group
+  	ArrayList<User> members
+  	String name
+  	ArrayList<Group> subGroups
+  }
+  Group *- Group
+  Group *-- Calendar
+  
+  class Invitation {
+  	Appointment appointment
+  	String message
+  	boolean participates
+  	User user
+  }
+  Invitation *- Appointment
+  Invitation*-- User
+  
+  class Calendar {
+  	int id
+  	ArrayList<Appointment> appointments
+  	String name
+  }
+  Calendar *- Appointment
+  
+  
+  class MainUser << (S,#FF7700) Singleton >> {
+  	MainUser instance
+  }
+  MainUser : getInstance()
+  MainUser : newInstance()
+  MainUser *- User
+  class Room {
+  	int id
+  	int capacity
+  	String name
+  }
+ 
+  class User {
+	  String email
+	  int id
+	  String name
+	  String role
+  }
+  Selectable <|-- User
+  Selectable <|-- Room
+  Selectable <|-- Group
+  
+  
+}
+
+
+@enduml
+	

@@ -3,8 +3,6 @@ package views;
 import interfaces.View;
 
 import java.util.ArrayList;
-import java.util.Stack;
-
 import utlils.ViewStack;
 import models.Group;
 
