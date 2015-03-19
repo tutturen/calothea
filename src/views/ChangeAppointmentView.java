@@ -302,9 +302,17 @@ public class ChangeAppointmentView extends BaseView {
 			int[] time = getTime(input);
 			if (time != null) {
 				Date start = activity.getStartDate();
+				Date end = activity.getEndDate();
+				int userId = MainUser.getInstance().getId();
+				int year = start.getYear() + 1900;
+				int month = start.getMonth() + 1;
+				int day = start.getDate();
 				try {
-					AvtaleController.changeStartTime(activity.getId(), MainUser.getInstance().getId(), start.getYear() + 1900, start.getMonth() + 1, start.getDate(), time[0],
+					AvtaleController.changeStartTime(activity.getId(), userId, year, month, day, time[0],
 							time[1]);
+					if ((time[0] > end.getHours() || (time[0] == end.getHours() && time[1] > end.getMinutes()))) {
+						AvtaleController.changeEndTime(activity.getId(), userId, year, month, day, time[0], time[1]+1);
+					}
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));
 				}
@@ -315,10 +323,20 @@ public class ChangeAppointmentView extends BaseView {
 		} else if (status == CHANGE_END) {
 			int[] time = getTime(input);
 			if (time != null) {
-				Date end = activity.getStartDate();
+				Date start = activity.getStartDate();
+				Date end = activity.getEndDate();
+				int userId = MainUser.getInstance().getId();
+				int year = start.getYear() + 1900;
+				int month = start.getMonth() + 1;
+				int day = start.getDate();
+				int hour = time[0];
+				int minute = time[1];
 				try {
 					AvtaleController.changeEndTime(activity.getId(), MainUser.getInstance().getId(), end.getYear() + 1900, end.getMonth() + 1, end.getDate(), time[0],
 							time[1]);
+					if ((hour < start.getHours() || (hour == start.getHours() && minute <= start.getMinutes()))) {
+						AvtaleController.changeStartTime(activity.getId(), userId, year, month, day, hour, minute-1);
+					}
 				} catch (ParseException e) {
 					viewStack.push(new MessageView(e.getMessage()));
 				}
