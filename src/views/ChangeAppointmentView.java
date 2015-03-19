@@ -32,8 +32,8 @@ public class ChangeAppointmentView extends BaseView {
 	private SelectView<Group> groupSelect;
 	private SelectView<Rom> roomSelect;
 
-	public ChangeAppointmentView(Aktivitet activity) {
-		this.activity = activity;
+	public ChangeAppointmentView(int activityId) {
+		this.activity = AvtaleController.getAktivitet(activityId);
 	}
 
 	@Override

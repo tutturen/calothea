@@ -148,7 +148,7 @@ public class AktivitetView extends BaseView {
 			return;
 		}
 		else if (userIsAdmin() && input.length() == 1 && input.charAt(0) == '3') {
-			viewStack.push(new ChangeAppointmentView(activity));
+			viewStack.push(new ChangeAppointmentView(activity.getId()));
 			return;
 		} else if (input.length() == 1 && input.charAt(0) == '2') {
 			ArrayList<User> members = new ArrayList<User>();

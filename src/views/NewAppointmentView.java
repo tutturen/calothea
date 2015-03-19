@@ -47,7 +47,7 @@ public class NewAppointmentView extends BaseView {
 			Aktivitet newActivity = AvtaleController.createAvtale(MainUser.getInstance(), input, message, location, new Date(), end);
 			viewStack.pop();
 			viewStack.push(new AktivitetView(newActivity.getId()));
-			viewStack.push(new ChangeAppointmentView(newActivity));
+			viewStack.push(new ChangeAppointmentView(newActivity.getId()));
 			this.done = true;
 		}
 	}
