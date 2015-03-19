@@ -42,8 +42,8 @@ public class NewAppointmentView extends BaseView {
 			String message = "Viktig møte.";
 			String location = "Ubestemt";
 			Date end = new Date();
-			// Set it to last two hours
-			end.setTime(end.getTime() + 7200000);
+			// Set it to last one minute
+			end.setTime(end.getTime() + 60000);
 			Aktivitet newActivity = AvtaleController.createAvtale(MainUser.getInstance(), input, message, location, new Date(), end);
 			viewStack.pop();
 			viewStack.push(new AktivitetView(newActivity.getId()));
