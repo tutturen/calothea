@@ -60,8 +60,12 @@ public class AktivitetView extends BaseView {
 		String timeSluttStr = new SimpleDateFormat("HH:mm").format(activity.getEndDate());
 		String sluttTid = "Slutt:   " + Console.matchLength(timeSluttStr, leftTableWidth);
 		String sted = "Sted:    " + Console.matchLength(activity.getLocation(), leftTableWidth);
+		String rom = "";
+		if (activity.getRom() != null) {
+			rom = "Rom:     " + Console.matchLength(activity.getRom().getSmallName(), leftTableWidth);			
+		}
 		
-		ArrayList<String> messageLines = Console.fitInBox(activity.getMessage(), 35, 5);
+		ArrayList<String> messageLines = Console.fitInBox(activity.getMessage(), 35, 6);
 		
 		lines.add("+--------------  INFO  ---------------+   " + Console.tableHead("MELDING", rightTableWidth));
 		lines.add("| "   + ansvarlig +                 " |   " + Console.tableRow(messageLines.get(0), rightTableWidth));
@@ -69,9 +73,12 @@ public class AktivitetView extends BaseView {
 		lines.add("| "   + startTid +                  " |   " + Console.tableRow(messageLines.get(2), rightTableWidth));
 		lines.add("| "   + sluttTid +                  " |   " + Console.tableRow(messageLines.get(3), rightTableWidth));
 		lines.add("| "   + sted +                      " |   " + Console.tableRow(messageLines.get(4), rightTableWidth));
+		if (activity.getRom() != null) {
+			lines.add("| "   + rom +                       " |   " + Console.tableRow(messageLines.get(5), rightTableWidth));			
+		}
 		lines.add("+-------------------------------------+   " + Console.tableRow(rightTableWidth));
  
-		lines.add(Console.tableHead("TRE KULE DELTAGERE", WIDTH));
+		lines.add(Console.tableHead("NOEN DELTAGERE", WIDTH));
 		lines.add("| " + Console.matchLength(activity.getAdmin().getName(), WIDTH - 16) + ATTENDING + "|");
 		int max = activity.getInvitations().size() > 3 ? 3 : activity.getInvitations().size();
 		for (int i = 0; i < max; i++) {

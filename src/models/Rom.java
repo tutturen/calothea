@@ -1,5 +1,6 @@
 package models;
 
+import utlils.Console;
 import interfaces.Selectable;
 
 public class Rom implements Selectable {
@@ -42,7 +43,7 @@ public class Rom implements Selectable {
 	}
 
 	public String getName() {
-		return name;
+		return Console.matchLength(name, 25) + " | kapasitet: " + kapasitet;
 	}
 
 	public int getRomNr() {
@@ -56,6 +57,10 @@ public class Rom implements Selectable {
 	
 	public int getId() {
 		return this.id;
+	}
+	
+	public String getSmallName() {
+		return name + " [" + kapasitet + "]";
 	}
 
 }

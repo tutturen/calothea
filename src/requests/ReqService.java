@@ -76,7 +76,7 @@ public interface ReqService {
 
 	@FormUrlEncoded
 	@POST("/appointment/setRoom")
-	public Rom setRoom(@Field("appointment_id") int appointmentId, @Field("rom_id") int romId);
+	public Rom setRoom(@Field("appointment_id") int appointmentId, @Field("room_id") int romId);
 	
 	@GET("/user/{user_id}/appointments")
 	public ArrayList<Aktivitet> getAlleBrukerAktiviteter(@Path("user_id") int userId);

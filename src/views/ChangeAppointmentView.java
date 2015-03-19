@@ -70,7 +70,7 @@ public class ChangeAppointmentView extends BaseView {
 			resetValues();
 		}else if(roomSelect!=null && roomSelect.isDone()){
 			AvtaleController.setRoom(roomSelect.getSelected().getId(), activity.getId() );
-			message = "Du har en reservasjon p� rommet " + roomSelect.getSelected().getName() + " til denne avtalen";
+			message = "Du har en reservasjon på rommet " + roomSelect.getSelected().getName() + " til denne avtalen";
 			status=NOTHING_CHOSEN;
 		}
 
